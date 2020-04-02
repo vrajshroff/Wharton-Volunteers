@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Virtual Hour Student Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
+      authDomain: "wharton-volunteers.firebaseapp.com",
+      databaseURL: "https://wharton-volunteers.firebaseio.com",
+      projectId: "wharton-volunteers",
+      storageBucket: "wharton-volunteers.appspot.com",
+      messagingSenderId: "1067661612787",
+      appId: "1:1067661612787:web:b6eac7c8fb4aff84260986"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    initApp = function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+
+        } else {
+          //location.href = '/';
+        }
+      }, function(error) {
+        console.log(error);
+      });
+    };
+    window.addEventListener('load', function() {
+      initApp();
+    });
+  </script>
+
+</head>
+
+<body style="background-color:AliceBlue;">
+<div class="container-fluid" > 
+  <div class="row" style="background-color:Navy;">
+    <div class="col">
+      <h1 align="center" style="color:white;">Wharton Index of Transformational Impact </h1>
+      <p align="center" style="color:white;"> <i>An Online Platform to connect hospitals with volunteers and donors</i></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <br><br>
+    </div>
+  </div>
+
+  </div>
+
+  <script>
+    var classID = getParameterByName("givenID");
+    var db = firebase.firestore();
+    var unsubscribe = null; //listener status to turn off the DB
+
+
+    if (classID && classID.trim()) {} else {
+      document.getElementById("error").innerHTML = 'Invalid Class ID. <a href="index.html">Please try again.</a>';
+      document.getElementById("addToQueue").disabled = true;
+      document.getElementById("seeQueue").disabled = true;
+    }
+
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+
+    function addToQueue() {
+      document.getElementById("addToQueue").disabled = true;
+
+      db.collection("classes").doc(classID).collection("students").doc(firebase.auth().currentUser.uid).set({
+          creator: firebase.auth().currentUser.displayName,
+          needHelp: "",
+          timeAdded: Date.now()
+        })
+        .then(function() {
+          seeQueue();
+        })
+        .catch(function(error) {
+          document.getElementById("error").innerHTML = "";
+          document.getElementById("class").innerHTML = "";
+          document.getElementById("status").innerHTML =
+            '<b>Error Occurred. Few of the Possible Reasons</b>:<br>0. The instructor has not opened up the queue yet.<br>1. Class ID is invalid. <a href="index.html">Try again</a> with a correct class ID.<br>2. You are not logged in with your school email. <a href="index.html">Go back to the home page</a> and try again.<br>3. It is quite likely that it was a one time error and just <a href="index.html">trying again</a> will resolve the issue.<br><br>Contact <a href="mailto:vshroff@sas.upenn.edu">Vraj Shroff</a> if the problem persists.';
+          document.getElementById("addToQueue").disabled = false;
+          console.log(error);
+        });
+    }
+
+    function seeQueue() {
+      document.getElementById("seeQueue").disabled = true;
+
+      unsubscribe = db.collection("classes").doc(classID).collection("students").orderBy("timeAdded")
+        .onSnapshot(function(querySnapshot) {
+          var allStudents = [];
+          document.getElementById("error").innerHTML = "";
+          document.getElementById("status").innerHTML = "<b>Queue for the class:</b>";
+          document.getElementById("class").innerHTML = "Welcome to class, " + classID;
+
+          querySnapshot.forEach(function(doc) {
+            console.log(doc.id, " => ", doc.data()); //each student
+            var temp = Object.values(doc.data());
+            temp.splice(2, 1); //timestamp is removed
+            allStudents.push(temp);
+          });
+          createTable(allStudents);
+        }, function(error) {
+          document.getElementById("seeQueue").disabled = false;
+          document.getElementById("error").innerHTML = "";
+          document.getElementById("class").innerHTML = "";
+          document.getElementById("status").innerHTML =
+            '<b>Error Occurred. Few of the Possible Reasons</b>:<br>1. The Class ID is invalid. <a href="index.html">Try again</a> with a correct class ID.<br>2. You are not logged in with your school email. <a href="index.html">Go back to the home page</a> and try again.<br>3. It is quite likely that it was a one time error and just <a href="index.html">trying again</a> will resolve the issue.<br><br>Contact <a href="mailto:vshroff@sas.upenn.edu">Vraj Shroff</a> if the problem persists.';
+          console.log("Error: " + error);
+        });
+    }
+
+    function createTable(tableData, table) {
+      var table = document.getElementById("queueTable");
+      table.innerHTML = "";
+      var tableBody = document.createElement('tbody');
+
+      tableData.forEach(function(rowData) {
+        var row = document.createElement('tr');
+
+        for (var i = 0; i < rowData.length; i++) {
+          if (i == 1 && rowData[i]) { //TA signaled to help them
+            var cell = document.createElement('td');
+            var span = document.createElement('span');
+            cell.style.margin = "10px";
+            span.innerHTML = '<a target="_blank" href="' + rowData[i] + '">Join the Virtual Room</a>'
+            cell.appendChild(span);
+            row.appendChild(cell);
+          } else if (i == 1 && !rowData[i]) { //Student is not assigned to any TA yet
+            var cell = document.createElement('td');
+            var span = document.createElement('span');
+            span.style.margin = "10px";
+            cell.innerHTML = '<i>Waiting for a TA</i>'
+            cell.appendChild(span);
+            row.appendChild(cell);
+          } else {
+            var cell = document.createElement('td');
+            var span = document.createElement('span');
+            cell.style.margin = "10px";
+            span.innerHTML = rowData[i];
+            cell.appendChild(span);
+            row.appendChild(cell);
+          }
+        }
+        tableBody.appendChild(row);
+      });
+      table.appendChild(tableBody);
+    }
+
+    document.addEventListener("visibilitychange", function() {
+      if (document.visibilityState === 'visible') {
+        if (unsubscribe) {
+          seeQueue(); //this is done to decrease the number of simultaneous connections to the DB at the cost of more reads
+        }
+      } else {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
