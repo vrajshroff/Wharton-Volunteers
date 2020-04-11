@@ -800,7 +800,7 @@
       db.collection("hospitals").doc(obj["Hospital Username"]).set(obj)
         .then(function() {
           console.log("Document successfully written!");
-          document.getElementById("status").innerHTML = "Hospital successfully added."
+          document.getElementById("status").innerHTML = "Hospital successfully added. Go back to the homepage and check out your hospital information."
         })
         .catch(function(error) {
           console.error("Error writing document: ", error);
