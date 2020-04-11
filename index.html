@@ -6,6 +6,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
+      authDomain: "wharton-volunteers.firebaseapp.com",
+      databaseURL: "https://wharton-volunteers.firebaseio.com",
+      projectId: "wharton-volunteers",
+      storageBucket: "wharton-volunteers.appspot.com",
+      messagingSenderId: "1067661612787",
+      appId: "1:1067661612787:web:b6eac7c8fb4aff84260986"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
 </head>
 
 <body style="background-color:AliceBlue;">
@@ -32,14 +47,23 @@
       <li class="nav-item" style="border:1px solid black;">
         <a class="nav-link" href="auth.html?websiteId=create.html">Add New Hospital</a>
       </li>
-      <li class="nav-item" style="border:1px solid black;">
-        <a class="nav-link" href="auth.html?websiteId=myAccount.html">Log In</a>
-      </li>
     </ul>
   </div>
 
   <br>
-
+  <script>
+    var db = firebase.firestore();
+    db.collection("hospitals")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          console.log(doc.id, " => ", doc.data()); // add this info to table and Google maps
+        });
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+      });
+  </script>
 </body>
 
 </html>

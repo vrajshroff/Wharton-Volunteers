@@ -14,22 +14,17 @@ app.use(express.json());
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 app.get('/', function(req, res) {
-  res.render(path.join(__dirname + '/index.ejs'));
+  res.sendFile(path.join(__dirname + '/index.html'));
 })
 
-app.get('/auth', function(req, res) {
+app.get('/index.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
+})
+
+app.get('/auth.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/auth.html'));
 })
 
-app.get('/create', function(req, res) {
-  res.render(path.join(__dirname + '/create.ejs'));
-})
-
-app.get('/temp', function(req, res) {
-  res.sendFile(path.join(__dirname + '/temp.html'));
-})
-
-app.post('/addHospital', function(req, res) {
-  console.log(req.body);
-  res.render(path.join(__dirname + '/create.ejs'));
+app.get('/create.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/create.html'));
 })
