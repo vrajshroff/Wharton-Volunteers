@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <title>Authorization for Virtual Hour</title>
+  <title>Virtual Hour Student Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -19,35 +19,26 @@
       appId: "1:1067661612787:web:b6eac7c8fb4aff84260986"
     };
     firebase.initializeApp(firebaseConfig);
-  </script>
-  <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
 
-  <script>
-    function getParameterByName(name) {
-      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-    }
+    initApp = function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
 
-    var url = getParameterByName("websiteId");
-    var parm = getParameterByName("givenID");
-    if (parm) {
-      url = url + "?givenID=" + parm;
-    }
-
-    var uiConfig = {
-      signInSuccessUrl: url,
-      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-      tosUrl: 'index.html',
-      privacyPolicyUrl: 'index.html'
+        } else {
+          //location.href = '/';
+        }
+      }, function(error) {
+        console.log(error);
+      });
     };
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start('#firebaseui-auth-container', uiConfig);
+    window.addEventListener('load', function() {
+      initApp();
+    });
   </script>
+
 </head>
 
 <body style="background-color:AliceBlue;">
-
 
   <div class="row" style="background-color:Navy;">
     <div class="col">
@@ -56,17 +47,27 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <br><br>
-    </div>
+  <div style="background-color:WhiteSmoke;">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="calculator.html">Calculator</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="about.html">About Us</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="auth.html?websiteId=create.html">Add New Hospital</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link active" href="auth.html?websiteId=myAccount.html">Log In</a>
+      </li>
+    </ul>
   </div>
 
-  <div class="row" id="firebaseDiv">
-    <div class="col">
-      <div id="firebaseui-auth-container"></div>
-    </div>
-  </div>
+  <div class="container-fluid"></div>
 </body>
 
 </html>

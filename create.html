@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Virtual Hour Student Login</title>
+  <title>Add Hospital to TIMS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -39,17 +39,46 @@
 </head>
 
 <body style="background-color:AliceBlue;">
-  <div class="container-fluid">
-    <div class="row" style="background-color:Navy;">
-      <div class="col">
-        <h1 align="center" style="color:white;">Wharton Index of Transformational Impact </h1>
-        <p align="center" style="color:white;"> <i>An Online Platform to connect hospitals with volunteers and donors</i></p>
-      </div>
+
+  <div class="row" style="background-color:Navy;">
+    <div class="col">
+      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
     </div>
+  </div>
+
+  <div style="background-color:WhiteSmoke;">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="calculator.html">Calculator</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="about.html">About Us</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link active" href="auth.html?websiteId=create.html">Add New Hospital</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="auth.html?websiteId=myAccount.html">Log In</a>
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="container-fluid">
 
     <div class="row">
       <div class="col">
         <br><br>
+
+        <h2> Add Your Hospital to TIMS </h2>
+        <i>
+          <p>Note: All questions are required. Please answer them with best of your ability. If you sleect "No Data", your hospital's ratings would be negatively affected.</p>
+        </i>
+        <hr>
         <form action="/addHospital" method="post">
 
           <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? This tool can be used for reference: https://wid.world/simulator.</b></p>
@@ -110,7 +139,8 @@
           <label><input type="radio" name="Additional Services" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Additional Services" value="3" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high
             quality.</label><br>
-          <label><input type="radio" name="Additional Services" value="4" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high quality,
+          <label><input type="radio" name="Additional Services" value="4" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high
+            quality,
             and the program performs above average on at least one key relevant metric.</label><br>
           <label><input type="radio" name="Additional Services" value="5" required>&nbsp;At least 2 additional services are provided, to which at least 5% of the hospital's resources are dedicated. Appropriate services are delivered with high
             quality, and the programs perform above average on at least one key relevant metric.</label><br>
@@ -271,7 +301,8 @@
           <label><input type="radio" name="Formal Governance Structure" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Formal Governance Structure" value="1" required>&nbsp;Hospital has an informal governance structure and does not have a board</label><br>
           <label><input type="radio" name="Formal Governance Structure" value="3" required>&nbsp;Hospital has a formal organizational structure (chart) in place that is appropriate to the work being carried out and an independent board</label><br>
-          <label><input type="radio" name="Formal Governance Structure" value="5" required>&nbsp;Hospital has a well-defined organizational structure (chart), clear delegation of responsibility and authority, coherent functioning of departments, and
+          <label><input type="radio" name="Formal Governance Structure" value="5" required>&nbsp;Hospital has a well-defined organizational structure (chart), clear delegation of responsibility and authority, coherent functioning of departments,
+            and
             an independent board that works on policymaking, oversight, and support</label><br>
           <br>
 
@@ -288,11 +319,14 @@
           <label><input type="radio" name="Strategic Plan and Implementation" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Strategic Plan and Implementation" value="1" required>&nbsp;Hospital has not yet developed either a long-term or short-term strategic plan</label><br>
           <label><input type="radio" name="Strategic Plan and Implementation" value="2" required>&nbsp;Hospital develops a long-term strategic plan and/or a yearly operational plan</label><br>
-          <label><input type="radio" name="Strategic Plan and Implementation" value="3" required>&nbsp;Hospital develops and adheres to a yearly operational plan that identifies organizational goals to be achieved and the resources needed to achieve
+          <label><input type="radio" name="Strategic Plan and Implementation" value="3" required>&nbsp;Hospital develops and adheres to a yearly operational plan that identifies organizational goals to be achieved and the resources needed to
+            achieve
             those goals</label><br>
-          <label><input type="radio" name="Strategic Plan and Implementation" value="4" required>&nbsp;Hospital develops and adheres to a long-term strategic plan that identifies organizational goals to be achieved and the resources needed to achieve
+          <label><input type="radio" name="Strategic Plan and Implementation" value="4" required>&nbsp;Hospital develops and adheres to a long-term strategic plan that identifies organizational goals to be achieved and the resources needed to
+            achieve
             those goals</label><br>
-          <label><input type="radio" name="Strategic Plan and Implementation" value="5" required>&nbsp;Hospital develops and adheres to a long-term strategic plan with a yearly operational plan that identifies organizational goals to be achieved over
+          <label><input type="radio" name="Strategic Plan and Implementation" value="5" required>&nbsp;Hospital develops and adheres to a long-term strategic plan with a yearly operational plan that identifies organizational goals to be achieved
+            over
             a specific period of time and the resources needed to achieve those goals</label><br>
           <br>
 
@@ -320,9 +354,11 @@
             funding</label><br>
           <label><input type="radio" name="Systems Capacity" value="2" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with
             sufficient funding</label><br>
-          <label><input type="radio" name="Systems Capacity" value="3" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed with
+          <label><input type="radio" name="Systems Capacity" value="3" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed
+            with
             sufficient funding</label><br>
-          <label><input type="radio" name="Systems Capacity" value="4" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with sufficient
+          <label><input type="radio" name="Systems Capacity" value="4" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with
+            sufficient
             funding</label><br>
           <label><input type="radio" name="Systems Capacity" value="5" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed with
             sufficient funding</label><br>
@@ -351,9 +387,11 @@
           <label><input type="radio" name="Board Meetings" value="1" required>&nbsp;Board meetings are not held</label><br>
           <label><input type="radio" name="Board Meetings" value="2" required>&nbsp;Board meetings are held on an ad hoc basis</label><br>
           <label><input type="radio" name="Board Meetings" value="3" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital records minutes during board meetings</label><br>
-          <label><input type="radio" name="Board Meetings" value="4" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible for
+          <label><input type="radio" name="Board Meetings" value="4" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible
+            for
             future reference</label><br>
-          <label><input type="radio" name="Board Meetings" value="5" required>&nbsp;Board meetings are held on a regular basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible for
+          <label><input type="radio" name="Board Meetings" value="5" required>&nbsp;Board meetings are held on a regular basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible
+            for
             future reference</label><br>
           <br>
 
@@ -378,7 +416,8 @@
           <label><input type="radio" name="Board Donation Oversight" value="3" required>&nbsp;The board reviews and approves the budget.</label><br>
           <label><input type="radio" name="Board Donation Oversight" value="4" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and donor
             restrictions.</label><br>
-          <label><input type="radio" name="Board Donation Oversight" value="5" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and donor's
+          <label><input type="radio" name="Board Donation Oversight" value="5" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and
+            donor's
             restrictions. The board also reviews and compares the budgeted versus actual expenses and income, and discusses major variances.</label><br>
           <br>
 
@@ -686,7 +725,8 @@
           <p><b>If you would like, you may provide a story of an individual whose life your hospital has benefited. Personal stories often help donors and volunteers make a personal connection to a charitable organization.</b></p>
           <input type="text" name="Beneficiary Narrative" style="width:300px;" required><br><br>
 
-          <p><b>Does the hospital have any specific donor needs? If so, please explain, as a way for potential donors to find the hospital. If available, please provide a plan for future funds, including specific uses (e.g., new program or facility),
+          <p><b>Does the hospital have any specific donor needs? If so, please explain, as a way for potential donors to find the hospital. If available, please provide a plan for future funds, including specific uses (e.g., new program or
+              facility),
               amounts, priority, and alignment to the hospital's strategic plan.</b></p>
           <input type="text" name="Donation Needs" style="width:300px;" required><br><br>
 
