@@ -869,6 +869,29 @@ for (let key of mapToSubCats.keys()) {
 	var runningScoreTotalCare = 0;
 	var runningScoreAvgCare = 0;
 	var runningWeightsCare = 0;
+	
+	//category variables
+	//regional impact potential
+	var runningScoreTotalRegional = 0;
+	var runningScoreAvgRegional = 0;
+	var runningWeightsRegional = 0;
+	//external relations
+	var runningScoreTotalRelations = 0;
+	var runningScoreAvgRelations = 0;
+	var runningWeightsRelations = 0;
+	//volunteer opportunity
+	var runningScoreTotalVolOppt = 0;
+	var runningScoreAvgVolOppt = 0;
+	var runningWeightsVolOppt = 0;
+	//volunteer satisfaction
+	var runningScoreTotalVolSats = 0;
+	var runningScoreAvgVolSats = 0;
+	var runningWeightsVolSats = 0;
+	var totalScore = 0; 
+
+	//categories
+	var financialHealth = 0;
+	var operationalPerformance = 0;
 
 
 
@@ -876,29 +899,29 @@ for (let key of mapToSubCats.keys()) {
 //map "variable name" to obj["variable name"], which is the score 
 //pass map into compute subcat scores
 //obj['sub category score'] = score
-for (let key of mapToWeightsFinal.keys()) { //key is the variable name
-	mapJSON[key] = obj[key];
-}
-computeSubCatScore(mapJSON);
-computeCatScore(mapJSON);
-computeTotalScore();
-obj['funding sources'] = runningScoreAvgFunding;
-obj['financial capacity'] = runningScoreAvg
-obj['operational effciency']  = runningScoreAvgOperation
-obj['governance'] = runningScoreAvgGov
-obj['transparency'] = runningScoreAvgTrans
-obj['accountability'] = runningScoreAvgAccount
-obj['organization quality'] = runningScoreAvgOrganization
-obj['volume'] = runningScoreAvgVolume
-obj['financial efficiency'] = runningScoreAvgEfficiency
-obj['care quality'] = runningScoreAvgCare
-obj['regional impact potential'] = runningScoreAvgRegional
-obj['external relations'] = runningScoreAvgRelations
-obj['volunteer opportunity'] = runningScoreAvgVolOppt
-obj['volunteer satisfaction'] = runningScoreAvgVolSats
-obj['financial health'] = financialHealth
-obj['operational performance'] = operationalPerformance
-obj['score'] = totalScore
+	for (let key of mapToWeightsFinal.keys()) { //key is the variable name
+		mapJSON[key] = obj[key];
+	}
+	computeSubCatScore(mapJSON);
+	computeCatScore(mapJSON);
+	computeTotalScore();
+	obj['funding sources'] = runningScoreAvgFunding;
+	obj['financial capacity'] = runningScoreAvg;
+	obj['operational effciency']  = runningScoreAvgOperation;
+	obj['governance'] = runningScoreAvgGov;
+	obj['transparency'] = runningScoreAvgTrans;
+	obj['accountability'] = runningScoreAvgAccount;
+	obj['organization quality'] = runningScoreAvgOrganization;
+	obj['volume'] = runningScoreAvgVolume;
+	obj['financial efficiency'] = runningScoreAvgEfficiency;
+	obj['care quality'] = runningScoreAvgCare;
+	obj['regional impact potential'] = runningScoreAvgRegional;
+	obj['external relations'] = runningScoreAvgRelations;
+	obj['volunteer opportunity'] = runningScoreAvgVolOppt;
+	obj['volunteer satisfaction'] = runningScoreAvgVolSats;
+	obj['financial health'] = financialHealth;
+	obj['operational performance'] = operationalPerformance;
+	obj['score'] = totalScore;
 
 
 
@@ -961,28 +984,9 @@ var computeSubCatScore = function(mapToScores) {
 }
 
 
-//category variables
-//regional impact potential
-var runningScoreTotalRegional = 0;
-var runningScoreAvgRegional = 0;
-var runningWeightsRegional = 0;
-//external relations
-var runningScoreTotalRelations = 0;
-var runningScoreAvgRelations = 0;
-var runningWeightsRelations = 0;
-//volunteer opportunity
-var runningScoreTotalVolOppt = 0;
-var runningScoreAvgVolOppt = 0;
-var runningWeightsVolOppt = 0;
-//volunteer satisfaction
-var runningScoreTotalVolSats = 0;
-var runningScoreAvgVolSats = 0;
-var runningWeightsVolSats = 0;
 
-//categories
-var financialHealth = 0;
+	    
 var totalFinancialHealthWeight = runningWeightsAccount + runningWeightsFunding + runningWeightsEfficiency + runningWeightsFinancial;
-var operationalPerformance = 0;
 var totalOperationalPerfWeight = runningWeightsOperation + runningWeightsGov + runningWeightsTrans + runningWeightsOrganization + runningWeightsVolume + runningWeightsCare;
 
 var computeCatScore = function(mapToScores) {
@@ -1026,7 +1030,7 @@ var computeCatScore = function(mapToScores) {
 
 }
 
-var totalScore = 0; 
+
 
 var computeTotalScore = function() {
 	totalScore = (runningScoreTotalRegional + runningScoreTotalRelations + runningScoreTotalVolOppt + runningScoreTotalVolSats + financialHealth + operationalPerformance) 
