@@ -55,13 +55,21 @@
 
   <br>
   <script>
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+
+
     var db = firebase.firestore();
+    var username = getParameterByName("username");
     var docRef = db.collection("hospitals").doc(username);
 
     docRef.get().then(function(doc) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
         //display this data
+
       } else {
         location.href = "index.html"
         console.log("No such document!");
