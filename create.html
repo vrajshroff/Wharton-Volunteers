@@ -825,19 +825,7 @@
     let mapJSON = new Map();
     createMaps();
 
-    //recreate maps with the quotes
-    for (let key of mapToWeights.keys()) {
-      mapToWeightsFinal.set("\"" + key + "\"", mapToWeights.get(key));
-    }
-    for (let key of mapToCats.keys()) {
-      mapToCatsFinal.set("\"" + key + "\"", mapToCats.get(key));
-    }
-    for (let key of mapToSubCats.keys()) {
-      mapToSubCatsFinal.set("\"" + key + "\"", mapToSubCats.get(key));
-    }
-
     //subcategory variables
-
     var runningScoreTotalFunding = 0;
     var runningScoreAvgFunding = 0;
     var runningWeightsFunding = 0;
