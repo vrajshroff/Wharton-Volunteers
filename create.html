@@ -1191,8 +1191,6 @@
     //var obj = {}
 
 
-    computeScores();
-
     function computeScores() {
 
       console.log(mapToWeights.keys());
@@ -1201,14 +1199,14 @@
 
         //here can you first check obj[key] is defined - try something like this? Otheriwse your code would break
 
-        /*if (obj[key])  {
+        if (obj[key])  {
           mapJSON.set(key, obj[key]);
         } else {
           mapJSON.set(key, 0);
         }
-        */
+        
 
-        mapJSON.set(key, obj[key]);
+       // mapJSON.set(key, obj[key]);
         //mapJSON[key] = obj[key];
       }
       console.log(mapJSON);
@@ -1365,23 +1363,23 @@
 
       //can u please change the following to what I sent in the slack to be consistent - otherwise you will break Kat's code. E.g. funding sources should be "SC Funding Sources"
 
-      obj['funding sources'] = runningScoreAvgFunding;
-      obj['financial capacity'] = runningScoreAvgFinancial;
-      obj['operational effciency'] = runningScoreAvgOperation;
-      obj['governance'] = runningScoreAvgGov;
-      obj['transparency'] = runningScoreAvgTrans;
-      obj['accountability'] = runningScoreAvgAccount;
-      obj['organization quality'] = runningScoreAvgOrganization;
-      obj['volume'] = runningScoreAvgVolume;
-      obj['financial efficiency'] = runningScoreAvgEfficiency;
-      obj['care quality'] = runningScoreAvgCare;
-      obj['regional impact potential'] = runningScoreAvgRegional;
-      obj['external relations'] = runningScoreAvgRelations;
-      obj['volunteer opportunity'] = runningScoreAvgVolOppt;
-      obj['volunteer satisfaction'] = runningScoreAvgVolSats;
-      obj['financial health'] = financialHealth;
-      obj['operational performance'] = operationalPerformance;
-      obj['score'] = totalScore;
+      obj['SC funding sources'] = runningScoreAvgFunding;
+      obj['SC financial capacity'] = runningScoreAvgFinancial;
+      obj['SC operational effciency'] = runningScoreAvgOperation;
+      obj['SC governance'] = runningScoreAvgGov;
+      obj['SC transparency'] = runningScoreAvgTrans;
+      obj['SC accountability'] = runningScoreAvgAccount;
+      obj['SC organization quality'] = runningScoreAvgOrganization;
+      obj['SC volume'] = runningScoreAvgVolume;
+      obj['SC financial efficiency'] = runningScoreAvgEfficiency;
+      obj['SC care quality'] = runningScoreAvgCare;
+      obj['C regional impact potential'] = runningScoreAvgRegional;
+      obj['C external relations'] = runningScoreAvgRelations;
+      obj['C volunteer opportunity'] = runningScoreAvgVolOppt;
+      obj['C volunteer satisfaction'] = runningScoreAvgVolSats;
+      obj['C financial health'] = financialHealth;
+      obj['C operational performance'] = operationalPerformance;
+      obj['R rating'] = totalScore;
 
       firestore();
       console.log(JSON.stringify(obj));
