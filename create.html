@@ -26,7 +26,8 @@
         if (user) {
 
         } else {
-          location.href = 'index.html';
+          //uncomment after demo
+          //location.href = 'index.html';
         }
       }, function(error) {
         console.log(error);
@@ -784,8 +785,10 @@
 
     //function called when submit is pressed
     function addToDB() {
-      
-      obj["Creator Email"] = firebase.auth().currentUser.email;
+
+      obj["Creator Email"] = "vrajshroff@gmail.com"
+      //firebase.auth().currentUser.email;
+      //change after demo
 
       var idSet = new Set();
       var elements = document.getElementById("myForm").elements;
@@ -798,7 +801,6 @@
       }
       results = JSON.stringify(obj);
       console.log(results);
-      //at this point obj has all the fields so it is ready to be called to add new fields
 
       //angela's function
       computeScores();
@@ -817,7 +819,7 @@
   </script>
 
   <script>
-        var mapToWeights = new Map();
+    var mapToWeights = new Map();
     var mapToWeightsFinal = new Map();
     var mapToSubCatsj = new Map();
     var mapToSubCatsFinal = new Map();
@@ -1192,20 +1194,30 @@
     computeScores();
 
     function computeScores() {
-      
+
       console.log(mapToWeights.keys());
-        
-          for (let key of mapToWeights.keys()) { //key is the variable name
-            mapJSON.set(key, obj[key]);
-            //mapJSON[key] = obj[key];
-          }
-          console.log(mapJSON);
-          console.log(mapJSON.entries());
+
+      for (let key of mapToWeights.keys()) { //key is the variable name
+
+        //here can you first check obj[key] is defined - try something like this? Otheriwse your code would break
+
+        /*if (obj[key])  {
+          mapJSON.set(key, obj[key]);
+        } else {
+          mapJSON.set(key, 0);
+        }
+        */
+
+        mapJSON.set(key, obj[key]);
+        //mapJSON[key] = obj[key];
+      }
+      console.log(mapJSON);
+      console.log(mapJSON.entries());
       computeSubCatScore(mapJSON);
 
     }
 
-    
+
 
 
 
@@ -1219,53 +1231,53 @@
         console.log("variable");
         console.log(variable);
         if (mapToSubCatsj.get(variable).valueOf() == "Funding Sources") {
-            console.log("funding sources");
+          console.log("funding sources");
           runningScoreTotalFunding = runningScoreTotalFunding + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsFunding = runningWeightsFunding + mapToWeights.get(variable);
 
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Financial Capacity") {
-            console.log("financial cap");
+          console.log("financial cap");
           runningScoreTotalFinancial = runningScoreTotalFinancial + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsFinancial = runningWeightsFinancial + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Operational Efficiency") {
-            console.log("operational efficiency");
+          console.log("operational efficiency");
           runningScoreTotalOperation = runningScoreTotalOperation + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsOperation = runningWeightsOperation + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Governance") {
-            console.log("governance");
+          console.log("governance");
           runningScoreTotalGov = runningScoreTotalGov + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsGov = runningWeightsGov + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Transparency") {
-            console.log("transparency");
+          console.log("transparency");
           runningScoreTotalTrans = runningScoreTotalTrans + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsTrans = runningWeightsTrans + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Accountability") {
-            console.log("accountability");
+          console.log("accountability");
           runningScoreTotalAccount = runningScoreTotalAccount + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsAccount = runningWeightsAccount + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Organization Quality") {
-            console.log("org quality");
+          console.log("org quality");
           runningScoreTotalOrganization = runningScoreTotalOrganization + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsOrganization = runningWeightsOrganization + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Volume") {
-            console.log("volume");
+          console.log("volume");
           runningScoreTotalVolume = runningScoreTotalVolume + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsVolume = runningWeightsVolume + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Financial Efficiency") {
-            console.log("financial efficiency");
+          console.log("financial efficiency");
           runningScoreTotalEfficiency = runningScoreTotalEfficiency + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsEfficiency = runningWeightsEfficiency + mapToWeights.get(variable);
         }
         if (mapToSubCatsj.get(variable).valueOf() == "Care Quality") {
-            console.log("care quality");
+          console.log("care quality");
           runningScoreTotalCare = runningScoreTotalCare + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsCare = runningWeightsCare + mapToWeights.get(variable);
         }
@@ -1291,15 +1303,8 @@
       runningScoreAvgEfficiency = runningScoreTotalEfficiency / runningWeightsEfficiency;
       runningScoreAvgCare = runningScoreTotalCare / runningWeightsCare;
 
-            computeCatScore(mapJSON);
-      
-
-
+      computeCatScore(mapJSON);
     }
-
-
-
-  
 
     function computeCatScore(mapToScores) {
       totalFinancialHealthWeight = runningWeightsAccount + runningWeightsFunding + runningWeightsEfficiency + runningWeightsFinancial;
@@ -1327,6 +1332,7 @@
           runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
         }
       }
+
       runningScoreAvgRegional = runningScoreTotalRegional / runningWeightsRegional;
       runningScoreAvgRelations = runningScoreTotalRelations / runningWeightsRelations;
       runningScoreAvgVolOppt = runningScoreTotalVolOppt / runningWeightsVolOppt;
@@ -1341,7 +1347,7 @@
       operationalPerformance = (runningScoreTotalOperation + runningScoreTotalGov + runningScoreTotalTrans + runningScoreTotalOrganization + runningScoreTotalVolume + runningScoreTotalCare) /
         (runningWeightsOperation + runningWeightsGov + runningWeightsTrans + runningWeightsOrganization + runningWeightsVolume + runningWeightsCare);
 
-        computeTotalScore(mapToScores);
+      computeTotalScore(mapToScores);
 
 
 
@@ -1351,11 +1357,13 @@
 
     function computeTotalScore(mapToScores) {
       for (const [variable, score] of mapToScores.entries()) {
-            totalScoreSum = totalScoreSum + score * mapToWeights.get(variable);
-            totalScoreWeights = totalScoreWeights + mapToWeights.get(variable);
+        totalScoreSum = totalScoreSum + score * mapToWeights.get(variable);
+        totalScoreWeights = totalScoreWeights + mapToWeights.get(variable);
       }
 
       totalScore = totalScoreSum / totalScoreWeights;
+
+      //can u please change the following to what I sent in the slack to be consistent - otherwise you will break Kat's code. E.g. funding sources should be "SC Funding Sources"
 
       obj['funding sources'] = runningScoreAvgFunding;
       obj['financial capacity'] = runningScoreAvgFinancial;
@@ -1375,15 +1383,10 @@
       obj['operational performance'] = operationalPerformance;
       obj['score'] = totalScore;
 
-      //firestore();
+      firestore();
       console.log(JSON.stringify(obj));
 
     }
-
-
-
-
-    
   </script>
 </body>
 
