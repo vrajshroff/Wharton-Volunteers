@@ -1197,16 +1197,14 @@
 
       for (let key of mapToWeights.keys()) { //key is the variable name
 
-        //here can you first check obj[key] is defined - try something like this? Otheriwse your code would break
-
-        if (obj[key])  {
+        if (obj[key]) {
           mapJSON.set(key, obj[key]);
         } else {
           mapJSON.set(key, 0);
         }
-        
 
-       // mapJSON.set(key, obj[key]);
+
+        // mapJSON.set(key, obj[key]);
         //mapJSON[key] = obj[key];
       }
       console.log(mapJSON);
@@ -1214,10 +1212,6 @@
       computeSubCatScore(mapJSON);
 
     }
-
-
-
-
 
 
     function computeSubCatScore(mapToScores) {
@@ -1352,7 +1346,6 @@
     }
 
 
-
     function computeTotalScore(mapToScores) {
       for (const [variable, score] of mapToScores.entries()) {
         totalScoreSum = totalScoreSum + score * mapToWeights.get(variable);
@@ -1360,8 +1353,6 @@
       }
 
       totalScore = totalScoreSum / totalScoreWeights;
-
-      //can u please change the following to what I sent in the slack to be consistent - otherwise you will break Kat's code. E.g. funding sources should be "SC Funding Sources"
 
       obj['SC funding sources'] = runningScoreAvgFunding;
       obj['SC financial capacity'] = runningScoreAvgFinancial;
