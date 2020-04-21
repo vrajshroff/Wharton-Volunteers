@@ -732,10 +732,12 @@
       var elements = document.getElementById("myForm").elements;
       for (var i = 0; i < elements.length - 1; i++) {
         var item = elements.item(i);
-        if (item.checked || item.value.length > 0) {
+        if (item.checked || item.value.length > 1) {
           obj[item.name] = item.value;
+          console.log(item.value);
         }
       }
+      console.log(JSON.stringify(obj));
       computeScores();
     }
 
