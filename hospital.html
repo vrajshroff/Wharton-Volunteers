@@ -65,27 +65,28 @@
 				document.getElementById("hospitalName").innerHTML = String(doc.get("Hospital Name"))
 				document.getElementById("hospitalAddress").innerHTML = String(doc.get("Hospital Address"))
 				document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
-				document.getElementById("hospitalRating").innerHTML = String(doc.get("R Rating").toFixed(2))
+				document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
 
-				//Categories
-				document.getElementById("cRegionalImpactPotential").innerHTML = Float(doc.get("C Regional Impact Potential").toFixed(2))
-				document.getElementById("cFinancialHealth").innerHTML = Float(doc.get("C Financial Health").toFixed(2))
-				document.getElementById("cOperational Performance").innerHTML = Float(doc.get("C Operational Performance").toFixed(2))
-				document.getElementById("External Relations").innerHTML = Float(doc.get("C External Relations").toFixed(2))
-				document.getElementById("cVolunteerOpportunity").innerHTML = Float(doc.get("C Volunteer Opportunity").toFixed(2))
-				document.getElementById("cVolunteerSatisfaction").innerHTML = Float(doc.get("C Volunteer Satisfaction").toFixed(2))
+				// //Categories
+				// document.getElementById("cRegionalImpactPotential").innerHTML = doc.get("C regional impact potential").toFixed(2)/5*100
+				// var h = doc.get("C regional impact potential").toFixed(2)/5*100
+				// document.getElementById("cFinancialHealth").innerHTML = String(doc.get("C financial health").toFixed(2))
+				// document.getElementById("cOperational Performance").innerHTML = String(doc.get("C operational performance").toFixed(2))
+				// document.getElementById("External Relations").innerHTML = String(doc.get("C external relations").toFixed(2))
+				// document.getElementById("cVolunteerOpportunity").innerHTML = String(doc.get("C volunteer opportunity").toFixed(2))
+				// document.getElementById("cVolunteerSatisfaction").innerHTML = String(doc.get("C volunteer satisfaction").toFixed(2))
 
 				//Subcategories
-				document.getElementById("scFundingSources").innerHTML = String(doc.get("SC Funding Sources").toFixed(2))
-				document.getElementById("scFinancialEfficiency").innerHTML = String(doc.get("SC Financial Efficiency").toFixed(2))
-				document.getElementById("scFinancialCapability").innerHTML = String(doc.get("SC Financial Capability").toFixed(2))
-				document.getElementById("scAccountability").innerHTML = String(doc.get("SC Accountability").toFixed(2))
-				document.getElementById("scOperationalEfficiency").innerHTML = String(doc.get("SC OperationalEfficiency").toFixed(2))
-				document.getElementById("scGovernance").innerHTML = String(doc.get("SC Governance").toFixed(2))
-				document.getElementById("scTransparency").innerHTML = String(doc.get("SC Transparency").toFixed(2))
-				document.getElementById("scOrganizationQuality").innerHTML = String(doc.get("SC Organization Quality").toFixed(2))
-				document.getElementById("scVolume").innerHTML = String(doc.get("SC Volume").toFixed(2))
-				document.getElementById("scCareQuality").innerHTML = String(doc.get("SC Care Quality").toFixed(2))
+				document.getElementById("scFundingSources").innerHTML = String(doc.get("SC funding sources").toFixed(2))
+				document.getElementById("scFinancialEfficiency").innerHTML = String(doc.get("SC financial efficiency").toFixed(2))
+				document.getElementById("scFinancialCapacity").innerHTML = String(doc.get("SC financial capacity").toFixed(2))
+				document.getElementById("scAccountability").innerHTML = String(doc.get("SC accountability").toFixed(2))
+				document.getElementById("scOperationalEfficiency").innerHTML = String(doc.get("SC operational effciency").toFixed(2))
+				document.getElementById("scGovernance").innerHTML = String(doc.get("SC governance").toFixed(2))
+				document.getElementById("scTransparency").innerHTML = String(doc.get("SC transparency").toFixed(2))
+				document.getElementById("scOrganizationQuality").innerHTML = String(doc.get("SC organization quality").toFixed(2))
+				document.getElementById("scVolume").innerHTML = String(doc.get("SC volume").toFixed(2))
+				document.getElementById("scCareQuality").innerHTML = String(doc.get("SC care quality").toFixed(2))
 
 			} else {
 				location.href = "index.html"
@@ -103,7 +104,7 @@
 				<br><br>
 				<div class="container">
 					<h2 id="hospitalName"> </h2>
-					<p id="hospitalRating">/10</p>
+					<p id="hospitalRating"></p>
 					<hr>
 					<div class="row">
 
@@ -129,9 +130,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="height:85%">
+							<tr style="height: 46%">
 								<th scope="col">Regional Impact Potential</th>
-								<td><span>85%</span></td>
+								<td><span >46</span></td>
 							</tr>
 							<tr style="height:23%">
 								<th scope="row">Financial Health</th>
@@ -170,7 +171,7 @@
 						</tr>
 						<tr>
 							<td>Funding Sources</td>
-							<td id = "scFundingSources"></td>
+							<td id = "scFundingSources">fs</td>
 							<td></td>
 						</tr>
 						<tr>
@@ -179,8 +180,8 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td>Financial Capability</td>
-							<td id = "scFinancialCapability"></td>
+							<td>Financial Capacity</td>
+							<td id = "scFinancialCapacity"></td>
 							<td></td>
 						</tr>
 						<tr>
