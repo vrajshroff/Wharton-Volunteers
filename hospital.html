@@ -142,14 +142,14 @@
 									data: {
 										labels: ['Regional Impact Potential', 'Financial Health', 'Operational Performance', 'External Relations', 'Volunteer Opportunity', 'Volunteer Satisfaction'],
 										datasets: [{
-											label: 'Rating Percentage',
+											label: 'Rating on a scale from 0 to 5',
 											backgroundColor: 'rgb(51, 105, 255)',
-											data: [doc.get("C regional impact potential").toFixed(2) / 5 * 100,
-											doc.get("C financial health").toFixed(2) / 5 * 100,
-											doc.get("C operational performance").toFixed(2) / 5 * 100,
-											doc.get("C external relations").toFixed(2) / 5 * 100,
-											doc.get("C volunteer opportunity").toFixed(2) / 5 * 100,
-											doc.get("C volunteer satisfaction").toFixed(2) / 5 * 100]
+											data: [doc.get("C regional impact potential").toFixed(2),
+											doc.get("C financial health").toFixed(2),
+											doc.get("C operational performance").toFixed(2),
+											doc.get("C external relations").toFixed(2),
+											doc.get("C volunteer opportunity").toFixed(2),
+											doc.get("C volunteer satisfaction").toFixed(2)]
 
 										}]
 									},
@@ -157,8 +157,7 @@
 										scales: {
 											yAxes: [{
 												ticks: {
-													suggestedMin: 50,
-													suggestedMax: 100
+													suggestedMax: 5
 												}
 											}]
 										}
