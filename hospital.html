@@ -30,8 +30,7 @@
 	<div class="row" style="background-color:Navy;">
 		<div class="col">
 			<h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
-			<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
-					Donors</i></p>
+			<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
 		</div>
 	</div>
 
@@ -60,7 +59,7 @@
 		var username = getParameterByName("username");
 		var docRef = db.collection("hospitals").doc(username);
 
-		docRef.get().then(function (doc) {
+		docRef.get().then(function(doc) {
 			if (doc.exists) {
 				console.log("Document data:", doc.data());
 				//Hospital info
@@ -82,10 +81,10 @@
 				document.getElementById("scCareQuality").innerHTML = String(doc.get("SC care quality").toFixed(2))
 
 			} else {
-				location.href = "index.html"
+				//location.href = "index.html"
 				console.log("No such document!");
 			}
-		}).catch(function (error) {
+		}).catch(function(error) {
 			console.log("Error getting document:", error);
 		});
 	</script>
@@ -129,7 +128,7 @@
 						var docRef = db.collection("hospitals").doc(username);
 
 
-						docRef.get().then(function (doc) {
+						docRef.get().then(function(doc) {
 							if (doc.exists) {
 
 								var ctx = document.getElementById('myChart').getContext('2d');
@@ -169,10 +168,9 @@
 								location.href = "index.html"
 								console.log("No such document!");
 							}
-						}).catch(function (error) {
+						}).catch(function(error) {
 							console.log("Error getting document:", error);
 						});
-
 					</script>
 
 				</div>
