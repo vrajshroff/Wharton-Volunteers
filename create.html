@@ -55,17 +55,13 @@
         <a class="nav-link" href="index.html">Home</a>
       </li>
       <li class="nav-item" style="border:1px solid black;">
-        <a class="nav-link" href="calculator.html">Calculator</a>
-      </li>
-      <li class="nav-item" style="border:1px solid black;">
         <a class="nav-link" href="about.html">About Us</a>
       </li>
       <li class="nav-item" style="border:1px solid black;">
-        <a class="nav-link active" href="auth.html?websiteId=create.html">Add New Hospital</a>
+        <a class="nav-link active" href="auth.html">Add New Hospital</a>
       </li>
     </ul>
   </div>
-
 
   <div class="container-fluid">
 
@@ -794,15 +790,10 @@
       var elements = document.getElementById("myForm").elements;
       for (var i = 0; i < elements.length - 1; i++) {
         var item = elements.item(i);
-        console.log(item.value.length);
-        if (item.checked || item.value.length > 1) {
+        if (item.checked || item.value.length > 0) {
           obj[item.name] = item.value;
         }
       }
-      results = JSON.stringify(obj);
-      console.log(results);
-
-      //angela's function
       computeScores();
     }
 
