@@ -22,29 +22,29 @@
 	</script>
 
 </head>
-  
+
 <body style="background-color:AliceBlue;">
 
 
 	<div class="row" style="background-color:Navy;">
-	  <div class="col">
-		<h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
-		<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
-	  </div>
+		<div class="col">
+			<h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+			<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
+		</div>
 	</div>
-  
+
 	<div style="background-color:WhiteSmoke;">
-	  <ul class="nav nav-tabs nav-justified">
-		<li class="nav-item" style="border:1px solid black;">
-		  <a class="nav-link" href="index.html">Home</a>
-		</li>
-		<li class="nav-item" style="border:1px solid black;">
-		  <a class="nav-link" href="about.html">About Us</a>
-		</li>
-		<li class="nav-item" style="border:1px solid black;">
-		  <a class="nav-link" href="auth.html">Add New Hospital</a>
-		</li>
-	  </ul>
+		<ul class="nav nav-tabs nav-justified">
+			<li class="nav-item" style="border:1px solid black;">
+				<a class="nav-link" href="index.html">Home</a>
+			</li>
+			<li class="nav-item" style="border:1px solid black;">
+				<a class="nav-link" href="about.html">About Us</a>
+			</li>
+			<li class="nav-item" style="border:1px solid black;">
+				<a class="nav-link" href="auth.html">Add New Hospital</a>
+			</li>
+		</ul>
 	</div>
 
 	<script>
@@ -58,7 +58,7 @@
 		var username = getParameterByName("username");
 		var docRef = db.collection("hospitals").doc(username);
 
-		docRef.get().then(function (doc) {
+		docRef.get().then(function(doc) {
 			if (doc.exists) {
 				console.log("Document data:", doc.data());
 				//Hospital info
@@ -89,10 +89,10 @@
 				document.getElementById("scCareQuality").innerHTML = String(doc.get("SC care quality").toFixed(2))
 
 			} else {
-				location.href = "index.html"
+				//location.href = "index.html"
 				console.log("No such document!");
 			}
-		}).catch(function (error) {
+		}).catch(function(error) {
 			console.log("Error getting document:", error);
 		});
 	</script>
@@ -132,7 +132,7 @@
 						<tbody>
 							<tr style="height: 46%">
 								<th scope="col">Regional Impact Potential</th>
-								<td><span >46</span></td>
+								<td><span>46</span></td>
 							</tr>
 							<tr style="height:23%">
 								<th scope="row">Financial Health</th>
@@ -171,52 +171,52 @@
 						</tr>
 						<tr>
 							<td>Funding Sources</td>
-							<td id = "scFundingSources">fs</td>
+							<td id="scFundingSources">fs</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Financial Efficiency</td>
-							<td id = "scFinancialEfficiency"></td>
+							<td id="scFinancialEfficiency"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Financial Capacity</td>
-							<td id = "scFinancialCapacity"></td>
+							<td id="scFinancialCapacity"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Accountability</td>
-							<td id = "scAccountability"></td>
+							<td id="scAccountability"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Operational Efficiency</td>
-							<td id = "scOperationalEfficiency"></td>
+							<td id="scOperationalEfficiency"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Governance</td>
-							<td id = "scGovernance"></td>
+							<td id="scGovernance"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Transparency</td>
-							<td id = "scTransparency"></td>
+							<td id="scTransparency"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Organization Quality</td>
-							<td id = "scOrganizationQuality"></td>
+							<td id="scOrganizationQuality"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Volume</td>
-							<td id = "scVolume"></td>
+							<td id="scVolume"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Care Quality</td>
-							<td id = "scCareQuality"></td>
+							<td id="scCareQuality"></td>
 							<td></td>
 						</tr>
 					</table>
