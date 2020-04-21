@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	<script>
 		var firebaseConfig = {
 			apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
@@ -22,29 +23,30 @@
 	</script>
 
 </head>
-  
+
 <body style="background-color:AliceBlue;">
 
 
 	<div class="row" style="background-color:Navy;">
-	  <div class="col">
-		<h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
-		<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
-	  </div>
+		<div class="col">
+			<h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+			<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
+					Donors</i></p>
+		</div>
 	</div>
-  
+
 	<div style="background-color:WhiteSmoke;">
-	  <ul class="nav nav-tabs nav-justified">
-		<li class="nav-item" style="border:1px solid black;">
-		  <a class="nav-link" href="index.html">Home</a>
-		</li>
-		<li class="nav-item" style="border:1px solid black;">
-		  <a class="nav-link" href="about.html">About Us</a>
-		</li>
-		<li class="nav-item" style="border:1px solid black;">
-		  <a class="nav-link" href="auth.html">Add New Hospital</a>
-		</li>
-	  </ul>
+		<ul class="nav nav-tabs nav-justified">
+			<li class="nav-item" style="border:1px solid black;">
+				<a class="nav-link" href="index.html">Home</a>
+			</li>
+			<li class="nav-item" style="border:1px solid black;">
+				<a class="nav-link" href="about.html">About Us</a>
+			</li>
+			<li class="nav-item" style="border:1px solid black;">
+				<a class="nav-link" href="auth.html">Add New Hospital</a>
+			</li>
+		</ul>
 	</div>
 
 	<script>
@@ -66,15 +68,6 @@
 				document.getElementById("hospitalAddress").innerHTML = String(doc.get("Hospital Address"))
 				document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
 				document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
-
-				// //Categories
-				// document.getElementById("cRegionalImpactPotential").innerHTML = doc.get("C regional impact potential").toFixed(2)/5*100
-				// var h = doc.get("C regional impact potential").toFixed(2)/5*100
-				// document.getElementById("cFinancialHealth").innerHTML = String(doc.get("C financial health").toFixed(2))
-				// document.getElementById("cOperational Performance").innerHTML = String(doc.get("C operational performance").toFixed(2))
-				// document.getElementById("External Relations").innerHTML = String(doc.get("C external relations").toFixed(2))
-				// document.getElementById("cVolunteerOpportunity").innerHTML = String(doc.get("C volunteer opportunity").toFixed(2))
-				// document.getElementById("cVolunteerSatisfaction").innerHTML = String(doc.get("C volunteer satisfaction").toFixed(2))
 
 				//Subcategories
 				document.getElementById("scFundingSources").innerHTML = String(doc.get("SC funding sources").toFixed(2))
@@ -121,47 +114,74 @@
 				<br><br>
 
 				<div class="container-fluid">
-					<h3 align="center">Ratings Explanation</h3>
-					<table class="graph" align="center">
-						<thead>
-							<tr>
-								<th scope="col">Item</th>
-								<th scope="col">Percent</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr style="height: 46%">
-								<th scope="col">Regional Impact Potential</th>
-								<td><span >46</span></td>
-							</tr>
-							<tr style="height:23%">
-								<th scope="row">Financial Health</th>
-								<td><span>23%</span></td>
-							</tr>
-							<tr style="height:77%">
-								<th scope="row">Operational Performance</th>
-								<td><span>77%</span></td>
-							</tr>
-							<tr style="height:38%">
-								<th scope="row">External Relations</th>
-								<td><span>38%</span></td>
-							</tr>
-							<tr style="height:95%">
-								<th scope="row">Volunteer Opportunity</th>
-								<td><span>95%</span></td>
-							</tr>
-							<tr style="height:80%">
-								<th scope="row">Volunteer Satisfaction</th>
-								<td><span>80%</span></td>
-							</tr>
-						</tbody>
-					</table>
+					<h3 align="center">Category Ratings</h3>
+
+					<canvas id="myChart"></canvas>
+					<script>
+						function getParameterByName(name) {
+							var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+							return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+						}
+
+
+						var db = firebase.firestore();
+						var username = getParameterByName("username");
+						var docRef = db.collection("hospitals").doc(username);
+
+
+						docRef.get().then(function (doc) {
+							if (doc.exists) {
+
+								var ctx = document.getElementById('myChart').getContext('2d');
+
+								var chart = new Chart(ctx, {
+									// The type of chart we want to create
+									type: 'bar',
+
+									// The data for our dataset
+									data: {
+										labels: ['Regional Impact Potential', 'Financial Health', 'Operational Performance', 'External Relations', 'Volunteer Opportunity', 'Volunteer Satisfaction'],
+										datasets: [{
+											label: 'Rating Percentage',
+											backgroundColor: 'rgb(51, 105, 255)',
+											data: [doc.get("C regional impact potential").toFixed(2) / 5 * 100,
+											doc.get("C financial health").toFixed(2) / 5 * 100,
+											doc.get("C operational performance").toFixed(2) / 5 * 100,
+											doc.get("C external relations").toFixed(2) / 5 * 100,
+											doc.get("C volunteer opportunity").toFixed(2) / 5 * 100,
+											doc.get("C volunteer satisfaction").toFixed(2) / 5 * 100]
+
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													suggestedMin: 50,
+													suggestedMax: 100
+												}
+											}]
+										}
+
+									}
+								});
+
+							} else {
+								location.href = "index.html"
+								console.log("No such document!");
+							}
+						}).catch(function (error) {
+							console.log("Error getting document:", error);
+						});
+
+					</script>
+
 				</div>
 
 				<br><br><br><br>
 
 				<div class="container">
-					<h3 align="center"> Category Breakdown </h3>
+					<h3 align="center"> Subcategory Ratings</h3>
 					<br>
 					<table class="table table-hover">
 						<tr style="background-color: navy; color: whitesmoke">
@@ -171,52 +191,52 @@
 						</tr>
 						<tr>
 							<td>Funding Sources</td>
-							<td id = "scFundingSources">fs</td>
+							<td id="scFundingSources">fs</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Financial Efficiency</td>
-							<td id = "scFinancialEfficiency"></td>
+							<td id="scFinancialEfficiency"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Financial Capacity</td>
-							<td id = "scFinancialCapacity"></td>
+							<td id="scFinancialCapacity"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Accountability</td>
-							<td id = "scAccountability"></td>
+							<td id="scAccountability"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Operational Efficiency</td>
-							<td id = "scOperationalEfficiency"></td>
+							<td id="scOperationalEfficiency"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Governance</td>
-							<td id = "scGovernance"></td>
+							<td id="scGovernance"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Transparency</td>
-							<td id = "scTransparency"></td>
+							<td id="scTransparency"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Organization Quality</td>
-							<td id = "scOrganizationQuality"></td>
+							<td id="scOrganizationQuality"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Volume</td>
-							<td id = "scVolume"></td>
+							<td id="scVolume"></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>Care Quality</td>
-							<td id = "scCareQuality"></td>
+							<td id="scCareQuality"></td>
 							<td></td>
 						</tr>
 					</table>
@@ -236,137 +256,3 @@
 
 
 </html>
-
-<style>
-	.graph {
-		margin-bottom: 1em;
-		font: normal 100%/150% arial, helvetica, sans-serif;
-	}
-
-	.graph tbody th {
-		text-align: right;
-	}
-
-	@supports (display:grid) {
-
-		@media (min-width:32em) {
-
-			.graph {
-				display: block;
-				width: 900px;
-				height: 300px;
-			}
-
-			.graph caption {
-				display: block;
-			}
-
-			.graph thead {
-				display: none;
-			}
-
-			.graph tbody {
-				position: relative;
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(2em, 1fr));
-				column-gap: 2.5%;
-				align-items: end;
-				height: 100%;
-				margin: 3em 0 1em 2.8em;
-				padding: 0 1em;
-				border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-				background: repeating-linear-gradient(180deg,
-						rgba(170, 170, 170, 0.7) 0,
-						rgba(170, 170, 170, 0.7) 1px,
-						transparent 1px,
-						transparent 20%);
-			}
-
-			.graph tbody:before,
-			.graph tbody:after {
-				position: absolute;
-				left: -3.2em;
-				width: 2.8em;
-				text-align: right;
-				font: bold 80%/120% arial, helvetica, sans-serif;
-			}
-
-			.graph tbody:before {
-				content: "100%";
-				top: -0.6em;
-			}
-
-			.graph tbody:after {
-				content: "0%";
-				bottom: -0.6em;
-			}
-
-			.graph tr {
-				position: relative;
-				display: block;
-			}
-
-			.graph tr:hover {
-				z-index: 999;
-			}
-
-			.graph th,
-			.graph td {
-				display: block;
-				text-align: center;
-			}
-
-			.graph tbody th {
-				position: absolute;
-				bottom: -4em;
-				left: 0;
-				width: 100%;
-				/* background: rgb(255, 255, 255); */
-				font-weight: lighter;
-				text-align: center;
-				white-space: wrap;
-				text-indent: 0;
-			}
-
-			.graph tbody th:after {
-				content: "";
-			}
-
-			.graph td {
-				width: 100%;
-				height: 100%;
-				background: rgb(51, 105, 255);
-				border-radius: 0.5em 0.5em 0 0;
-				transition: background 0.5s;
-			}
-
-			.graph tr:hover td {
-				opacity: 0.7;
-			}
-
-			.graph td span {
-				overflow: hidden;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				width: 0;
-				padding: 0.5em 0;
-				margin: -1em 0 0;
-				font: normal 85%/120% arial, helvetica, sans-serif;
-				font-weight: bold;
-				opacity: 0;
-				transition: opacity 0.5s;
-				color: white;
-			}
-
-			.toggleGraph:checked+table td span,
-			.graph tr:hover td span {
-				width: 4em;
-				margin-left: -2em;
-				/* 1/2 the declared width */
-				opacity: 1;
-			}
-		}
-
-	}
-</style>
