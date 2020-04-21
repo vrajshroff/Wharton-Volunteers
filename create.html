@@ -87,10 +87,10 @@
           <input type="text" name="Hospital Name" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital address</b></p>
-          <input type="text" name="Hospital Address" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Address" placeholder="Bazaricherra, Karimganj, Assam, India" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital contact information</b></p>
-          <input type="text" name="Hospital Contact" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Contact" placeholder="Mobile/Email" style="width:300px;" required><br><br>
 
           <!-- Questions -->
           <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? The average patient income can be estimated based on all sources of income (including wages, proceeds from
@@ -724,7 +724,7 @@
     //function called when submit is pressed
     function addToDB() {
 
-      obj["Creator Email"] = "vrajshroff@gmail.com"
+      obj["creator"] = "vrajshroff@gmail.com"
       //firebase.auth().currentUser.email;
       //change after demo
 
