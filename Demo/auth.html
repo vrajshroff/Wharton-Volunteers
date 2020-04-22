@@ -24,15 +24,8 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
 
   <script>
-    function getParameterByName(name) {
-      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-    }
-
-    var url = getParameterByName("websiteId");
-
     var uiConfig = {
-      signInSuccessUrl: url,
+      signInSuccessUrl: 'create.html',
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
       tosUrl: 'index.html',
       privacyPolicyUrl: 'index.html'
