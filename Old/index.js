@@ -28,8 +28,3 @@ app.get('/auth.html', function(req, res) {
 app.get('/create.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/create.html'));
 })
-
-
-app.get('/hospital.html', function(req, res) {
-  res.sendFile(path.join(__dirname + '/hospital.html'));
-})
