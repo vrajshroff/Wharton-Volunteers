@@ -26,11 +26,11 @@
 
 <body style="background-color:AliceBlue;">
 
-
 	<div class="row" style="background-color:Navy;">
 		<div class="col">
 			<h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
-			<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
+			<p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
+					Donors</i></p>
 		</div>
 	</div>
 
@@ -59,7 +59,7 @@
 		var username = getParameterByName("username");
 		var docRef = db.collection("hospitals").doc(username);
 
-		docRef.get().then(function(doc) {
+		docRef.get().then(function (doc) {
 			if (doc.exists) {
 				console.log("Document data:", doc.data());
 				//Hospital info
@@ -84,7 +84,7 @@
 				//location.href = "index.html"
 				console.log("No such document!");
 			}
-		}).catch(function(error) {
+		}).catch(function (error) {
 			console.log("Error getting document:", error);
 		});
 	</script>
@@ -94,25 +94,24 @@
 		<div class="row">
 			<div class="col">
 				<br><br>
-				<div class="container">
-					<h2 id="hospitalName"> </h2>
-					<p id="hospitalRating"></p>
-					<hr>
-					<div class="row">
 
-						<div class="col-sm">
-							<h3> Address </h3>
-							<p id="hospitalAddress"></p>
-						</div>
-						<div class="col-sm">
-							<h3> Contact </h3>
-							<p id="hospitalContact"></p>
-						</div>
+				<h2 id="hospitalName"> </h2>
+				<p id="hospitalRating"></p>
+				<hr>
+				<div class="row">
+
+					<div class="col-sm">
+						<h3> Address </h3>
+						<p id="hospitalAddress"></p>
+					</div>
+					<div class="col-sm">
+						<h3> Contact </h3>
+						<p id="hospitalContact"></p>
 					</div>
 				</div>
 				<br><br>
 
-				<div class="container-fluid">
+				<div class="container">
 					<h3 align="center">Category Ratings</h3>
 
 					<canvas id="myChart"></canvas>
@@ -128,7 +127,7 @@
 						var docRef = db.collection("hospitals").doc(username);
 
 
-						docRef.get().then(function(doc) {
+						docRef.get().then(function (doc) {
 							if (doc.exists) {
 
 								var ctx = document.getElementById('myChart').getContext('2d');
@@ -168,7 +167,7 @@
 								location.href = "index.html"
 								console.log("No such document!");
 							}
-						}).catch(function(error) {
+						}).catch(function (error) {
 							console.log("Error getting document:", error);
 						});
 					</script>
@@ -177,68 +176,68 @@
 
 				<br><br>
 
-				<div class="container">
-					<h3 align="center"> Subcategory Ratings</h3>
-					<br>
-					<table class="table table-hover">
-						<tr style="background-color: navy; color: whitesmoke">
-							<th>Subcategory</th>
-							<th>Rating</th>
-							<th>Description</th>
-						</tr>
-						<tr>
-							<td>Funding Sources</td>
-							<td id="scFundingSources">fs</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Financial Efficiency</td>
-							<td id="scFinancialEfficiency"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Financial Capacity</td>
-							<td id="scFinancialCapacity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Accountability</td>
-							<td id="scAccountability"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Operational Efficiency</td>
-							<td id="scOperationalEfficiency"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Governance</td>
-							<td id="scGovernance"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Transparency</td>
-							<td id="scTransparency"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Organization Quality</td>
-							<td id="scOrganizationQuality"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Volume</td>
-							<td id="scVolume"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Care Quality</td>
-							<td id="scCareQuality"></td>
-							<td></td>
-						</tr>
-					</table>
 
-				</div>
+				<h3 align="center"> Subcategory Ratings</h3>
+				<br>
+				<table class="table table-hover">
+					<tr style="background-color: navy; color: whitesmoke">
+						<th>Subcategory</th>
+						<th>Rating</th>
+						<th>Description</th>
+					</tr>
+					<tr>
+						<td>Funding Sources</td>
+						<td id="scFundingSources">fs</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Financial Efficiency</td>
+						<td id="scFinancialEfficiency"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Financial Capacity</td>
+						<td id="scFinancialCapacity"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Accountability</td>
+						<td id="scAccountability"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Operational Efficiency</td>
+						<td id="scOperationalEfficiency"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Governance</td>
+						<td id="scGovernance"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Transparency</td>
+						<td id="scTransparency"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Organization Quality</td>
+						<td id="scOrganizationQuality"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Volume</td>
+						<td id="scVolume"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Care Quality</td>
+						<td id="scCareQuality"></td>
+						<td></td>
+					</tr>
+				</table>
+
+
 
 				<br><br>
 
