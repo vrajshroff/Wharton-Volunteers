@@ -164,7 +164,7 @@
   </section>
 
   <script>
-    function addRow(name, addy, contact, id) {
+    function addRow(name, addy, contact, rating, id) {
 
       var tableBody = document.getElementById("tBody");
 
@@ -184,7 +184,7 @@
           tr.appendChild(td);
 
         var td = document.createElement('TD');
-          td.appendChild(document.createTextNode(" Rating "));
+          td.appendChild(document.createTextNode(rating));
           tr.appendChild(td);
 
         var b = document.createElement('Button');
@@ -214,7 +214,8 @@
           var name = doc.data()["Hospital Name"];
           var addy = doc.data()["Hospital Address"];
           var contact = doc.data()["Hospital Contact"];
-          addRow(name, addy, contact, doc.id);
+          var rating = doc.data()["R Rating"];
+          addRow(name, addy, contact, rating, doc.id);
           addMarker(addy);
           //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         });
