@@ -25,10 +25,14 @@ app.get('/auth.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/auth.html'));
 })
 
+
 app.get('/create.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/create.html'));
 })
 
+app.get('/about.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/about.html'));
+})
 
 app.get('/hospital.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/hospital.html'));
