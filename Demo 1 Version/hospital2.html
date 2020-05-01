@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>TIMS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
+      authDomain: "wharton-volunteers.firebaseapp.com",
+      databaseURL: "https://wharton-volunteers.firebaseio.com",
+      projectId: "wharton-volunteers",
+      storageBucket: "wharton-volunteers.appspot.com",
+      messagingSenderId: "1067661612787",
+      appId: "1:1067661612787:web:b6eac7c8fb4aff84260986"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body style="background-color:AliceBlue;">
+
+  <div class="row" style="background-color:Navy;">
+    <div class="col">
+      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
+          Donors</i></p>
+    </div>
+  </div>
+
+  <div style="background-color:WhiteSmoke;">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="about.html">About Us</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="auth.html">Add New Hospital</a>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+
+    function someFunction(div) {
+      console.log(div);
+    }
+
+    var map = new Map();
+    map.set('regional impact potential', 'regional impact potential')
+    map.set('funding sources', 'financial health')
+    map.set('financial efficiency', 'financial health')
+    map.set('financial capacity', 'financial health')
+    map.set('accountability', 'financial health')
+    map.set('operational efficiency', 'operational performance')
+    map.set('governance', 'operational performance')
+    map.set('transparency ', 'operational performance')
+    map.set('organization quality', 'operational performance')
+    map.set('volume', 'operational performance')
+    map.set('care quality', 'operational performance')
+    map.set('external relations', 'external relations')
+    map.set('volunteer opportunity', 'volunteer opportunity')
+
+
+    var db = firebase.firestore();
+    var username = getParameterByName("username");
+    var docRef = db.collection("hospitals").doc(username);
+
+    var docJSON;
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+
+        docJSON = doc.data();
+        var cats = []
+        var rats = []
+        for (var k in docJSON) {
+          if (k.startsWith("C ")) {
+            cats.push(k.substring(2))
+            rats.push(docJSON[k].toFixed(2))
+          }
+        }
+        console.log("cats: " + cats);
+        console.log("rats: " + rats);
+
+
+        //graph
+        var data = [{
+          x: cats,
+          y: rats,
+          type: 'bar'
+        }];
+
+        Plotly.newPlot('myDiv', data, {
+          paper_bgcolor: 'rgba(100,0,0,0)',
+          plot_bgcolor: 'rgba(100,0,0,0)'
+        });
+
+        //basic info
+        document.getElementById("hospitalName").innerHTML = String(doc.get("Hospital Name"))
+        document.getElementById("hospitalAddress").innerHTML = String(doc.get("Hospital Address"))
+        document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
+        document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
+        document.getElementById("summary").innerHTML = String(doc.get("Summary"))
+
+        //table
+        var x = document.getElementById("table");
+
+        for (var i = 0; i < cats.length; i++) {
+          var y = document.createElement("TR");
+          y.setAttribute("id", cats[i]);
+
+          var z = document.createElement("TD");
+          var t = document.createElement('span')
+          t.innerHTML = '<a href="#" onclick="someFunction(\'' + cats[i] + '\');">' + cats[i] + '</a>';
+
+          z.appendChild(t);
+          y.appendChild(z);
+
+          z = document.createElement("TD");
+          t = document.createTextNode(rats[i] +
+            " / 5");
+          z.appendChild(t);
+          y.appendChild(z);
+
+          x.appendChild(y);
+        }
+
+      } else {
+        location.href = "index.html"
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+  </script>
+  <br>
+  <div class="container-fluid">
+    <h1 id="hospitalName"> </h1><br>
+    <div class="row">
+      <div class="col">
+        <h6> Address </h6>
+        <p id="hospitalAddress"></p>
+      </div>
+      <div class="col">
+        <h6> Contact </h6>
+        <p id="hospitalContact"></p>
+      </div>
+      <div class="col">
+        <h6> Rating</h6>
+        <p id="hospitalRating"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h6> Summary</h6>
+        <p id="summary"></p>
+      </div>
+    </div>
+    <div id="myDiv"></div>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody id="table">
+    </tbody>
+  </table>
+  <br>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Sub-Category</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <tbody id="table2">
+
+    </tbody>
+  </table>
+
+</body>
+
+</html>

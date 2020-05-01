@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Add Hospital to TIMS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
+      authDomain: "wharton-volunteers.firebaseapp.com",
+      databaseURL: "https://wharton-volunteers.firebaseio.com",
+      projectId: "wharton-volunteers",
+      storageBucket: "wharton-volunteers.appspot.com",
+      messagingSenderId: "1067661612787",
+      appId: "1:1067661612787:web:b6eac7c8fb4aff84260986"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    initApp = function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+
+        } else {
+          //uncomment after demo
+          //location.href = 'index.html';
+        }
+      }, function(error) {
+        console.log(error);
+      });
+    };
+    window.addEventListener('load', function() {
+      initApp();
+    });
+  </script>
+  <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body style="background-color:AliceBlue;">
+
+  <div class="row" style="background-color:Navy;">
+    <div class="col">
+      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
+    </div>
+  </div>
+
+  <div style="background-color:WhiteSmoke;">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="about.html">About Us</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="auth.html" style="color:black">Add New Hospital</a>
+      </li>
+    </ul>
+  </div>
+
+  <br><br>
+
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col">
+
+        <h2> Add Your Hospital to TIMS </h2>
+        <i>
+          <p>Note: All questions are required. Please answer them with best of your ability. If you sleect "No Data", your hospital's ratings would be negatively affected.</p>
+        </i>
+
+        <p>You will be able to see your hospital rating before you submit your data.</p>
+
+        <hr>
+        <form id="myForm" onsubmit="addToDB()">
+          <p><b>Enter a username for your hospital</b></p>
+          <input type="text" name="Hospital Username" style="width:300px;" required><br><br>
+
+          <p><b>Enter hospital name</b></p>
+          <input type="text" name="Hospital Name" style="width:300px;" required><br><br>
+
+          <p><b>Enter hospital address</b></p>
+          <input type="text" name="Hospital Address" placeholder="Bazaricherra, Karimganj, Assam, India" style="width:300px;" required><br><br>
+
+          <p><b>Enter hospital contact information</b></p>
+          <input type="text" name="Hospital Contact" placeholder="Mobile/Email" style="width:300px;" required><br><br>
+
+          <p><b>Hospital Summary</b></p>
+          <input type="text" name="Summary" style="width:300px;" required><br><br>
+          <!-- Questions -->
+          <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? The average patient income can be estimated based on all sources of income (including wages, proceeds from
+              sales, etc.). This tool can be used for reference: https://wid.world/simulator.</b></p>
+          <label><input type="radio" name="Socioeconomic Status of Patient Population" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Socioeconomic Status of Patient Population" value="1" required>&nbsp;Local population falls in &gt;80th percentile for country's income per capita</label><br>
+          <label><input type="radio" name="Socioeconomic Status of Patient Population" value="2" required>&nbsp;Local population falls in 60th - 80th percentile for country's income per capita</label><br>
+          <label><input type="radio" name="Socioeconomic Status of Patient Population" value="3" required>&nbsp;Local population falls in 40th - 60th percentile for country's income per capita</label><br>
+          <label><input type="radio" name="Socioeconomic Status of Patient Population" value="4" required>&nbsp;Local population falls in 20th - 40th percentile for country's income per capita</label><br>
+          <label><input type="radio" name="Socioeconomic Status of Patient Population" value="5" required>&nbsp;Local population falls in &lt;20th percentile for country's income per capita</label><br>
+          <br>
+
+          <p><b>Does a mix of incomes exist in the region such that wealthier patients can be charged more to offset charity care for lower income patients? In other words, what is the standard deviation of the local population income?</b></p>
+          <label><input type="radio" name="Local Population Income Mix" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="1" required>&nbsp;Standard deviation of local population income is &lt;5% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="2" required>&nbsp;Standard deviation of local population income is 5% - 10% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="3" required>&nbsp;Standard deviation of local population income is 10% - 20% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="4" required>&nbsp;Standard deviation of local population income is 20% - 30% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="5" required>&nbsp;Standard deviation of local population income is &gt;30% of average local population income</label><br>
+          <br>
+
+          <p><b>What is the local population density within serving distance of the hospital (people per square kilometer)?</b></p>
+          <label><input type="radio" name="Local Patient Population Density" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="1" required>&nbsp;0 - 100 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="2" required>&nbsp;100 - 150 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="3" required>&nbsp;150 - 200 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="4" required>&nbsp;200 - 250 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="5" required>&nbsp;&gt;250 people per square kilometer</label><br>
+          <br>
+
+          <p><b>How easy is it for the patient population to receive care at another hospital?</b></p>
+          <label><input type="radio" name="Alternative Care Options" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Alternative Care Options" value="1" required>&nbsp;Multiple alternative care options are available within less than a half-hour travel time</label><br>
+          <label><input type="radio" name="Alternative Care Options" value="2" required>&nbsp;Multiple alternative care options are available within less a one-hour travel time</label><br>
+          <label><input type="radio" name="Alternative Care Options" value="3" required>&nbsp;At least one alternative care option is available within a one-hour travel time</label><br>
+          <label><input type="radio" name="Alternative Care Options" value="4" required>&nbsp;Alternative care is not available within a one-hour travel time</label><br>
+          <label><input type="radio" name="Alternative Care Options" value="5" required>&nbsp;Alternative care is not available within a two-hour travel time</label><br>
+          <br>
+
+          <p><b>What is the maternal mortality rate (number of deaths of maternity patients per 100,000 live births annually) in the region where the hospital is located?</b></p>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="1" required>&nbsp;&lt;10</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="2" required>&nbsp;10 - 50</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="3" required>&nbsp;50 - 100</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="4" required>&nbsp;100 - 150</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="5" required>&nbsp;&gt;150</label><br>
+          <br>
+
+          <p><b>What is the infant mortality rate (number of deaths of infants per 1,000 live births annually) in the region where the hospital is located?</b></p>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="1" required>&nbsp;&lt;3</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="2" required>&nbsp;3 - 10</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="3" required>&nbsp;10 - 15</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="4" required>&nbsp;15 - 20</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="5" required>&nbsp;&gt;20</label><br>
+          <br>
+
+          <p><b>How many sources of revenue does the hospital have (as a measure of sustainability)?</b></p>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="1" required>&nbsp;Hospital does not have a stable source of revenue</label><br>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="2" required>&nbsp;Donations are the hospital's only source of stable revenue</label><br>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="3" required>&nbsp;Revenue comes from earnings from a single business activity and may include donations</label><br>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="4" required>&nbsp;Revenue comes from a combination of consolidated donations (&gt;40% of donations come from a few key donors) and earnings from multiple business
+            activities</label><br>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="5" required>&nbsp;Revenue comes from a combination of many donation sources (&gt;40% of donations do not come from a few key donors) and earnings from multiple business
+            activities</label><br>
+          <br>
+
+          <p><b>What percentage of the hospital's annual revenue is provided by donations (as a measure of sustainability)? (To calculate, add the value of all donation sources and divide by the annual revenue.)</b></p>
+          <label><input type="radio" name="Donations Percent of Revenue" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Donations Percent of Revenue" value="1" required>&nbsp;&gt;40%</label><br>
+          <label><input type="radio" name="Donations Percent of Revenue" value="2" required>&nbsp;30% - 40%</label><br>
+          <label><input type="radio" name="Donations Percent of Revenue" value="3" required>&nbsp;20% - 30%</label><br>
+          <label><input type="radio" name="Donations Percent of Revenue" value="4" required>&nbsp;10% - 20%</label><br>
+          <label><input type="radio" name="Donations Percent of Revenue" value="5" required>&nbsp;&lt;10%</label><br>
+          <br>
+
+          <p><b>What percent of annual revenue is the hospital able to retain after costs are paid (as a measure of sustainability)?</b></p>
+          <label><input type="radio" name="Operating Margin" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Operating Margin" value="1" required>&nbsp;&lt;0%</label><br>
+          <label><input type="radio" name="Operating Margin" value="2" required>&nbsp;0 - 2%</label><br>
+          <label><input type="radio" name="Operating Margin" value="3" required>&nbsp;2 - 4%</label><br>
+          <label><input type="radio" name="Operating Margin" value="4" required>&nbsp;4 - 6%</label><br>
+          <label><input type="radio" name="Operating Margin" value="5" required>&nbsp;&gt;6%</label><br>
+          <br>
+
+          <p><b>What percent of expenses consist of program expenses (e.g., non-administrative and non-capital expenditures)? (To calculate, divide the average program expense by the average total expense, over three most recent fiscal years.)</b>
+          </p>
+          <label><input type="radio" name="Program Expense Percentage" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Program Expense Percentage" value="1" required>&nbsp;&lt;50%</label><br>
+          <label><input type="radio" name="Program Expense Percentage" value="2" required>&nbsp;50% - 60%</label><br>
+          <label><input type="radio" name="Program Expense Percentage" value="3" required>&nbsp;60% - 70%</label><br>
+          <label><input type="radio" name="Program Expense Percentage" value="4" required>&nbsp;70% - 80%</label><br>
+          <label><input type="radio" name="Program Expense Percentage" value="5" required>&nbsp;&gt;80%</label><br>
+          <br>
+
+          <p><b>What percent of expenses consist of administrative expenses (e.g., human resources, accounting, overhead)? (To calculate, divide the average administrative expense by the average total expense, over three most recent fiscal
+              years.)</b></p>
+          <label><input type="radio" name="Administrative Expense Percentage" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Administrative Expense Percentage" value="1" required>&nbsp;&gt;30%</label><br>
+          <label><input type="radio" name="Administrative Expense Percentage" value="2" required>&nbsp;25% - 30%</label><br>
+          <label><input type="radio" name="Administrative Expense Percentage" value="3" required>&nbsp;20% - 25%</label><br>
+          <label><input type="radio" name="Administrative Expense Percentage" value="4" required>&nbsp;15% - 20%</label><br>
+          <label><input type="radio" name="Administrative Expense Percentage" value="5" required>&nbsp;&lt;15%</label><br>
+          <br>
+
+          <p><b>What percent of expenses consist of reinvesting in capital expenditures (e.g., new buildings / equipment)? (To calculate, divide the average capital expenditure by the average total expense, over three most recent fiscal years.)</b>
+          </p>
+          <label><input type="radio" name="Capital Expenditure Percentage" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Capital Expenditure Percentage" value="1" required>&nbsp;&lt;1%</label><br>
+          <label><input type="radio" name="Capital Expenditure Percentage" value="2" required>&nbsp;1 - 2%</label><br>
+          <label><input type="radio" name="Capital Expenditure Percentage" value="3" required>&nbsp;2 - 3%</label><br>
+          <label><input type="radio" name="Capital Expenditure Percentage" value="4" required>&nbsp;3 - 4%</label><br>
+          <label><input type="radio" name="Capital Expenditure Percentage" value="5" required>&nbsp;&gt;4%</label><br>
+          <br>
+
+          <p><b>What percent of expenses consist of fundraising expenses? (To calculate, divide the average fundraising expense by the average total expense, over three most recent fiscal years.)</b></p>
+          <label><input type="radio" name="Fundraising Expense Percentage" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Fundraising Expense Percentage" value="1" required>&nbsp;&gt;25%</label><br>
+          <label><input type="radio" name="Fundraising Expense Percentage" value="2" required>&nbsp;20 - 25%</label><br>
+          <label><input type="radio" name="Fundraising Expense Percentage" value="3" required>&nbsp;15 - 20%</label><br>
+          <label><input type="radio" name="Fundraising Expense Percentage" value="4" required>&nbsp;10 - 15%</label><br>
+          <label><input type="radio" name="Fundraising Expense Percentage" value="5" required>&nbsp;&lt;10%</label><br>
+          <br>
+
+          <p><b>How much does it cost the hospital to bring in each $1 of donations? (To calculate, divide the average fundraising expense by the average total donations, over three most recent fiscal years.)</b></p>
+          <label><input type="radio" name="Fundraising Efficiency" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Fundraising Efficiency" value="1" required>&nbsp;&gt;$0.30</label><br>
+          <label><input type="radio" name="Fundraising Efficiency" value="2" required>&nbsp;$0.25 - $0.30</label><br>
+          <label><input type="radio" name="Fundraising Efficiency" value="3" required>&nbsp;$0.20 - $0.25</label><br>
+          <label><input type="radio" name="Fundraising Efficiency" value="4" required>&nbsp;$0.10 - $0.20</label><br>
+          <label><input type="radio" name="Fundraising Efficiency" value="5" required>&nbsp;&lt;$0.10</label><br>
+          <br>
+
+          <p><b>By how much have program expenses grown annually over the three most recent fiscal years? (To calculate: [(Expense in year 3/Expense in year 1)^(1/3) - 1].)</b></p>
+          <label><input type="radio" name="Program Expense Growth" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Program Expense Growth" value="1" required>&nbsp;&lt;2%</label><br>
+          <label><input type="radio" name="Program Expense Growth" value="2" required>&nbsp;2 - 4%</label><br>
+          <label><input type="radio" name="Program Expense Growth" value="3" required>&nbsp;4 - 6%</label><br>
+          <label><input type="radio" name="Program Expense Growth" value="4" required>&nbsp;6 - 8%</label><br>
+          <label><input type="radio" name="Program Expense Growth" value="5" required>&nbsp;&gt;8%</label><br>
+          <br>
+
+          <p><b>What is the hospital's liabilities to assets ratio (as a measure of sustainability)? (To calculate, divide total liabilities by total assets in the most recent fiscal year.)</b></p>
+          <label><input type="radio" name="Liabilities to Assets Ratio" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Liabilities to Assets Ratio" value="1" required>&nbsp;&gt;100%</label><br>
+          <label><input type="radio" name="Liabilities to Assets Ratio" value="2" required>&nbsp;50% - 100%</label><br>
+          <label><input type="radio" name="Liabilities to Assets Ratio" value="3" required>&nbsp;30% - 50%</label><br>
+          <label><input type="radio" name="Liabilities to Assets Ratio" value="4" required>&nbsp;10% - 30%</label><br>
+          <label><input type="radio" name="Liabilities to Assets Ratio" value="5" required>&nbsp;&lt;10%</label><br>
+          <br>
+
+          <p><b>What percentage of annual revenue is given to patients as charity (free) care?</b></p>
+          <label><input type="radio" name="Charity Care Percentage" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Charity Care Percentage" value="1" required>&nbsp;&lt;1%</label><br>
+          <label><input type="radio" name="Charity Care Percentage" value="2" required>&nbsp;1% - 5%</label><br>
+          <label><input type="radio" name="Charity Care Percentage" value="3" required>&nbsp;5% - 10%</label><br>
+          <label><input type="radio" name="Charity Care Percentage" value="4" required>&nbsp;10% - 15%</label><br>
+          <label><input type="radio" name="Charity Care Percentage" value="5" required>&nbsp;&gt;15%</label><br>
+          <br>
+
+          <p><b>Does the hospital prepare a budget and have adequate processes of budgetary controls? Does the hospital prepare a budget variance analysis?</b></p>
+          <label><input type="radio" name="Budget" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Budget" value="1" required>&nbsp;Hospital sometimes or frequently has a budget prepared.</label><br>
+          <label><input type="radio" name="Budget" value="3" required>&nbsp;Hospital always has budget prepared or prepares budget primarily for donor reporting. Hospital prepares budget variance analysis.</label><br>
+          <label><input type="radio" name="Budget" value="5" required>&nbsp;Hospital prepares budget with adequate details and accuracy at the beginning of each project and budget is reviewed periodically. Hospital prepares budget variance analysis
+            and takes appropriate action.</label><br>
+          <br>
+
+          <p><b>Does the hospital have audited financial statements prepared by an independent accountant with an audit oversight committee?</b></p>
+          <label><input type="radio" name="Auditing" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Auditing" value="1" required>&nbsp;Hospital prepares and audits its own financials</label><br>
+          <label><input type="radio" name="Auditing" value="3" required>&nbsp;Hospital's audited financials are prepared by an independent accountant</label><br>
+          <label><input type="radio" name="Auditing" value="5" required>&nbsp;Hospital's audited financials are prepared by an independent accountant with an audit oversight committee</label><br>
+          <br>
+
+          <p><b>Does the hospital maintain proper books of accounts? </b></p>
+          <label><input type="radio" name="Accounting Books" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Accounting Books" value="1" required>&nbsp;Hospital maintains books of account in an ad hoc manner or on an as needed basis</label><br>
+          <label><input type="radio" name="Accounting Books" value="3" required>&nbsp;Hospital maintains cash book, bank book, ledger, journals, and other subsidiary ledgers</label><br>
+          <label><input type="radio" name="Accounting Books" value="5" required>&nbsp;Hospital maintains cash book, bank book, ledger, journals, and other subsidiary ledgers and updates them on a daily basis</label><br>
+          <br>
+
+          <p><b>Are the hospital's bank accounts in the name of the hospital, not an individual?</b></p>
+          <label><input type="radio" name="Bank Accounts" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Bank Accounts" value="1" required>&nbsp;Hospital has no bank account in the name of the hospital</label><br>
+          <label><input type="radio" name="Bank Accounts" value="2" required>&nbsp;Hospital has bank accounts in the name of the hospital and individuals, and the majority of the funds are in individuals' bank accounts</label><br>
+          <label><input type="radio" name="Bank Accounts" value="3" required>&nbsp;Hospital has bank accounts in the name of the hospital and individuals, and each type of account is equally used</label><br>
+          <label><input type="radio" name="Bank Accounts" value="4" required>&nbsp;Hospital has bank accounts in the name of the hospital and individuals, and the majority of the funds are in the hospital's bank account</label><br>
+          <label><input type="radio" name="Bank Accounts" value="5" required>&nbsp;Hospital only has bank accounts in the name of the hospital</label><br>
+          <br>
+
+          <p><b>How much does the hospital spend per lives saved annually? (To calculate, divide total program and administrative expenses by the number of lives saved.)</b></p>
+          <label><input type="radio" name="Cost Per Life Saved" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Cost Per Life Saved" value="1" required>&nbsp;&gt;$6,000</label><br>
+          <label><input type="radio" name="Cost Per Life Saved" value="2" required>&nbsp;$4,000 - $6,000</label><br>
+          <label><input type="radio" name="Cost Per Life Saved" value="3" required>&nbsp;$2,000 - $4,000</label><br>
+          <label><input type="radio" name="Cost Per Life Saved" value="4" required>&nbsp;$1,000 - $2,000</label><br>
+          <label><input type="radio" name="Cost Per Life Saved" value="5" required>&nbsp;&lt;$1,000</label><br>
+          <br>
+
+          <p><b>How efficiently does the hospital allocate charity care dollars (as a measure of accessibility)? For example, does the hospital use an ability-to-pay pricing approach, write off unexpected complications, and/or assess charity care
+              needs using behavioral methods such as the "shared meals" and "vital assets" tests.</b></p>
+          <label><input type="radio" name="Charity Care Efficiency" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Charity Care Efficiency" value="3" required>&nbsp;Hospital first decides on a set of services to offer and then retroactively identifies the right price point for those services.</label><br>
+          <label><input type="radio" name="Charity Care Efficiency" value="4" required>&nbsp;Hospital strives to make healthcare more accessible to the poor on an ad hoc basis.</label><br>
+          <label><input type="radio" name="Charity Care Efficiency" value="5" required>&nbsp;Hospital has a defined method to evaluate how much patients are able to pay and uses that limit to choose treatment options. Hospital writes off large
+            unexpected costs rather than charging the patient.</label><br>
+          <br>
+
+          <p><b>Does the hospital have a formal governance structure established?</b></p>
+          <label><input type="radio" name="Formal Governance Structure" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Formal Governance Structure" value="1" required>&nbsp;Hospital has an informal governance structure and does not have a board</label><br>
+          <label><input type="radio" name="Formal Governance Structure" value="3" required>&nbsp;Hospital has a formal organizational structure (chart) in place that is appropriate to the work being carried out and an independent board</label><br>
+          <label><input type="radio" name="Formal Governance Structure" value="5" required>&nbsp;Hospital has a well-defined organizational structure (chart), clear delegation of responsibility and authority, coherent functioning of departments, and
+            an independent board that works on policymaking, oversight, and support</label><br>
+          <br>
+
+          <p><b>How committed and dedicated to the mission of the hospital are staff and volunteers?</b></p>
+          <label><input type="radio" name="Commitment to Mission" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Commitment to Mission" value="1" required>&nbsp;Staff may not know the hospital's mission</label><br>
+          <label><input type="radio" name="Commitment to Mission" value="2" required>&nbsp;Staff have expectations that conflict with the hospital's mission</label><br>
+          <label><input type="radio" name="Commitment to Mission" value="3" required>&nbsp;Staff usually take actions that align with the hospital's mission, and may compromise in difficult situations</label><br>
+          <label><input type="radio" name="Commitment to Mission" value="4" required>&nbsp;Staff almost always take actions that align with the hospital's mission</label><br>
+          <label><input type="radio" name="Commitment to Mission" value="5" required>&nbsp;Staff almost always take actions that align with the hospital's mission, even when it requires difficult decisions</label><br>
+          <br>
+
+          <p><b>Does the hospital have a strategic plan to improve and expand services? Are planned strategies and interventions implemented properly?</b></p>
+          <label><input type="radio" name="Strategic Plan and Implementation" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Strategic Plan and Implementation" value="1" required>&nbsp;Hospital has not yet developed either a long-term or short-term strategic plan</label><br>
+          <label><input type="radio" name="Strategic Plan and Implementation" value="2" required>&nbsp;Hospital develops a long-term strategic plan and/or a yearly operational plan</label><br>
+          <label><input type="radio" name="Strategic Plan and Implementation" value="3" required>&nbsp;Hospital develops and adheres to a yearly operational plan that identifies organizational goals to be achieved and the resources needed to achieve
+            those goals</label><br>
+          <label><input type="radio" name="Strategic Plan and Implementation" value="4" required>&nbsp;Hospital develops and adheres to a long-term strategic plan that identifies organizational goals to be achieved and the resources needed to achieve
+            those goals</label><br>
+          <label><input type="radio" name="Strategic Plan and Implementation" value="5" required>&nbsp;Hospital develops and adheres to a long-term strategic plan with a yearly operational plan that identifies organizational goals to be achieved over
+            a specific period of time and the resources needed to achieve those goals</label><br>
+          <br>
+
+          <p><b>Are key performance indicators defined and in place to monitor progress with respect to inputs, activities, outcomes and impacts?</b></p>
+          <label><input type="radio" name="Key Performance Indicators" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Key Performance Indicators" value="1" required>&nbsp;Hospital has not yet defined measurable key performance indicators.</label><br>
+          <label><input type="radio" name="Key Performance Indicators" value="2" required>&nbsp;Hospital has defined key performance indicators.</label><br>
+          <label><input type="radio" name="Key Performance Indicators" value="3" required>&nbsp;Hospital has defined measurable key performance indicators to monitor progress with respect to inputs, activities, outcomes, and impacts.</label><br>
+          <label><input type="radio" name="Key Performance Indicators" value="4" required>&nbsp;Hospital has clearly defined, measurable key performance indicators to monitor progress with respect to inputs, activities, outcomes, and impacts.
+            Hospital is performing well towards most goals.</label><br>
+          <label><input type="radio" name="Key Performance Indicators" value="5" required>&nbsp;Hospital has clearly defined, measurable key performance indicators to monitor progress with respect to inputs, activities, outcomes, and impacts.
+            Hospital is performing excellently towards most goals.</label><br>
+          <br>
+
+          <p><b>Are the feasibility and cost-effectiveness of alternate implementation plans discussed?</b></p>
+          <label><input type="radio" name="Alternate Implementation Plans" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Alternate Implementation Plans" value="1" required>&nbsp;Hospital infrequently discusses alternative plans to achieve strategic goals</label><br>
+          <label><input type="radio" name="Alternate Implementation Plans" value="3" required>&nbsp;Hospital frequently discusses alternative plans to achieve strategic goals</label><br>
+          <label><input type="radio" name="Alternate Implementation Plans" value="5" required>&nbsp;Hospital discusses and evaluates the feasibility and cost effectiveness of alternative plans to achieve strategic goals</label><br>
+          <br>
+
+          <p><b>Do the hospital's systems have sufficient capacity, and are they able to scale?</b></p>
+          <label><input type="radio" name="Systems Capacity" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Systems Capacity" value="1" required>&nbsp;Hospital does not possess the basic infrastructure, tools, and resources needed to fulfill its activities and is unable expand capacity as needed with sufficient
+            funding</label><br>
+          <label><input type="radio" name="Systems Capacity" value="2" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with
+            sufficient funding</label><br>
+          <label><input type="radio" name="Systems Capacity" value="3" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed with
+            sufficient funding</label><br>
+          <label><input type="radio" name="Systems Capacity" value="4" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with sufficient
+            funding</label><br>
+          <label><input type="radio" name="Systems Capacity" value="5" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed with
+            sufficient funding</label><br>
+          <br>
+
+          <p><b>Is the hospital's board independent (e.g., board is not comprised of too many staff members)?</b></p>
+          <label><input type="radio" name="Board Independence" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Board Independence" value="1" required>&nbsp;The board does not have independent board members</label><br>
+          <label><input type="radio" name="Board Independence" value="2" required>&nbsp;Independent board members are not a voting majority and less than 3 in number</label><br>
+          <label><input type="radio" name="Board Independence" value="3" required>&nbsp;Independent board members are not a voting majority but are at least 3 in number</label><br>
+          <label><input type="radio" name="Board Independence" value="4" required>&nbsp;Independent board members are a voting majority and are at least 3 in number</label><br>
+          <label><input type="radio" name="Board Independence" value="5" required>&nbsp;Independent board members are a voting majority and are at least 5 in number</label><br>
+          <br>
+
+          <p><b>Does the hospital have board members/trustees that are permanent in nature (with no fixed term) or who have served for 10 years or more?</b></p>
+          <label><input type="radio" name="Permanent Board Members" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Permanent Board Members" value="1" required>&nbsp;Board members do not have fixed terms</label><br>
+          <label><input type="radio" name="Permanent Board Members" value="2" required>&nbsp;Board members have a fixed term &gt;10 years</label><br>
+          <label><input type="radio" name="Permanent Board Members" value="3" required>&nbsp;Board members have a fixed term &gt;10 years and consistently adhere to it</label><br>
+          <label><input type="radio" name="Permanent Board Members" value="4" required>&nbsp;Board members have a fixed term &lt;10 years</label><br>
+          <label><input type="radio" name="Permanent Board Members" value="5" required>&nbsp;Board members have a fixed term &lt;10 years and consistently adhere to it</label><br>
+          <br>
+
+          <p><b>Are board meetings held regularly?</b></p>
+          <label><input type="radio" name="Board Meetings" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Board Meetings" value="1" required>&nbsp;Board meetings are not held</label><br>
+          <label><input type="radio" name="Board Meetings" value="2" required>&nbsp;Board meetings are held on an ad hoc basis</label><br>
+          <label><input type="radio" name="Board Meetings" value="3" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital records minutes during board meetings</label><br>
+          <label><input type="radio" name="Board Meetings" value="4" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible for
+            future reference</label><br>
+          <label><input type="radio" name="Board Meetings" value="5" required>&nbsp;Board meetings are held on a regular basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible for
+            future reference</label><br>
+          <br>
+
+          <p><b>Are annual general meetings held? Are statutory resolutions such as appointment of auditors and election of board members passed during general meetings?</b></p>
+          <label><input type="radio" name="Annual General Meetings" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Annual General Meetings" value="1" required>&nbsp;The board infrequently holds general meetings or holds them on an ad hoc basis</label><br>
+          <label><input type="radio" name="Annual General Meetings" value="3" required>&nbsp;The board holds general meetings annually / as per the by-laws</label><br>
+          <label><input type="radio" name="Annual General Meetings" value="5" required>&nbsp;The board holds general meetings annually / as per the by-laws and resolutions are passed</label><br>
+          <br>
+
+          <p><b>Does the board review itself, systems, processes, and CEO/staff regularly?</b></p>
+          <label><input type="radio" name="Board Review" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Board Review" value="1" required>&nbsp;The board infrequently conducts reviews of itself, systems, processes, and CEO/staff</label><br>
+          <label><input type="radio" name="Board Review" value="3" required>&nbsp;The board sometimes conducts reviews of itself, systems, processes, and CEO/staff</label><br>
+          <label><input type="radio" name="Board Review" value="5" required>&nbsp;The board regularly conducts reviews of itself, systems, processes, and CEO/staff</label><br>
+          <br>
+
+          <p><b>Does the board have oversight over how donated funds are used?</b></p>
+          <label><input type="radio" name="Board Donation Oversight" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Board Donation Oversight" value="1" required>&nbsp;The board does not have access to information about how donated funds are used.</label><br>
+          <label><input type="radio" name="Board Donation Oversight" value="2" required>&nbsp;The board is provided with information on how donated funds are used.</label><br>
+          <label><input type="radio" name="Board Donation Oversight" value="3" required>&nbsp;The board reviews and approves the budget.</label><br>
+          <label><input type="radio" name="Board Donation Oversight" value="4" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and donor
+            restrictions.</label><br>
+          <label><input type="radio" name="Board Donation Oversight" value="5" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and donor's
+            restrictions. The board also reviews and compares the budgeted versus actual expenses and income, and discusses major variances.</label><br>
+          <br>
+
+          <p><b>Does the hospital have an appointed CEO?</b></p>
+          <label><input type="radio" name="Appointed CEO" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Appointed CEO" value="1" required>&nbsp;Hospital does not have a CEO</label><br>
+          <label><input type="radio" name="Appointed CEO" value="3" required>&nbsp;Hospital has a CEO</label><br>
+          <label><input type="radio" name="Appointed CEO" value="5" required>&nbsp;Hospital has a CEO that reports to an independent board and has staff reporting to them</label><br>
+          <br>
+
+          <p><b>How strong is the hospital's legal support and competency in analyzing a changing regulatory landscape / suggesting appropriate service providers?</b></p>
+          <label><input type="radio" name="Legal Support" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Legal Support" value="1" required>&nbsp;Hospital has no legal support in analyzing changing regulatory landscape</label><br>
+          <label><input type="radio" name="Legal Support" value="2" required>&nbsp;Hospital has legal support, but actionable advice is limited</label><br>
+          <label><input type="radio" name="Legal Support" value="3" required>&nbsp;Hospital has legal support, but actionable advice is difficult to implement</label><br>
+          <label><input type="radio" name="Legal Support" value="4" required>&nbsp;Hospital has legal support that suggests practicable actions </label><br>
+          <label><input type="radio" name="Legal Support" value="5" required>&nbsp;Hospital has legal support that foresees regulatory changes and suggests current and future practicable actions</label><br>
+          <br>
+
+          <p><b>Does the hospital have and follow documented workplace policies (e.g., human resources, travel, finance, conflict of interest, whistleblower, employee use of assets, records retention and destruction)?</b></p>
+          <label><input type="radio" name="Operational Policies" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Operational Policies" value="1" required>&nbsp;Hospital has not yet created documented operational policies (e.g., human resources, travel, finance, conflict of interest, whistleblower, employee use of
+            assets, records retention and destruction)</label><br>
+          <label><input type="radio" name="Operational Policies" value="3" required>&nbsp;Hospital has documented operational policies (e.g., human resources, travel, finance, conflict of interest, whistleblower, employee use of assets, records
+            retention and destruction)</label><br>
+          <label><input type="radio" name="Operational Policies" value="5" required>&nbsp;Hospital has and follows documented operational policies (e.g., human resources, travel, finance, conflict of interest, whistleblower, employee use of assets,
+            records retention and destruction)</label><br>
+          <br>
+
+          <p><b>How well and often does the hospital communicate the loss prevented or gains resulting from donations?</b></p>
+          <label><input type="radio" name="Outcomes Reporting" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Outcomes Reporting" value="1" required>&nbsp;Hospital does not communicate outcomes with donors</label><br>
+          <label><input type="radio" name="Outcomes Reporting" value="2" required>&nbsp;Hospital communicates outcomes to donors on an ad hoc basis</label><br>
+          <label><input type="radio" name="Outcomes Reporting" value="3" required>&nbsp;Hospital communicates outcomes to donors on an ad hoc basis and includes some outcomes</label><br>
+          <label><input type="radio" name="Outcomes Reporting" value="4" required>&nbsp;Hospital communicates outcomes to donors regularly (yearly or more frequently) and includes concrete outcomes metrics</label><br>
+          <label><input type="radio" name="Outcomes Reporting" value="5" required>&nbsp;Hospital communicates outcomes to donors regularly (yearly or more frequently), includes concrete outcomes metrics and individual stories, and communicates
+            through a variety of channels (website, letters, emails, social media, in person, etc.)</label><br>
+          <br>
+
+          <p><b>Does the hospital have a privacy policy that allows donors to request their name and address not be shared with other organizations?</b></p>
+          <label><input type="radio" name="Donor Privacy Policy" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Donor Privacy Policy" value="1" required>&nbsp;Hospital either does not have a written donor privacy policy or the existing policy does not meet the criteria for protecting contributors' personal
+            information.</label><br>
+          <label><input type="radio" name="Donor Privacy Policy" value="2" required>&nbsp;Hospital has a written opt-out donor privacy policy that can be sent upon request, which enables donors to tell the charity to remove their names and contact
+            information from lists the hospital shares or sells.</label><br>
+          <label><input type="radio" name="Donor Privacy Policy" value="3" required>&nbsp;Hospital has a written opt-out donor privacy policy published on its website which enables donors to tell the hospital to remove their names and contact
+            information from lists the hospital shares or sells.</label><br>
+          <label><input type="radio" name="Donor Privacy Policy" value="4" required>&nbsp;Hospital has a written donor privacy policy that can be sent upon request, which states unambiguously that (1) it will not share or sell a donor's information
+            with anyone else, nor send donor mailings on behalf of other organizations or (2) it will only share or sell personal information once the donor has given it specific permission to do so.</label><br>
+          <label><input type="radio" name="Donor Privacy Policy" value="5" required>&nbsp;Hospital has a written donor privacy policy published on its website, which states unambiguously that (1) it will not share or sell a donor's information with
+            anyone else, nor send donor mailings on behalf of other organizations or (2) it will only share or sell personal information once the donor has given it specific permission to do so.</label><br>
+          <br>
+
+          <p><b>Does the hospital have a website with information pertinent to donors and volunteers?</b></p>
+          <label><input type="radio" name="Website" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Website" value="1" required>&nbsp;Hospital does not yet have a website</label><br>
+          <label><input type="radio" name="Website" value="2" required>&nbsp;Hospital has a website with contact information</label><br>
+          <label><input type="radio" name="Website" value="3" required>&nbsp;Hospital has a website with contact information and lists board members and/or senior staff</label><br>
+          <label><input type="radio" name="Website" value="4" required>&nbsp;Hospital has a website with contact information and audited financial statements</label><br>
+          <label><input type="radio" name="Website" value="5" required>&nbsp;Hospital has a website with contact information that lists board members, senior staff, and audited financial statements</label><br>
+          <br>
+
+          <p><b>Does the hospital use efficient care standards to ensure services are both affordable and nearly as effective and safe as more expensive alternatives?</b></p>
+          <label><input type="radio" name="Appropriate Standards of Care" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Appropriate Standards of Care" value="3" required>&nbsp;Hospital provides best treatments available that may be unaffordable or highly affordable treatments that may be less effective than more expensive
+            treatments</label><br>
+          <label><input type="radio" name="Appropriate Standards of Care" value="4" required>&nbsp;Hospital generally provides best treatments available and sometimes considers affordability of treatments</label><br>
+          <label><input type="radio" name="Appropriate Standards of Care" value="5" required>&nbsp;Hospital uses a set of revised gold standards that emphasizes both affordability and effectiveness when choosing treatments</label><br>
+          <br>
+
+          <p><b>Do all patients receive equal care regardless of their wealth (as a measure of accessibility)?</b></p>
+          <label><input type="radio" name="Equal Services for All Patients" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Equal Services for All Patients" value="1" required>&nbsp;Hospital has a single tier of service aimed at the rich (private patients)</label><br>
+          <label><input type="radio" name="Equal Services for All Patients" value="3" required>&nbsp;Hospital has two or more tiers of service</label><br>
+          <label><input type="radio" name="Equal Services for All Patients" value="5" required>&nbsp;Hospital has a single tier of service aimed at the poor (general patients)</label><br>
+          <br>
+
+          <p><b>How well does the hospital work with community experts, partners, staff, and patients to build support, plan for the future, and impact the health of their local communities?</b></p>
+          <label><input type="radio" name="Community Engagement" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Community Engagement" value="1" required>&nbsp;Hospital does not provide information to the community on its services.</label><br>
+          <label><input type="radio" name="Community Engagement" value="2" required>&nbsp;Hospital does not provide information to the community on its services. Hospital is aware of local community or partner organizations. </label><br>
+          <label><input type="radio" name="Community Engagement" value="3" required>&nbsp;Hospital provides community with information on its services. Hospital is aware of local community or partner organizations. </label><br>
+          <label><input type="radio" name="Community Engagement" value="4" required>&nbsp;Hospital provides community with information on its services. Staff and board members are encouraged to become active in community and partner
+            organizations.</label><br>
+          <label><input type="radio" name="Community Engagement" value="5" required>&nbsp;Hospital actively works in the community to understand and address barriers to community members using its services. Hospital builds community
+            partnerships.</label><br>
+          <br>
+
+          <p><b>Has the hospital received safety and quality certifications?</b></p>
+          <label><input type="radio" name="Quality Certifications" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Quality Certifications" value="3" required>&nbsp;Hospital does not yet have any quality or safety certifications</label><br>
+          <label><input type="radio" name="Quality Certifications" value="4" required>&nbsp;Hospital has at least one quality or safety certification</label><br>
+          <label><input type="radio" name="Quality Certifications" value="5" required>&nbsp;Hospital has at least one quality certification and at least one safety certification (or multiple certifications of a particular type)</label><br>
+          <br>
+
+          <p><b>Has the hospital received awards and recognition from third parties in recognition of the hospital's impact?</b></p>
+          <label><input type="radio" name="Awards Conferred" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Awards Conferred" value="3" required>&nbsp;Hospital has not received awards or recognition from third parties</label><br>
+          <label><input type="radio" name="Awards Conferred" value="4" required>&nbsp;Hospital has received one award or recognition from a third party</label><br>
+          <label><input type="radio" name="Awards Conferred" value="5" required>&nbsp;Hospital has received multiple awards or recognitions from third parties, or one highly prestigious award</label><br>
+          <br>
+
+          <p><b>How many major surgeries does the hospital provide (per 1000 population served) annually?</b></p>
+          <label><input type="radio" name="Major Surgeries" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Major Surgeries" value="1" required>&nbsp;&lt;1</label><br>
+          <label><input type="radio" name="Major Surgeries" value="2" required>&nbsp;1 - 4</label><br>
+          <label><input type="radio" name="Major Surgeries" value="3" required>&nbsp;4 - 7</label><br>
+          <label><input type="radio" name="Major Surgeries" value="4" required>&nbsp;7 - 10</label><br>
+          <label><input type="radio" name="Major Surgeries" value="5" required>&nbsp;&gt;10</label><br>
+          <br>
+
+          <p><b>How many child deliveries does the hospital provide (per 100 women of childbearing age in the population served) annually?</b></p>
+          <label><input type="radio" name="Child Deliveries" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Child Deliveries" value="1" required>&nbsp;&lt;1</label><br>
+          <label><input type="radio" name="Child Deliveries" value="2" required>&nbsp;1 - 4</label><br>
+          <label><input type="radio" name="Child Deliveries" value="3" required>&nbsp;4 - 7</label><br>
+          <label><input type="radio" name="Child Deliveries" value="4" required>&nbsp;7 - 10</label><br>
+          <label><input type="radio" name="Child Deliveries" value="5" required>&nbsp;&gt;10</label><br>
+          <br>
+
+          <p><b>How many outpatient visits (per 1000 population served) does the hospital provide annually?</b></p>
+          <label><input type="radio" name="Outpatient Visits" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Outpatient Visits" value="1" required>&nbsp;&lt;100</label><br>
+          <label><input type="radio" name="Outpatient Visits" value="2" required>&nbsp;100 - 500</label><br>
+          <label><input type="radio" name="Outpatient Visits" value="3" required>&nbsp;500 - 1,000</label><br>
+          <label><input type="radio" name="Outpatient Visits" value="4" required>&nbsp;1,000 - 1,500</label><br>
+          <label><input type="radio" name="Outpatient Visits" value="5" required>&nbsp;&gt;1,500</label><br>
+          <br>
+
+          <p><b>How many beds does the hospital have?</b></p>
+          <label><input type="radio" name="Bed Capacity" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Bed Capacity" value="1" required>&nbsp;&lt;50</label><br>
+          <label><input type="radio" name="Bed Capacity" value="2" required>&nbsp;50 - 100</label><br>
+          <label><input type="radio" name="Bed Capacity" value="3" required>&nbsp;100 - 300</label><br>
+          <label><input type="radio" name="Bed Capacity" value="4" required>&nbsp;300 - 500</label><br>
+          <label><input type="radio" name="Bed Capacity" value="5" required>&nbsp;&gt;500</label><br>
+          <br>
+
+          <p><b>What is the hospital's bed occupancy rate? (To calculate, divide total number of bed-days during the year by (number of beds available * 365 days), then multiply by 100.)</b></p>
+          <label><input type="radio" name="Bed Occupancy" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Bed Occupancy" value="1" required>&nbsp;&lt;60%</label><br>
+          <label><input type="radio" name="Bed Occupancy" value="2" required>&nbsp;60% - 70%</label><br>
+          <label><input type="radio" name="Bed Occupancy" value="3" required>&nbsp;70% - 80%</label><br>
+          <label><input type="radio" name="Bed Occupancy" value="4" required>&nbsp;80% - 90%</label><br>
+          <label><input type="radio" name="Bed Occupancy" value="5" required>&nbsp;&gt;90%</label><br>
+          <br>
+
+          <p><b>What is the average weighted compound annual growth rate over the past three years of outpatient visits, inpatient admissions, major surgeries, and deliveries?</b></p>
+          <label><input type="radio" name="Weighted Average Patient Volume CAGR" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Weighted Average Patient Volume CAGR" value="1" required>&nbsp;&lt;-5%</label><br>
+          <label><input type="radio" name="Weighted Average Patient Volume CAGR" value="2" required>&nbsp;-5% to -2%</label><br>
+          <label><input type="radio" name="Weighted Average Patient Volume CAGR" value="3" required>&nbsp;-2% to 2%</label><br>
+          <label><input type="radio" name="Weighted Average Patient Volume CAGR" value="4" required>&nbsp;2% to 5%</label><br>
+          <label><input type="radio" name="Weighted Average Patient Volume CAGR" value="5" required>&nbsp;&gt;5%</label><br>
+          <br>
+
+          <p><b>How many deaths of maternity patients does the hospital experience (per 100,000 live births annually), as compared to the local maternal mortality rate?</b></p>
+          <label><input type="radio" name="Hospital Maternal Mortality Rate (MMR)" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Hospital Maternal Mortality Rate (MMR)" value="1" required>&nbsp;&gt;30% above local average</label><br>
+          <label><input type="radio" name="Hospital Maternal Mortality Rate (MMR)" value="2" required>&nbsp;10% above to 30% above local average</label><br>
+          <label><input type="radio" name="Hospital Maternal Mortality Rate (MMR)" value="3" required>&nbsp;10% below to 10% above local average</label><br>
+          <label><input type="radio" name="Hospital Maternal Mortality Rate (MMR)" value="4" required>&nbsp;10% below to 30% below local average</label><br>
+          <label><input type="radio" name="Hospital Maternal Mortality Rate (MMR)" value="5" required>&nbsp;&gt;30% below local average</label><br>
+          <br>
+
+          <p><b>How many deaths of infants does the hospital experience (per 1,000 live births annually), as compared to the local infant mortality rate?</b></p>
+          <label><input type="radio" name="Hospital Infant Mortality Rate (IMR)" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Hospital Infant Mortality Rate (IMR)" value="1" required>&nbsp;&gt;30% above local average</label><br>
+          <label><input type="radio" name="Hospital Infant Mortality Rate (IMR)" value="2" required>&nbsp;10% above to 30% above local average</label><br>
+          <label><input type="radio" name="Hospital Infant Mortality Rate (IMR)" value="3" required>&nbsp;10% below to 10% above local average</label><br>
+          <label><input type="radio" name="Hospital Infant Mortality Rate (IMR)" value="4" required>&nbsp;10% below to 30% below local average</label><br>
+          <label><input type="radio" name="Hospital Infant Mortality Rate (IMR)" value="5" required>&nbsp;&gt;30% below local average</label><br>
+          <br>
+
+          <p><b>How severe are the conditions of patients seen, as a measure of patient mortality risk?</b></p>
+          <label><input type="radio" name="Patient Mortality Risk" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Patient Mortality Risk" value="1" required>&nbsp;Most patients seen are low-risk patients with routine or non-urgent conditions</label><br>
+          <label><input type="radio" name="Patient Mortality Risk" value="3" required>&nbsp;About an equal number of patients are seen with severe, high-risk conditions as those seen with routine, low-risk conditions</label><br>
+          <label><input type="radio" name="Patient Mortality Risk" value="5" required>&nbsp;Most patients seen are high-risk patients with severe or life-threatening conditions</label><br>
+          <br>
+
+          <p><b>What percent of patients must return to the hospital and be admitted within 30 days of being discharged?</b></p>
+          <label><input type="radio" name="Patient Readmission Rate" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Patient Readmission Rate" value="1" required>&nbsp;&gt;25%</label><br>
+          <label><input type="radio" name="Patient Readmission Rate" value="2" required>&nbsp;20% - 25%</label><br>
+          <label><input type="radio" name="Patient Readmission Rate" value="3" required>&nbsp;10% - 20%</label><br>
+          <label><input type="radio" name="Patient Readmission Rate" value="4" required>&nbsp;5% - 10%</label><br>
+          <label><input type="radio" name="Patient Readmission Rate" value="5" required>&nbsp;&lt;5%</label><br>
+          <br>
+
+          <p><b>Does the hospital have staff with work experience of 10 years and above in a particular field?</b></p>
+          <label><input type="radio" name="Staff Experience" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Staff Experience" value="1" required>&nbsp;&lt;10% of staff have experience in a particular field of &gt;10 years</label><br>
+          <label><input type="radio" name="Staff Experience" value="2" required>&nbsp;10% - 25% of staff have experience in a particular field of &gt;10 years</label><br>
+          <label><input type="radio" name="Staff Experience" value="3" required>&nbsp;25% - 40% of staff have experience in a particular field of &gt;10 years</label><br>
+          <label><input type="radio" name="Staff Experience" value="4" required>&nbsp;40% - 50% of staff have experience in a particular field of &gt;10 years</label><br>
+          <label><input type="radio" name="Staff Experience" value="5" required>&nbsp;&gt;50% of staff have experience in a particular field of &gt;10 years</label><br>
+          <br>
+
+          <p><b>Does the hospital hold regular staff meetings?</b></p>
+          <label><input type="radio" name="Staff Meetings" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Staff Meetings" value="1" required>&nbsp;Staff meetings are held infrequently</label><br>
+          <label><input type="radio" name="Staff Meetings" value="3" required>&nbsp;Staff meetings are held when issues arise</label><br>
+          <label><input type="radio" name="Staff Meetings" value="5" required>&nbsp;Staff meetings are held regularly (at least once a month) and as needed when issues arise</label><br>
+          <br>
+
+          <p><b>In the past two years, what has been the overall staff turnover rate?</b></p>
+          <label><input type="radio" name="Staff Turnover" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Staff Turnover" value="1" required>&nbsp;&gt;90%</label><br>
+          <label><input type="radio" name="Staff Turnover" value="2" required>&nbsp;70% - 90%</label><br>
+          <label><input type="radio" name="Staff Turnover" value="3" required>&nbsp;30% - 70%</label><br>
+          <label><input type="radio" name="Staff Turnover" value="4" required>&nbsp;10% - 30%</label><br>
+          <label><input type="radio" name="Staff Turnover" value="5" required>&nbsp;&lt;10%</label><br>
+          <br>
+
+          <p><b>Does the hospital have partners that it is are collaborating with, and does it plan to add partners to its network?</b></p>
+          <label><input type="radio" name="Collaboration" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Collaboration" value="1" required>&nbsp;Hospital does not yet have any partners</label><br>
+          <label><input type="radio" name="Collaboration" value="2" required>&nbsp;Hospital does not yet have any partners but is actively looking to expand their network</label><br>
+          <label><input type="radio" name="Collaboration" value="3" required>&nbsp;Hospital has one partner and is actively looking to expand their network</label><br>
+          <label><input type="radio" name="Collaboration" value="4" required>&nbsp;Hospital has meaningful partnerships with at least two other organizations</label><br>
+          <label><input type="radio" name="Collaboration" value="5" required>&nbsp;Hospital has meaningful partnerships with at least two other organizations and is actively looking to expand their network</label><br>
+          <br>
+
+          <p><b>Does the hospital have relationships/exchange programs with other similar organizations or universities?</b></p>
+          <label><input type="radio" name="Exchange Programs" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Exchange Programs" value="3" required>&nbsp;Hospital does not have a relationship / exchange program with another organization / university</label><br>
+          <label><input type="radio" name="Exchange Programs" value="4" required>&nbsp;Hospital has a relationship / exchange program with one other organization / university</label><br>
+          <label><input type="radio" name="Exchange Programs" value="5" required>&nbsp;Hospital has relationships / exchange programs with more than one other organization / university</label><br>
+          <br>
+
+          <p><b>What is the level of responsibility expected of volunteers, in terms of hours and difficulty?</b></p>
+          <label><input type="radio" name="Volunteer Responsibility" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Volunteer Responsibility" value="1" required>&nbsp;Volunteers are expected to contribute work that may not be well matched to their skillset for more than 70 hours per week</label><br>
+          <label><input type="radio" name="Volunteer Responsibility" value="2" required>&nbsp;Volunteers are expected to contribute work that may not be well matched to their skillset for more than 55 hours per week</label><br>
+          <label><input type="radio" name="Volunteer Responsibility" value="3" required>&nbsp;Volunteers are expected to contribute work that may not be well matched to their skillset for no more than 55 hours per week</label><br>
+          <label><input type="radio" name="Volunteer Responsibility" value="4" required>&nbsp;Volunteers are expected to contribute work well matched to their skillset for more than 55 hours per week</label><br>
+          <label><input type="radio" name="Volunteer Responsibility" value="5" required>&nbsp;Volunteers are expected to contribute work well matched to their skillset for no more than 55 hours per week</label><br>
+          <br>
+
+          <p><b>How many years and what type of experience do volunteers need to be successful?</b></p>
+          <label><input type="radio" name="Expected Volunteer Experience" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Expected Volunteer Experience" value="1" required>&nbsp;Hospital does not have specific expectations for the number of years and type of experience volunteers need to be successful</label><br>
+          <label><input type="radio" name="Expected Volunteer Experience" value="3" required>&nbsp;Hospital has some specific expectations for the number of years and type of experience volunteers need to be successful</label><br>
+          <label><input type="radio" name="Expected Volunteer Experience" value="5" required>&nbsp;Hospital has clearly defined expectations for the number of years and type of experience volunteers need to be successful</label><br>
+          <br>
+
+          <p><b>Are nearby opportunities readily available for volunteers' spouses?</b></p>
+          <label><input type="radio" name="Spousal Job Opportunities" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Spousal Job Opportunities" value="1" required>&nbsp;There are rarely opportunities and it is extremely difficult for volunteer spouses to find a job</label><br>
+          <label><input type="radio" name="Spousal Job Opportunities" value="2" required>&nbsp;There are limited opportunities and it is difficult for volunteer spouses to find a job</label><br>
+          <label><input type="radio" name="Spousal Job Opportunities" value="3" required>&nbsp;There are some job opportunities for volunteer spouses, but it takes effort to find a suitable one</label><br>
+          <label><input type="radio" name="Spousal Job Opportunities" value="4" required>&nbsp;There are many job opportunities and some of them are suitable for volunteer spouses</label><br>
+          <label><input type="radio" name="Spousal Job Opportunities" value="5" required>&nbsp;There are many job opportunities and it is easy for volunteer spouses to find a suitable job</label><br>
+          <br>
+
+          <p><b>Is quality education available for volunteers' children?</b></p>
+          <label><input type="radio" name="Child Education Opportunities" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Child Education Opportunities" value="1" required>&nbsp;There are no nearby opportunities for volunteers' children to receive adequate education</label><br>
+          <label><input type="radio" name="Child Education Opportunities" value="2" required>&nbsp;There are opportunities for volunteers' children to receive education within some traveling distance</label><br>
+          <label><input type="radio" name="Child Education Opportunities" value="3" required>&nbsp;There are opportunities for volunteers' children to receive quality education within some traveling distance</label><br>
+          <label><input type="radio" name="Child Education Opportunities" value="4" required>&nbsp;There are nearby opportunities for volunteers' children to receive education</label><br>
+          <label><input type="radio" name="Child Education Opportunities" value="5" required>&nbsp;There are nearby opportunities for volunteers' children to receive quality education</label><br>
+          <br>
+
+          <p><b>How difficult is it for volunteers to find quality housing?</b></p>
+          <label><input type="radio" name="Housing Opportunities" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Housing Opportunities" value="1" required>&nbsp;There are not adequate housing options</label><br>
+          <label><input type="radio" name="Housing Opportunities" value="2" required>&nbsp;There are limited housing options, and they are difficult to find</label><br>
+          <label><input type="radio" name="Housing Opportunities" value="3" required>&nbsp;There are several housing options that are easy to find</label><br>
+          <label><input type="radio" name="Housing Opportunities" value="4" required>&nbsp;There are quality housing options, but they may be difficult to find</label><br>
+          <label><input type="radio" name="Housing Opportunities" value="5" required>&nbsp;There are quality housing options that are easy to find</label><br>
+          <br>
+
+          <p><b>How safe is the area in which the hospital is located?</b></p>
+          <label><input type="radio" name="Local Safety" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Local Safety" value="1" required>&nbsp;Crime rate &gt;70</label><br>
+          <label><input type="radio" name="Local Safety" value="2" required>&nbsp;Crime rate 60 - 70</label><br>
+          <label><input type="radio" name="Local Safety" value="3" required>&nbsp;Crime rate 50 - 60</label><br>
+          <label><input type="radio" name="Local Safety" value="4" required>&nbsp;Crime rate 40 - 50</label><br>
+          <label><input type="radio" name="Local Safety" value="5" required>&nbsp;Crime rate &lt;40</label><br>
+          <br>
+
+
+          <!-- Questions Over-->
+
+          <input type="submit" value="Check your Rating">
+        </form>
+
+        <br>
+        <button type="button" onclick="firestore()">Submit your Data</button>
+        <p id="status" style="color:red"></p>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    var results;
+    var db = firebase.firestore();
+    var form = document.getElementById("myForm");
+    var obj = {};
+
+    //prevent default form behavior
+    function handleForm(event) {
+      event.preventDefault();
+    }
+    form.addEventListener('submit', handleForm);
+
+    //function called when submit is pressed
+    function addToDB() {
+
+      obj["creator"] = "vrajshroff@gmail.com"
+      //firebase.auth().currentUser.email;
+      //change after demo
+
+      var idSet = new Set();
+      var elements = document.getElementById("myForm").elements;
+      for (var i = 0; i < elements.length - 1; i++) {
+        var item = elements.item(i);
+        if (item.checked || item.value.length > 1) {
+          obj[item.name] = item.value;
+          console.log(item.value);
+        }
+      }
+      console.log(JSON.stringify(obj));
+      computeScores();
+    }
+
+    function firestore() {
+
+      if (obj['ready']) {
+        db.collection("hospitals").doc(obj["Hospital Username"]).set(obj)
+          .then(function() {
+            console.log("Document successfully written!");
+            document.getElementById("status").innerHTML = "Hospital successfully added. Go back to the homepage and check out your hospital information."
+          })
+          .catch(function(error) {
+            console.error("Error writing document: ", error);
+          });
+      } else {
+        document.getElementById('status').innerHTML = "Click 'Check your Rating' button first and try again."
+      }
+    }
+  </script>
+
+  <script>
+    var mapToWeights = new Map();
+    var mapToWeightsFinal = new Map();
+    var mapToSubCatsj = new Map();
+    var mapToSubCatsFinal = new Map();
+    var mapToCats = new Map()
+    var mapToCatsFinal = new Map();
+    var mapToScoresFinal = new Map();
+    var mapJSON = new Map();
+
+    function createMaps() {
+      mapToWeights.set('Socioeconomic Status of Patient Population', 10)
+      mapToWeights.set('Local Population Income Mix', 6)
+      mapToWeights.set('Local Patient Population Density', 8)
+      mapToWeights.set('Alternative Care Options', 9)
+      mapToWeights.set('Local Maternal Mortality Rate (MMR)', 10)
+      mapToWeights.set('Local Infant Mortality Rate (IMR)', 10)
+      mapToWeights.set('Additional Services', 4)
+      mapToWeights.set('Diversity of Revenue Sources', 7)
+      mapToWeights.set('Donations Percent of Revenue', 7)
+      mapToWeights.set('Operating Margin', 6)
+      mapToWeights.set('Program Expense Percentage', 7)
+      mapToWeights.set('Administrative Expense Percentage', 5)
+      mapToWeights.set('Capital Expenditure Percentage', 5)
+      mapToWeights.set('Fundraising Expense Percentage', 5)
+      mapToWeights.set('Fundraising Efficiency', 5)
+      mapToWeights.set('Program Expense Growth', 4)
+      mapToWeights.set('Liabilities to Assets Ratio', 1)
+      mapToWeights.set('Charity Care Percentage', 6)
+      mapToWeights.set('Budget', 2)
+      mapToWeights.set('Auditing', 1)
+      mapToWeights.set('Accounting Books', 1)
+      mapToWeights.set('Bank Accounts', 1)
+      mapToWeights.set('Safety of Funds', 5)
+      mapToWeights.set('Cost Per Life Saved', 7)
+      mapToWeights.set('Charity Care Efficiency', 6)
+      mapToWeights.set('Formal Governance Structure', 6)
+      mapToWeights.set('Commitment to Mission', 3)
+      mapToWeights.set('Strategic Plan and Implementation', 6)
+      mapToWeights.set('Key Performance Indicators', 3)
+      mapToWeights.set('Alternate Implementation Plans', 3)
+      mapToWeights.set('Systems Capacity', 6)
+      mapToWeights.set('Board Independence', 2)
+      mapToWeights.set('Permanent Board Members', 1)
+      mapToWeights.set('Board Meetings', 1)
+      mapToWeights.set('Annual General Meetings', 1)
+      mapToWeights.set('Board Review', 1)
+      mapToWeights.set('Board Donation Oversight', 1)
+      mapToWeights.set('Appointed CEO', 1)
+      mapToWeights.set('Legal Support', 2)
+      mapToWeights.set('Operational Policies', 1)
+      mapToWeights.set('Culture of Continuous Improvement', 1)
+      mapToWeights.set('Outcomes Reporting', 3)
+      mapToWeights.set('Donor Privacy Policy', 1)
+      mapToWeights.set('Website', 1)
+      mapToWeights.set('Appropriate Standards of Care', 6)
+      mapToWeights.set('Equal Services for All Patients', 7)
+      mapToWeights.set('Community Engagement', 6)
+      mapToWeights.set('Quality Certifications', 2)
+      mapToWeights.set('Awards Conferred', 4)
+      mapToWeights.set('Major Surgeries', 5)
+      mapToWeights.set('Child Deliveries', 5)
+      mapToWeights.set('Outpatient Visits', 6)
+      mapToWeights.set('Bed Occupancy', 7)
+      mapToWeights.set('Weighted Average Patient Volume CAGR', 4)
+      mapToWeights.set('Hospital Maternal Mortality Rate (MMR)', 4)
+      mapToWeights.set('Hospital Infant Mortality Rate (IMR)', 4)
+      mapToWeights.set('Patient Mortality Risk', 2)
+      mapToWeights.set('Patient Readmission Rate', 1)
+      mapToWeights.set('Days to Visit', 2)
+      mapToWeights.set('Patient Satisfaction - Service', 1)
+      mapToWeights.set('Patient Satisfaction - Staff', 1)
+      mapToWeights.set('Patient Satisfaction - Hospital Cleanliness', 1)
+      mapToWeights.set('Staff Satisfaction', 1)
+      mapToWeights.set('Staff Experience', 1)
+      mapToWeights.set('Staff Meetings', 1)
+      mapToWeights.set('Staff Turnover', 1)
+      mapToWeights.set('Physician Performance', 1)
+      mapToWeights.set('Leadership Credibility', 7)
+      mapToWeights.set('Donor Satisfaction', 3)
+      mapToWeights.set('Charity Rating Organizations', 1)
+      mapToWeights.set('Collaboration', 2)
+      mapToWeights.set('Exchange Programs', 1)
+      mapToWeights.set('Respect of Community', 1)
+      mapToWeights.set('Volunteer Responsibility', 1)
+      mapToWeights.set('Expected Volunteer Experience', 1)
+      mapToWeights.set('Spousal Job Opportunities', 1)
+      mapToWeights.set('Child Education Opportunities', 1)
+      mapToWeights.set('Housing Opportunities', 1)
+      mapToWeights.set('Local Safety', 2)
+      mapToWeights.set('Local Safety Perception', 2)
+      mapToWeights.set('Volunteer Recommendation', 3)
+      mapToWeights.set('Overall Volunteer Satisfaction', 1)
+      mapToWeights.set('Skills Match', 1)
+      mapToWeights.set('Learning Opportunities', 3)
+      mapToWeights.set('Career Development', 2)
+      mapToWeights.set('Job Training Appropriateness', 2)
+      mapToWeights.set('Community Affiliation', 3)
+      mapToWeights.set('Strategy and Influence', 2)
+      mapToWeights.set('Philanthropic Impact', 3)
+      mapToWeights.set('Flexibility', 1)
+      mapToWeights.set('Supervision', 2)
+      mapToWeights.set('Recognition', 1)
+      mapToWeights.set('Achievement', 3)
+
+
+      mapToCats.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
+      mapToCats.set('Local Population Income Mix', 'Regional Impact Potential')
+      mapToCats.set('Local Patient Population Density', 'Regional Impact Potential')
+      mapToCats.set('Alternative Care Options', 'Regional Impact Potential')
+      mapToCats.set('Local Maternal Mortality Rate (MMR)', 'Regional Impact Potential')
+      mapToCats.set('Local Infant Mortality Rate (IMR)', 'Regional Impact Potential')
+      mapToCats.set('Additional Services', 'Regional Impact Potential')
+      mapToCats.set('Diversity of Revenue Sources', 'Financial Health')
+      mapToCats.set('Donations Percent of Revenue', 'Financial Health')
+      mapToCats.set('Operating Margin', 'Financial Health')
+      mapToCats.set('Program Expense Percentage', 'Financial Health')
+      mapToCats.set('Administrative Expense Percentage', 'Financial Health')
+      mapToCats.set('Capital Expenditure Percentage', 'Financial Health')
+      mapToCats.set('Fundraising Expense Percentage', 'Financial Health')
+      mapToCats.set('Fundraising Efficiency', 'Financial Health')
+      mapToCats.set('Program Expense Growth', 'Financial Health')
+      mapToCats.set('Liabilities to Assets Ratio', 'Financial Health')
+      mapToCats.set('Charity Care Percentage', 'Financial Health')
+      mapToCats.set('Budget', 'Financial Health')
+      mapToCats.set('Auditing', 'Financial Health')
+      mapToCats.set('Accounting Books', 'Financial Health')
+      mapToCats.set('Bank Accounts', 'Financial Health')
+      mapToCats.set('Safety of Funds', 'Financial Health')
+      mapToCats.set('Cost Per Life Saved', 'Operational Performance')
+      mapToCats.set('Charity Care Efficiency', 'Operational Performance')
+      mapToCats.set('Formal Governance Structure', 'Operational Performance')
+      mapToCats.set('Commitment to Mission', 'Operational Performance')
+      mapToCats.set('Strategic Plan and Implementation', 'Operational Performance')
+      mapToCats.set('Key Performance Indicators', 'Operational Performance')
+      mapToCats.set('Alternate Implementation Plans', 'Operational Performance')
+      mapToCats.set('Systems Capacity', 'Operational Performance')
+      mapToCats.set('Board Independence', 'Operational Performance')
+      mapToCats.set('Permanent Board Members', 'Operational Performance')
+      mapToCats.set('Board Meetings', 'Operational Performance')
+      mapToCats.set('Annual General Meetings', 'Operational Performance')
+      mapToCats.set('Board Review', 'Operational Performance')
+      mapToCats.set('Board Donation Oversight', 'Operational Performance')
+      mapToCats.set('Appointed CEO', 'Operational Performance')
+      mapToCats.set('Legal Support', 'Operational Performance')
+      mapToCats.set('Operational Policies', 'Operational Performance')
+      mapToCats.set('Culture of Continuous Improvement', 'Operational Performance')
+      mapToCats.set('Outcomes Reporting', 'Operational Performance')
+      mapToCats.set('Donor Privacy Policy', 'Operational Performance')
+      mapToCats.set('Website', 'Operational Performance')
+      mapToCats.set('Appropriate Standards of Care', 'Operational Performance')
+      mapToCats.set('Equal Services for All Patients', 'Operational Performance')
+      mapToCats.set('Community Engagement', 'Operational Performance')
+      mapToCats.set('Quality Certifications', 'Operational Performance')
+      mapToCats.set('Awards Conferred', 'Operational Performance')
+      mapToCats.set('Major Surgeries', 'Operational Performance')
+      mapToCats.set('Child Deliveries', 'Operational Performance')
+      mapToCats.set('Outpatient Visits', 'Operational Performance')
+      mapToCats.set('Bed Occupancy', 'Operational Performance')
+      mapToCats.set('Weighted Average Patient Volume CAGR', 'Operational Performance')
+      mapToCats.set('Hospital Maternal Mortality Rate (MMR)', 'Operational Performance')
+      mapToCats.set('Hospital Infant Mortality Rate (IMR)', 'Operational Performance')
+      mapToCats.set('Patient Mortality Risk', 'Operational Performance')
+      mapToCats.set('Patient Readmission Rate', 'Operational Performance')
+      mapToCats.set('Days to Visit', 'Operational Performance')
+      mapToCats.set('Patient Satisfaction - Service', 'Operational Performance')
+      mapToCats.set('Patient Satisfaction - Staff', 'Operational Performance')
+      mapToCats.set('Patient Satisfaction - Hospital Cleanliness', 'Operational Performance')
+      mapToCats.set('Staff Satisfaction', 'Operational Performance')
+      mapToCats.set('Staff Experience', 'Operational Performance')
+      mapToCats.set('Staff Meetings', 'Operational Performance')
+      mapToCats.set('Staff Turnover', 'Operational Performance')
+      mapToCats.set('Physician Performance', 'Operational Performance')
+      mapToCats.set('Leadership Credibility', 'External Relations')
+      mapToCats.set('Donor Satisfaction', 'External Relations')
+      mapToCats.set('Charity Rating Organizations', 'External Relations')
+      mapToCats.set('Collaboration', 'External Relations')
+      mapToCats.set('Exchange Programs', 'External Relations')
+      mapToCats.set('Respect of Community', 'External Relations')
+      mapToCats.set('Volunteer Responsibility', 'Volunteer Opportunity')
+      mapToCats.set('Expected Volunteer Experience', 'Volunteer Opportunity')
+      mapToCats.set('Spousal Job Opportunities', 'Volunteer Opportunity')
+      mapToCats.set('Child Education Opportunities', 'Volunteer Opportunity')
+      mapToCats.set('Housing Opportunities', 'Volunteer Opportunity')
+      mapToCats.set('Local Safety', 'Volunteer Opportunity')
+      mapToCats.set('Local Safety Perception', 'Volunteer Opportunity')
+      mapToCats.set('Volunteer Recommendation', 'Volunteer Satisfaction')
+      mapToCats.set('Overall Volunteer Satisfaction', 'Volunteer Satisfaction')
+      mapToCats.set('Skills Match', 'Volunteer Satisfaction')
+      mapToCats.set('Learning Opportunities', 'Volunteer Satisfaction')
+      mapToCats.set('Career Development', 'Volunteer Satisfaction')
+      mapToCats.set('Job Training Appropriateness', 'Volunteer Satisfaction')
+      mapToCats.set('Community Affiliation', 'Volunteer Satisfaction')
+      mapToCats.set('Strategy and Influence', 'Volunteer Satisfaction')
+      mapToCats.set('Philanthropic Impact', 'Volunteer Satisfaction')
+      mapToCats.set('Flexibility', 'Volunteer Satisfaction')
+      mapToCats.set('Supervision', 'Volunteer Satisfaction')
+      mapToCats.set('Recognition', 'Volunteer Satisfaction')
+      mapToCats.set('Achievement', 'Volunteer Satisfaction')
+
+      mapToSubCatsj.set('Socioeconomic Status of Patient Population', '')
+      mapToSubCatsj.set('Local Population Income Mix', '')
+      mapToSubCatsj.set('Local Patient Population Density', '')
+      mapToSubCatsj.set('Alternative Care Options', '')
+      mapToSubCatsj.set('Local Maternal Mortality Rate (MMR)', '')
+      mapToSubCatsj.set('Local Infant Mortality Rate (IMR)', '')
+      mapToSubCatsj.set('Additional Services', '')
+      mapToSubCatsj.set('Diversity of Revenue Sources', 'Funding Sources')
+      mapToSubCatsj.set('Donations Percent of Revenue', 'Funding Sources')
+      mapToSubCatsj.set('Operating Margin', 'Financial Efficiency')
+      mapToSubCatsj.set('Program Expense Percentage', 'Financial Efficiency')
+      mapToSubCatsj.set('Administrative Expense Percentage', 'Financial Efficiency')
+      mapToSubCatsj.set('Capital Expenditure Percentage', 'Financial Efficiency')
+      mapToSubCatsj.set('Fundraising Expense Percentage', 'Financial Efficiency')
+      mapToSubCatsj.set('Fundraising Efficiency', 'Financial Efficiency')
+      mapToSubCatsj.set('Program Expense Growth', 'Financial Capacity')
+      mapToSubCatsj.set('Liabilities to Assets Ratio', 'Financial Capacity')
+      mapToSubCatsj.set('Charity Care Percentage', 'Financial Capacity')
+      mapToSubCatsj.set('Budget', 'Accountability')
+      mapToSubCatsj.set('Auditing', 'Accountability')
+      mapToSubCatsj.set('Accounting Books', 'Accountability')
+      mapToSubCatsj.set('Bank Accounts', 'Accountability')
+      mapToSubCatsj.set('Safety of Funds', 'Accountability')
+      mapToSubCatsj.set('Cost Per Life Saved', 'Operational Efficiency')
+      mapToSubCatsj.set('Charity Care Efficiency', 'Operational Efficiency')
+      mapToSubCatsj.set('Formal Governance Structure', 'Governance')
+      mapToSubCatsj.set('Commitment to Mission', 'Governance')
+      mapToSubCatsj.set('Strategic Plan and Implementation', 'Governance')
+      mapToSubCatsj.set('Key Performance Indicators', 'Governance')
+      mapToSubCatsj.set('Alternate Implementation Plans', 'Governance')
+      mapToSubCatsj.set('Systems Capacity', 'Governance')
+      mapToSubCatsj.set('Board Independence', 'Governance')
+      mapToSubCatsj.set('Permanent Board Members', 'Governance')
+      mapToSubCatsj.set('Board Meetings', 'Governance')
+      mapToSubCatsj.set('Annual General Meetings', 'Governance')
+      mapToSubCatsj.set('Board Review', 'Governance')
+      mapToSubCatsj.set('Board Donation Oversight', 'Governance')
+      mapToSubCatsj.set('Appointed CEO', 'Governance')
+      mapToSubCatsj.set('Legal Support', 'Governance')
+      mapToSubCatsj.set('Operational Policies', 'Governance')
+      mapToSubCatsj.set('Culture of Continuous Improvement', 'Governance')
+      mapToSubCatsj.set('Outcomes Reporting', 'Transparency')
+      mapToSubCatsj.set('Donor Privacy Policy', 'Transparency')
+      mapToSubCatsj.set('Website', 'Transparency')
+      mapToSubCatsj.set('Appropriate Standards of Care', 'Organization Quality')
+      mapToSubCatsj.set('Equal Services for All Patients', 'Organization Quality')
+      mapToSubCatsj.set('Community Engagement', 'Organization Quality')
+      mapToSubCatsj.set('Quality Certifications', 'Organization Quality')
+      mapToSubCatsj.set('Awards Conferred', 'Organization Quality')
+      mapToSubCatsj.set('Major Surgeries', 'Volume')
+      mapToSubCatsj.set('Child Deliveries', 'Volume')
+      mapToSubCatsj.set('Outpatient Visits', 'Volume')
+      mapToSubCatsj.set('Bed Occupancy', 'Volume')
+      mapToSubCatsj.set('Weighted Average Patient Volume CAGR', 'Volume')
+      mapToSubCatsj.set('Hospital Maternal Mortality Rate (MMR)', 'Care Quality')
+      mapToSubCatsj.set('Hospital Infant Mortality Rate (IMR)', 'Care Quality')
+      mapToSubCatsj.set('Patient Mortality Risk', 'Care Quality')
+      mapToSubCatsj.set('Patient Readmission Rate', 'Care Quality')
+      mapToSubCatsj.set('Days to Visit', 'Care Quality')
+      mapToSubCatsj.set('Patient Satisfaction - Service', 'Care Quality')
+      mapToSubCatsj.set('Patient Satisfaction - Staff', 'Care Quality')
+      mapToSubCatsj.set('Patient Satisfaction - Hospital Cleanliness', 'Care Quality')
+      mapToSubCatsj.set('Staff Satisfaction', 'Care Quality')
+      mapToSubCatsj.set('Staff Experience', 'Care Quality')
+      mapToSubCatsj.set('Staff Meetings', 'Care Quality')
+      mapToSubCatsj.set('Staff Turnover', 'Care Quality')
+      mapToSubCatsj.set('Physician Performance', 'Care Quality')
+      mapToSubCatsj.set('Leadership Credibility', '')
+      mapToSubCatsj.set('Donor Satisfaction', '')
+      mapToSubCatsj.set('Charity Rating Organizations', '')
+      mapToSubCatsj.set('Collaboration', '')
+      mapToSubCatsj.set('Exchange Programs', '')
+      mapToSubCatsj.set('Respect of Community', '')
+      mapToSubCatsj.set('Volunteer Responsibility', '')
+      mapToSubCatsj.set('Expected Volunteer Experience', '')
+      mapToSubCatsj.set('Spousal Job Opportunities', '')
+      mapToSubCatsj.set('Child Education Opportunities', '')
+      mapToSubCatsj.set('Housing Opportunities', '')
+      mapToSubCatsj.set('Local Safety', '')
+      mapToSubCatsj.set('Local Safety Perception', '')
+      mapToSubCatsj.set('Volunteer Recommendation', '')
+      mapToSubCatsj.set('Overall Volunteer Satisfaction', '')
+      mapToSubCatsj.set('Skills Match', '')
+      mapToSubCatsj.set('Learning Opportunities', '')
+      mapToSubCatsj.set('Career Development', '')
+      mapToSubCatsj.set('Job Training Appropriateness', '')
+      mapToSubCatsj.set('Community Affiliation', '')
+      mapToSubCatsj.set('Strategy and Influence', '')
+      mapToSubCatsj.set('Philanthropic Impact', '')
+      mapToSubCatsj.set('Flexibility', '')
+      mapToSubCatsj.set('Supervision', '')
+      mapToSubCatsj.set('Recognition', '')
+      mapToSubCatsj.set('Achievement', '')
+    }
+
+    createMaps();
+
+    //subcategory variables
+    var runningScoreTotalFunding = 0;
+    var runningScoreAvgFunding = 0;
+    var runningWeightsFunding = 0;
+
+    var runningScoreTotalFinancial = 0;
+    var runningScoreAvgFinancial = 0;
+    var runningWeightsFinancial = 0;
+
+    var runningScoreTotalOperation = 0;
+    var runningScoreAvgOperation = 0;
+    var runningWeightsOperation = 0;
+
+    var runningScoreTotalGov = 0;
+    var runningScoreAvgGov = 0;
+    var runningWeightsGov = 0;
+
+    var runningScoreTotalTrans = 0;
+    var runningScoreAvgTrans = 0;
+    var runningWeightsTrans = 0;
+
+    var runningScoreTotalAccount = 0;
+    var runningScoreAvgAccount = 0;
+    var runningWeightsAccount = 0;
+
+    var runningScoreTotalOrganization = 0;
+    var runningScoreAvgOrganization = 0;
+    var runningWeightsOrganization = 0;
+
+    var runningScoreTotalVolume = 0;
+    var runningScoreAvgVolume = 0;
+    var runningWeightsVolume = 0;
+
+    var runningScoreTotalEfficiency = 0;
+    var runningScoreAvgEfficiency = 0;
+    var runningWeightsEfficiency = 0;
+
+    var runningScoreTotalCare = 0;
+    var runningScoreAvgCare = 0;
+    var runningWeightsCare = 0;
+
+    //category variables
+    //regional impact potential
+    var runningScoreTotalRegional = 0;
+    var runningScoreAvgRegional = 0;
+    var runningWeightsRegional = 0;
+    //external relations
+    var runningScoreTotalRelations = 0;
+    var runningScoreAvgRelations = 0;
+    var runningWeightsRelations = 0;
+    //volunteer opportunity
+    var runningScoreTotalVolOppt = 0;
+    var runningScoreAvgVolOppt = 0;
+    var runningWeightsVolOppt = 0;
+    //volunteer satisfaction
+    var runningScoreTotalVolSats = 0;
+    var runningScoreAvgVolSats = 0;
+    var runningWeightsVolSats = 0;
+    var totalScoreSum = 0;
+    var totalScoreWeights = 0;
+    var totalScore = 0;
+
+    //categories
+    var financialHealth = 0;
+    var operationalPerformance = 0;
+
+    var totalFinancialHealthWeight = 0
+    var totalOperationalPerfWeight = 0
+
+
+    //for testing
+    //var obj = {}
+
+
+    function computeScores() {
+
+      console.log(mapToWeights.keys());
+
+      for (let key of mapToWeights.keys()) { //key is the variable name
+
+        if (obj[key]) {
+          mapJSON.set(key, obj[key]);
+        } else {
+          mapJSON.set(key, 0);
+        }
+
+
+        // mapJSON.set(key, obj[key]);
+        //mapJSON[key] = obj[key];
+      }
+      console.log(mapJSON);
+      console.log(mapJSON.entries());
+      computeSubCatScore(mapJSON);
+
+    }
+
+
+    function computeSubCatScore(mapToScores) {
+      console.log("compute SubCat Score");
+      console.log(mapToScores.entries());
+
+      //funding sources
+      for (const [variable, score] of mapToScores.entries()) {
+        console.log("variable");
+        console.log(variable);
+        if (mapToSubCatsj.get(variable).valueOf() == "Funding Sources") {
+          console.log("funding sources");
+          runningScoreTotalFunding = runningScoreTotalFunding + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsFunding = runningWeightsFunding + mapToWeights.get(variable);
+
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Financial Capacity") {
+          console.log("financial cap");
+          runningScoreTotalFinancial = runningScoreTotalFinancial + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsFinancial = runningWeightsFinancial + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Operational Efficiency") {
+          console.log("operational efficiency");
+          runningScoreTotalOperation = runningScoreTotalOperation + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsOperation = runningWeightsOperation + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Governance") {
+          console.log("governance");
+          runningScoreTotalGov = runningScoreTotalGov + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsGov = runningWeightsGov + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Transparency") {
+          console.log("transparency");
+          runningScoreTotalTrans = runningScoreTotalTrans + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsTrans = runningWeightsTrans + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Accountability") {
+          console.log("accountability");
+          runningScoreTotalAccount = runningScoreTotalAccount + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsAccount = runningWeightsAccount + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Organization Quality") {
+          console.log("org quality");
+          runningScoreTotalOrganization = runningScoreTotalOrganization + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsOrganization = runningWeightsOrganization + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Volume") {
+          console.log("volume");
+          runningScoreTotalVolume = runningScoreTotalVolume + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolume = runningWeightsVolume + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Financial Efficiency") {
+          console.log("financial efficiency");
+          runningScoreTotalEfficiency = runningScoreTotalEfficiency + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsEfficiency = runningWeightsEfficiency + mapToWeights.get(variable);
+        }
+        if (mapToSubCatsj.get(variable).valueOf() == "Care Quality") {
+          console.log("care quality");
+          runningScoreTotalCare = runningScoreTotalCare + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsCare = runningWeightsCare + mapToWeights.get(variable);
+        }
+      }
+      console.log(runningScoreTotalFunding);
+      console.log(runningScoreTotalFinancial);
+      console.log(runningScoreTotalOperation);
+      console.log(runningScoreTotalGov);
+      console.log(runningScoreTotalTrans);
+      console.log(runningScoreTotalAccount);
+      console.log(runningScoreTotalOrganization);
+      console.log(runningScoreTotalVolume);
+      console.log(runningScoreTotalEfficiency);
+      console.log(runningScoreTotalCare);
+      runningScoreAvgFunding = runningScoreTotalFunding / runningWeightsFunding;
+      runningScoreAvgFinancial = runningScoreTotalFinancial / runningWeightsFinancial;
+      runningScoreAvgOperation = runningScoreTotalOperation / runningWeightsOperation;
+      runningScoreAvgGov = runningScoreTotalGov / runningWeightsGov;
+      runningScoreAvgTrans = runningScoreTotalTrans / runningWeightsTrans;
+      runningScoreAvgAccount = runningScoreTotalAccount / runningWeightsAccount;
+      runningScoreAvgOrganization = runningScoreTotalOrganization / runningWeightsOrganization;
+      runningScoreAvgVolume = runningScoreTotalVolume / runningWeightsVolume;
+      runningScoreAvgEfficiency = runningScoreTotalEfficiency / runningWeightsEfficiency;
+      runningScoreAvgCare = runningScoreTotalCare / runningWeightsCare;
+
+      computeCatScore(mapJSON);
+    }
+
+    function computeCatScore(mapToScores) {
+      totalFinancialHealthWeight = runningWeightsAccount + runningWeightsFunding + runningWeightsEfficiency + runningWeightsFinancial;
+      totalOperationalPerfWeight = runningWeightsOperation + runningWeightsGov + runningWeightsTrans + runningWeightsOrganization + runningWeightsVolume + runningWeightsCare;
+
+      for (const [variable, score] of mapToScores.entries()) {
+
+        if (mapToCats.get(variable).valueOf() == "Regional Impact Potential") {
+          runningScoreTotalRegional = runningScoreTotalRegional + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsRegional = runningWeightsRegional + mapToWeights.get(variable);
+        }
+
+        if (mapToCats.get(variable).valueOf() == "External Relations") {
+          runningScoreTotalRelations = runningScoreTotalRelations + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsRelations = runningWeightsRelations + mapToWeights.get(variable);
+        }
+
+        if (mapToCats.get(variable).valueOf() == "Volunteer Opportunity") {
+          runningScoreTotalVolOppt = runningScoreTotalVolOppt + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolOppt = runningWeightsVolOppt + mapToWeights.get(variable);
+        }
+
+        if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
+          runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
+        }
+      }
+
+      runningScoreAvgRegional = runningScoreTotalRegional / runningWeightsRegional;
+      runningScoreAvgRelations = runningScoreTotalRelations / runningWeightsRelations;
+      runningScoreAvgVolOppt = runningScoreTotalVolOppt / runningWeightsVolOppt;
+      runningScoreAvgVolSats = runningScoreTotalVolSats / runningWeightsVolSats;
+
+
+      //financial health: funding sources, financial efficiency, financial capacity, accountability
+      financialHealth = (runningScoreTotalFunding + runningScoreTotalEfficiency + runningScoreTotalFinancial + runningScoreTotalAccount) /
+        (runningWeightsAccount + runningWeightsFunding + runningWeightsEfficiency + runningWeightsFinancial);
+
+      //operational performance: operational effciency, governance, transparency, organization quality, volume, care quality
+      operationalPerformance = (runningScoreTotalOperation + runningScoreTotalGov + runningScoreTotalTrans + runningScoreTotalOrganization + runningScoreTotalVolume + runningScoreTotalCare) /
+        (runningWeightsOperation + runningWeightsGov + runningWeightsTrans + runningWeightsOrganization + runningWeightsVolume + runningWeightsCare);
+
+      computeTotalScore(mapToScores);
+    }
+
+
+    function computeTotalScore(mapToScores) {
+      for (const [variable, score] of mapToScores.entries()) {
+        totalScoreSum = totalScoreSum + score * mapToWeights.get(variable);
+        totalScoreWeights = totalScoreWeights + mapToWeights.get(variable);
+      }
+
+      totalScore = totalScoreSum / totalScoreWeights;
+
+      obj['SC funding sources'] = runningScoreAvgFunding;
+      obj['SC financial capacity'] = runningScoreAvgFinancial;
+      obj['SC operational effciency'] = runningScoreAvgOperation;
+      obj['SC governance'] = runningScoreAvgGov;
+      obj['SC transparency'] = runningScoreAvgTrans;
+      obj['SC accountability'] = runningScoreAvgAccount;
+      obj['SC organization quality'] = runningScoreAvgOrganization;
+      obj['SC volume'] = runningScoreAvgVolume;
+      obj['SC financial efficiency'] = runningScoreAvgEfficiency;
+      obj['SC care quality'] = runningScoreAvgCare;
+      obj['C regional impact potential'] = runningScoreAvgRegional;
+      obj['C external relations'] = runningScoreAvgRelations;
+      obj['C volunteer opportunity'] = runningScoreAvgVolOppt;
+      obj['C volunteer satisfaction'] = runningScoreAvgVolSats;
+      obj['C financial health'] = financialHealth;
+      obj['C operational performance'] = operationalPerformance;
+      obj['R rating'] = totalScore;
+      obj['ready'] = true;
+
+      console.log(JSON.stringify(obj));
+
+      document.getElementById('status').innerHTML = "Your hospital got a rating of " + Number(obj['R rating']).toFixed(2) + ". You can click 'Submit your Data' to add your hospital to our platform.";
+    }
+  </script>
+</body>
+
+</html>
