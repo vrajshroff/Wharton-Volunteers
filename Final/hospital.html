@@ -40,7 +40,7 @@
 
   <div class="row" style="background-color:Navy;">
     <div class="col">
-      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+      <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
       <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
           Donors</i></p>
     </div>
@@ -67,7 +67,14 @@
     }
 
     function someFunction(div) {
-      console.log(div);
+      var result_style = document.getElementsByClassName("s " + div)
+      for (var i = 0; i < result_style.length; i++) {
+        if (result_style[i].style.display == "none") {
+          result_style[i].style.display = "table-row"
+        } else {
+          result_style[i].style.display = "none"
+        }
+      }
     }
 
     var map = new Map();
@@ -76,9 +83,9 @@
     map.set('financial efficiency', 'financial health')
     map.set('financial capacity', 'financial health')
     map.set('accountability', 'financial health')
-    map.set('operational efficiency', 'operational performance')
+    map.set('operational effciency', 'operational performance')
     map.set('governance', 'operational performance')
-    map.set('transparency ', 'operational performance')
+    map.set('transparency', 'operational performance')
     map.set('organization quality', 'operational performance')
     map.set('volume', 'operational performance')
     map.set('care quality', 'operational performance')
@@ -116,7 +123,10 @@
 
         Plotly.newPlot('myDiv', data, {
           paper_bgcolor: 'rgba(100,0,0,0)',
-          plot_bgcolor: 'rgba(100,0,0,0)'
+          plot_bgcolor: 'rgba(100,0,0,0)',
+          yaxis: {
+            range: [0, 5]
+          }
         });
 
         //basic info
@@ -125,6 +135,34 @@
         document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
         document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
         document.getElementById("summary").innerHTML = String(doc.get("Summary"))
+
+
+        //subcat
+        var subcats = {};
+
+        for (var k in docJSON) {
+          if (k.startsWith("SC ")) {
+            var foundSubCat = k.substring(3)
+            //console.log("foundSubCat: " + foundSubCat)
+            var itsCat = map.get(foundSubCat)
+            //console.log("itsCat: " + itsCat)
+            if (subcats[itsCat]) {
+              var tempList = subcats[itsCat]
+              tempList.push(foundSubCat)
+              subcats[itsCat] = tempList
+              //console.log("subcats.set(itsCat): " + subcats[itsCat])
+            } else {
+              var tempList = []
+              tempList.push(foundSubCat)
+              //console.log(foundSubCat)
+              console.log(itsCat)
+              subcats[itsCat] = tempList
+              //console.log("subcats.set(itsCat) else: " + subcats[itsCat])
+            }
+          }
+        }
+
+        console.log("subcats: " + JSON.stringify(subcats))
 
         //table
         var x = document.getElementById("table");
@@ -135,7 +173,12 @@
 
           var z = document.createElement("TD");
           var t = document.createElement('span')
-          t.innerHTML = '<a href="#" onclick="someFunction(\'' + cats[i] + '\');">' + cats[i] + '</a>';
+
+          if (subcats[cats[i]]) {
+            t.innerHTML = '<a href="javascript:someFunction(\'' + cats[i] + '\');">' + cats[i] + '</a>';
+          } else {
+            t.innerHTML = cats[i];
+          }
 
           z.appendChild(t);
           y.appendChild(z);
@@ -147,6 +190,29 @@
           y.appendChild(z);
 
           x.appendChild(y);
+
+          if (subcats[cats[i]]) {
+            console.log(subcats[cats[i]])
+            for (var j = 0; j < subcats[cats[i]].length; j++) {
+              y = document.createElement("TR");
+              y.setAttribute("class", "s " + cats[i]);
+              y.style.display = "none"
+
+              z = document.createElement("TD");
+              t = document.createElement('span')
+              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + subcats[cats[i]][j];
+              z.appendChild(t);
+              y.appendChild(z);
+
+              z = document.createElement("TD");
+              t = document.createElement('span')
+              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + docJSON["SC " + subcats[cats[i]][j]].toFixed(2) +
+                " / 5";
+              z.appendChild(t);
+              y.appendChild(z);
+              x.appendChild(y);
+            }
+          }
         }
 
       } else {
@@ -194,33 +260,6 @@
     </tbody>
   </table>
   <br>
-
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Sub-Category</th>
-        <th>Rating</th>
-      </tr>
-    </thead>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <tbody id="table2">
-
-    </tbody>
-  </table>
 
 </body>
 

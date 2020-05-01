@@ -5,10 +5,16 @@
   <title>TIMS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
   <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script>
     var firebaseConfig = {
       apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
@@ -60,31 +66,151 @@
       return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     }
 
+    function someFunction(div) {
+      var result_style = document.getElementsByClassName("s " + div)
+      for (var i = 0; i < result_style.length; i++) {
+        if (result_style[i].style.display == "none") {
+          result_style[i].style.display = "table-row"
+        } else {
+          result_style[i].style.display = "none"
+        }
+      }
+    }
+
+    var map = new Map();
+    map.set('regional impact potential', 'regional impact potential')
+    map.set('funding sources', 'financial health')
+    map.set('financial efficiency', 'financial health')
+    map.set('financial capacity', 'financial health')
+    map.set('accountability', 'financial health')
+    map.set('operational effciency', 'operational performance')
+    map.set('governance', 'operational performance')
+    map.set('transparency', 'operational performance')
+    map.set('organization quality', 'operational performance')
+    map.set('volume', 'operational performance')
+    map.set('care quality', 'operational performance')
+    map.set('external relations', 'external relations')
+    map.set('volunteer opportunity', 'volunteer opportunity')
+
 
     var db = firebase.firestore();
     var username = getParameterByName("username");
     var docRef = db.collection("hospitals").doc(username);
 
+    var docJSON;
     docRef.get().then(function(doc) {
       if (doc.exists) {
-        console.log("Document data:", doc.data());
-        //Hospital info
+
+        docJSON = doc.data();
+        var cats = []
+        var rats = []
+        for (var k in docJSON) {
+          if (k.startsWith("C ")) {
+            cats.push(k.substring(2))
+            rats.push(docJSON[k].toFixed(2))
+          }
+        }
+        console.log("cats: " + cats);
+        console.log("rats: " + rats);
+
+
+        //graph
+        var data = [{
+          x: cats,
+          y: rats,
+          type: 'bar'
+        }];
+
+        Plotly.newPlot('myDiv', data, {
+          paper_bgcolor: 'rgba(100,0,0,0)',
+          plot_bgcolor: 'rgba(100,0,0,0)'
+        });
+
+        //basic info
         document.getElementById("hospitalName").innerHTML = String(doc.get("Hospital Name"))
         document.getElementById("hospitalAddress").innerHTML = String(doc.get("Hospital Address"))
         document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
         document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
+        document.getElementById("summary").innerHTML = String(doc.get("Summary"))
 
-        //Subcategories
-        document.getElementById("scFundingSources").innerHTML = String(doc.get("SC funding sources").toFixed(2)) + " / 5"
-        document.getElementById("scFinancialEfficiency").innerHTML = String(doc.get("SC financial efficiency").toFixed(2)) + " / 5"
-        document.getElementById("scFinancialCapacity").innerHTML = String(doc.get("SC financial capacity").toFixed(2)) + " / 5"
-        document.getElementById("scAccountability").innerHTML = String(doc.get("SC accountability").toFixed(2)) + " / 5"
-        document.getElementById("scOperationalEfficiency").innerHTML = String(doc.get("SC operational effciency").toFixed(2)) + " / 5"
-        document.getElementById("scGovernance").innerHTML = String(doc.get("SC governance").toFixed(2)) + " / 5"
-        document.getElementById("scTransparency").innerHTML = String(doc.get("SC transparency").toFixed(2)) + " / 5"
-        document.getElementById("scOrganizationQuality").innerHTML = String(doc.get("SC organization quality").toFixed(2)) + " / 5"
-        document.getElementById("scVolume").innerHTML = String(doc.get("SC volume").toFixed(2)) + " / 5"
-        document.getElementById("scCareQuality").innerHTML = String(doc.get("SC care quality").toFixed(2)) + " / 5"
+
+        //subcat
+        var subcats = {};
+
+        for (var k in docJSON) {
+          if (k.startsWith("SC ")) {
+            var foundSubCat = k.substring(3)
+            //console.log("foundSubCat: " + foundSubCat)
+            var itsCat = map.get(foundSubCat)
+            //console.log("itsCat: " + itsCat)
+            if (subcats[itsCat]) {
+              var tempList = subcats[itsCat]
+              tempList.push(foundSubCat)
+              subcats[itsCat] = tempList
+              //console.log("subcats.set(itsCat): " + subcats[itsCat])
+            } else {
+              var tempList = []
+              tempList.push(foundSubCat)
+              //console.log(foundSubCat)
+              console.log(itsCat)
+              subcats[itsCat] = tempList
+              //console.log("subcats.set(itsCat) else: " + subcats[itsCat])
+            }
+          }
+        }
+
+        console.log("subcats: " + JSON.stringify(subcats))
+
+        //table
+        var x = document.getElementById("table");
+
+        for (var i = 0; i < cats.length; i++) {
+          var y = document.createElement("TR");
+          y.setAttribute("id", cats[i]);
+
+          var z = document.createElement("TD");
+          var t = document.createElement('span')
+
+          if (subcats[cats[i]]) {
+            t.innerHTML = '<a href="javascript:someFunction(\'' + cats[i] + '\');">' + cats[i] + '</a>';
+          } else {
+            t.innerHTML = cats[i];
+          }
+
+          z.appendChild(t);
+          y.appendChild(z);
+
+          z = document.createElement("TD");
+          t = document.createTextNode(rats[i] +
+            " / 5");
+          z.appendChild(t);
+          y.appendChild(z);
+
+          x.appendChild(y);
+
+          if (subcats[cats[i]]) {
+            console.log(subcats[cats[i]])
+            for (var j = 0; j < subcats[cats[i]].length; j++) {
+              y = document.createElement("TR");
+              y.setAttribute("class", "s " + cats[i]);
+              y.style.display = "none"
+
+              z = document.createElement("TD");
+              t = document.createElement('span')
+              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + subcats[cats[i]][j];
+              z.appendChild(t);
+              y.appendChild(z);
+
+              z = document.createElement("TD");
+              t = document.createElement('span')
+              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + docJSON["SC " + subcats[cats[i]][j]].toFixed(2) +
+                " / 5";
+              z.appendChild(t);
+              y.appendChild(z);
+              x.appendChild(y);
+            }
+          }
+        }
 
       } else {
         location.href = "index.html"
@@ -94,147 +220,44 @@
       console.log("Error getting document:", error);
     });
   </script>
-
+  <br>
   <div class="container-fluid">
-
+    <h1 id="hospitalName"> </h1><br>
     <div class="row">
       <div class="col">
-        <br>
-        <h1 id="hospitalName"> </h1><br>
-        <div class="row">
-          <div class="col-sm">
-            <h6> Rating</h6>
-            <p id="hospitalRating"></p>
-          </div>
-          <div class="col-sm">
-            <h6> Address </h6>
-            <p id="hospitalAddress"></p>
-          </div>
-          <div class="col-sm">
-            <h6> Contact </h6>
-            <p id="hospitalContact"></p>
-          </div>
-
-        </div>
-        <hr>
-
-        <div class="container">
-          <h3 align="center">Category Ratings</h3>
-
-          <canvas id="myChart"></canvas>
-          <script>
-            function getParameterByName(name) {
-              var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-              return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-            }
-
-
-            var db = firebase.firestore();
-            var username = getParameterByName("username");
-            var docRef = db.collection("hospitals").doc(username);
-
-
-            docRef.get().then(function(doc) {
-              if (doc.exists) {
-
-                var ctx = document.getElementById('myChart').getContext('2d');
-
-                var chart = new Chart(ctx, {
-                  // The type of chart we want to create
-                  type: 'bar',
-
-                  // The data for our dataset
-                  data: {
-                    labels: ['Regional Impact Potential', 'Financial Health', 'Operational Performance', 'External Relations', 'Volunteer Opportunity'],
-                    datasets: [{
-                      label: 'Rating on a scale from 0 to 5',
-                      backgroundColor: 'rgb(51, 105, 255)',
-                      data: [doc.get("C regional impact potential").toFixed(2),
-                        doc.get("C financial health").toFixed(2),
-                        doc.get("C operational performance").toFixed(2),
-                        doc.get("C external relations").toFixed(2),
-                        doc.get("C volunteer opportunity").toFixed(2)
-                      ]
-
-                    }]
-                  },
-                  options: {
-                    scales: {
-                      yAxes: [{
-                        ticks: {}
-                      }]
-                    }
-
-                  }
-                });
-
-              } else {
-                location.href = "index.html"
-                console.log("No such document!");
-              }
-            }).catch(function(error) {
-              location.href = "index.html"
-              console.log("Error getting document:", error);
-            });
-          </script>
-
-        </div>
-
-        <hr>
-        <h3 align="center"> Subcategory Ratings</h3>
-        <br>
-        <table class="table table-hover">
-          <tr style="background-color: navy; color: whitesmoke">
-            <th>Subcategory</th>
-            <th>Rating</th>
-          </tr>
-          <tr>
-            <td>Funding Sources</td>
-            <td id="scFundingSources">fs</td>
-          </tr>
-          <tr>
-            <td>Financial Efficiency</td>
-            <td id="scFinancialEfficiency"></td>
-          </tr>
-          <tr>
-            <td>Financial Capacity</td>
-            <td id="scFinancialCapacity"></td>
-          </tr>
-          <tr>
-            <td>Accountability</td>
-            <td id="scAccountability"></td>
-          </tr>
-          <tr>
-            <td>Operational Efficiency</td>
-            <td id="scOperationalEfficiency"></td>
-          </tr>
-          <tr>
-            <td>Governance</td>
-            <td id="scGovernance"></td>
-          </tr>
-          <tr>
-            <td>Transparency</td>
-            <td id="scTransparency"></td>
-          </tr>
-          <tr>
-            <td>Organization Quality</td>
-            <td id="scOrganizationQuality"></td>
-          </tr>
-          <tr>
-            <td>Volume</td>
-            <td id="scVolume"></td>
-          </tr>
-          <tr>
-            <td>Care Quality</td>
-            <td id="scCareQuality"></td>
-          </tr>
-        </table>
-        <br><br>
+        <h6> Address </h6>
+        <p id="hospitalAddress"></p>
+      </div>
+      <div class="col">
+        <h6> Contact </h6>
+        <p id="hospitalContact"></p>
+      </div>
+      <div class="col">
+        <h6> Rating</h6>
+        <p id="hospitalRating"></p>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <h6> Summary</h6>
+        <p id="summary"></p>
+      </div>
+    </div>
+    <div id="myDiv"></div>
   </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody id="table">
+    </tbody>
+  </table>
+  <br>
+
 </body>
-
-
 
 </html>
