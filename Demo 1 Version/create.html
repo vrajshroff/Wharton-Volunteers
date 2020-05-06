@@ -845,6 +845,33 @@
       mapToWeights.set('Child Education Opportunities', 1)
       mapToWeights.set('Housing Opportunities', 1)
       mapToWeights.set('Local Safety', 2)
+      mapToWeights.set('Local Safety Perception', 2)
+      mapToWeights.set('Volunteer Recommendation', 3)
+      mapToWeights.set('Overall Volunteer Satisfaction', 1)
+      mapToWeights.set('Skills Match', 1)
+      mapToWeights.set('Learning Opportunities', 3)
+      mapToWeights.set('Career Development', 2)
+      mapToWeights.set('Job Training Appropriateness', 2)
+      mapToWeights.set('Community Affiliation', 3)
+      mapToWeights.set('Strategy and Influence', 2)
+      mapToWeights.set('Philanthropic Impact', 3)
+      mapToWeights.set('Flexibility', 1)
+      mapToWeights.set('Supervision', 2)
+      mapToWeights.set('Recognition', 1)
+      mapToWeights.set('Achievement', 3)
+      mapToWeights.set('Respect of Community', 1)
+      mapToWeights.set('Charity Rating Organizations', 1)
+      mapToWeights.set('Donor Satisfaction', 3)
+      mapToWeights.set('Leadership Credibility', 7)
+      mapToWeights.set('Staff Satisfaction', 1)
+      mapToWeights.set('Patient Satisfaction - Hospital Cleanliness', 1)
+      mapToWeights.set('Patient Satisfaction - Staff', 1)
+      mapToWeights.set('Patient Satisfaction - Service', 1)
+      mapToWeights.set('Culture of Continuous Improvement', 1)
+      mapToWeights.set('Average Outpatient Cost', 5)
+      mapToWeights.set('Average Inpatient Cost', 5)
+      mapToWeights.set('Safety of Funds', 5)
+      mapToWeights.set('Additional Services', 4)
 
 
       mapToSubCatsj.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
@@ -853,6 +880,7 @@
       mapToSubCatsj.set('Alternative Care Options', 'Regional Impact Potential')
       mapToSubCatsj.set('Local Maternal Mortality Rate (MMR)', 'Regional Impact Potential')
       mapToSubCatsj.set('Local Infant Mortality Rate (IMR)', 'Regional Impact Potential')
+      mapToSubCatsj.set('Additional Services', 'Regional Impact Potential')
       mapToSubCatsj.set('Diversity of Revenue Sources', 'Funding Sources')
       mapToSubCatsj.set('Donations Percent of Revenue', 'Funding Sources')
       mapToSubCatsj.set('Operating Margin', 'Financial Efficiency')
@@ -868,8 +896,11 @@
       mapToSubCatsj.set('Auditing', 'Accountability')
       mapToSubCatsj.set('Accounting Books', 'Accountability')
       mapToSubCatsj.set('Bank Accounts', 'Accountability')
+      mapToSubCatsj.set('Safety of Funds', 'Accountability')
       mapToSubCatsj.set('Cost Per Life Saved', 'Operational Efficiency')
       mapToSubCatsj.set('Charity Care Efficiency', 'Operational Efficiency')
+      mapToSubCatsj.set('Average Inpatient Cost', 'Operational Efficiency')
+      mapToSubCatsj.set('Average Outpatient Cost', 'Operational Efficiency')
       mapToSubCatsj.set('Formal Governance Structure', 'Governance')
       mapToSubCatsj.set('Commitment to Mission', 'Governance')
       mapToSubCatsj.set('Strategic Plan and Implementation', 'Governance')
@@ -885,9 +916,10 @@
       mapToSubCatsj.set('Appointed CEO', 'Governance')
       mapToSubCatsj.set('Legal Support', 'Governance')
       mapToSubCatsj.set('Operational Policies', 'Governance')
-      mapToSubCatsj.set('Outcomes Reporting', 'Transparency ')
-      mapToSubCatsj.set('Donor Privacy Policy', 'Transparency ')
-      mapToSubCatsj.set('Website', 'Transparency ')
+      mapToSubCatsj.set('Culture of Continuous Improvement', 'Governance')
+      mapToSubCatsj.set('Outcomes Reporting', 'Transparency')
+      mapToSubCatsj.set('Donor Privacy Policy', 'Transparency')
+      mapToSubCatsj.set('Website', 'Transparency')
       mapToSubCatsj.set('Appropriate Standards of Care', 'Organization Quality')
       mapToSubCatsj.set('Equal Services for All Patients', 'Organization Quality')
       mapToSubCatsj.set('Community Engagement', 'Organization Quality')
@@ -896,24 +928,45 @@
       mapToSubCatsj.set('Major Surgeries', 'Volume')
       mapToSubCatsj.set('Child Deliveries', 'Volume')
       mapToSubCatsj.set('Outpatient Visits', 'Volume')
-      mapToSubCatsj.set('Bed Capacity', 'Volume')
       mapToSubCatsj.set('Bed Occupancy', 'Volume')
       mapToSubCatsj.set('Weighted Average Patient Volume CAGR', 'Volume')
       mapToSubCatsj.set('Hospital Maternal Mortality Rate (MMR)', 'Care Quality')
       mapToSubCatsj.set('Hospital Infant Mortality Rate (IMR)', 'Care Quality')
       mapToSubCatsj.set('Patient Mortality Risk', 'Care Quality')
       mapToSubCatsj.set('Patient Readmission Rate', 'Care Quality')
+      mapToSubCatsj.set('Patient Satisfaction - Service', 'Care Quality')
+      mapToSubCatsj.set('Patient Satisfaction - Staff', 'Care Quality')
+      mapToSubCatsj.set('Patient Satisfaction - Hospital Cleanliness', 'Care Quality')
+      mapToSubCatsj.set('Staff Satisfaction', 'Care Quality')
       mapToSubCatsj.set('Staff Experience', 'Care Quality')
       mapToSubCatsj.set('Staff Meetings', 'Care Quality')
       mapToSubCatsj.set('Staff Turnover', 'Care Quality')
+      mapToSubCatsj.set('Leadership Credibility', 'External Relations')
+      mapToSubCatsj.set('Donor Satisfaction', 'External Relations')
+      mapToSubCatsj.set('Charity Rating Organizations', 'External Relations')
       mapToSubCatsj.set('Collaboration', 'External Relations')
       mapToSubCatsj.set('Exchange Programs', 'External Relations')
+      mapToSubCatsj.set('Respect of Community', 'External Relations')
       mapToSubCatsj.set('Volunteer Responsibility', 'Volunteer Opportunity')
       mapToSubCatsj.set('Expected Volunteer Experience', 'Volunteer Opportunity')
       mapToSubCatsj.set('Spousal Job Opportunities', 'Volunteer Opportunity')
       mapToSubCatsj.set('Child Education Opportunities', 'Volunteer Opportunity')
       mapToSubCatsj.set('Housing Opportunities', 'Volunteer Opportunity')
       mapToSubCatsj.set('Local Safety', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Local Safety Perception', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Volunteer Recommendation', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Overall Volunteer Satisfaction', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Skills Match', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Learning Opportunities', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Career Development', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Job Training Appropriateness', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Community Affiliation', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Strategy and Influence', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Philanthropic Impact', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Flexibility', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Supervision', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Recognition', 'Volunteer Satisfaction')
+      mapToSubCatsj.set('Achievement', 'Volunteer Satisfaction')
 
 
       mapToCats.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
@@ -977,66 +1030,111 @@
       mapToCats.set('Staff Turnover', 'Operational Performance')
       mapToCats.set('Collaboration', 'External Relations')
       mapToCats.set('Exchange Programs', 'External Relations')
-      mapToCats.set('Volunteer Responsibility', 'Volunteer Opportunity')
-      mapToCats.set('Expected Volunteer Experience', 'Volunteer Opportunity')
-      mapToCats.set('Spousal Job Opportunities', 'Volunteer Opportunity')
-      mapToCats.set('Child Education Opportunities', 'Volunteer Opportunity')
-      mapToCats.set('Housing Opportunities', 'Volunteer Opportunity')
-      mapToCats.set('Local Safety', 'Volunteer Opportunity')
+      mapToCats.set('Volunteer Responsibility', 'Volunteer Experience')
+      mapToCats.set('Expected Volunteer Experience', 'Volunteer Experience')
+      mapToCats.set('Spousal Job Opportunities', 'Volunteer Experience')
+      mapToCats.set('Child Education Opportunities', 'Volunteer Experience')
+      mapToCats.set('Housing Opportunities', 'Volunteer Experience')
+      mapToCats.set('Local Safety', 'Volunteer Experience')
+      mapToCats.set('Local Safety Perception', 'Volunteer Experience')
+      mapToCats.set('Volunteer Recommendation', 'Volunteer Experience')
+      mapToCats.set('Overall Volunteer Satisfaction', 'Volunteer Experience')
+      mapToCats.set('Skills Match', 'Volunteer Experience')
+      mapToCats.set('Learning Opportunities', 'Volunteer Experience')
+      mapToCats.set('Career Development', 'Volunteer Experience')
+      mapToCats.set('Job Training Appropriateness', 'Volunteer Experience')
+      mapToCats.set('Community Affiliation', 'Volunteer SExperience')
+      mapToCats.set('Strategy and Influence', 'Volunteer Experience')
+      mapToCats.set('Philanthropic Impact', 'Volunteer Experience')
+      mapToCats.set('Flexibility', 'Volunteer Experience')
+      mapToCats.set('Supervision', 'Volunteer Experience')
+      mapToCats.set('Recognition', 'Volunteer Experience')
+      mapToCats.set('Achievement', 'Volunteer Experience')
+      mapToCats.set('Respect of Community', 'External Relations')
+      mapToCats.set('Charity Rating Organizations', 'External Relations')
+      mapToCats.set('Donor Satisfaction', 'External Relations')
+      mapToCats.set('Leadership Credibility', 'External Relations')
+      mapToCats.set('Staff Satisfaction', 'Care Quality')
+      mapToCats.set('Patient Satisfaction - Hospital Cleanliness', 'Care Quality')
+      mapToCats.set('Patient Satisfaction - Staff', 'Care Quality')
+      mapToCats.set('Patient Satisfaction - Service', 'Care Quality')
+      mapToCats.set('Culture of Continuous Improvement', 'Governance')
+      mapToCats.set('Average Outpatient Cost', 'Operational Efficiency')
+      mapToCats.set('Average Inpatient Cost', 'Operational Efficiency')
+      mapToCats.set('Safety of Funds', 'Accountability')
+      mapToCats.set('Additional Services', 'Regional Impact Potential')
 
     }
 
     createMaps();
 
     //subcategory variables
+    //funding sources
     var runningScoreTotalFunding = 0;
     var runningScoreAvgFunding = 0;
     var runningWeightsFunding = 0;
-
+    
+    //financial capacity
     var runningScoreTotalFinancial = 0;
     var runningScoreAvgFinancial = 0;
     var runningWeightsFinancial = 0;
-
+    
+    //operational efficiency
     var runningScoreTotalOperation = 0;
     var runningScoreAvgOperation = 0;
     var runningWeightsOperation = 0;
 
+    //governance
     var runningScoreTotalGov = 0;
     var runningScoreAvgGov = 0;
     var runningWeightsGov = 0;
 
+    //transparency
     var runningScoreTotalTrans = 0;
     var runningScoreAvgTrans = 0;
     var runningWeightsTrans = 0;
 
+    //accountability
     var runningScoreTotalAccount = 0;
     var runningScoreAvgAccount = 0;
     var runningWeightsAccount = 0;
 
+    //org quality
     var runningScoreTotalOrganization = 0;
     var runningScoreAvgOrganization = 0;
     var runningWeightsOrganization = 0;
 
+    //volume
     var runningScoreTotalVolume = 0;
     var runningScoreAvgVolume = 0;
     var runningWeightsVolume = 0;
 
+    //financial efficiency
     var runningScoreTotalEfficiency = 0;
     var runningScoreAvgEfficiency = 0;
     var runningWeightsEfficiency = 0;
 
+    //care quality
     var runningScoreTotalCare = 0;
     var runningScoreAvgCare = 0;
     var runningWeightsCare = 0;
 
+    //external relations
     var runningScoreTotalExtRelSub = 0;
     var runningScoreAvgExtRelSub = 0;
     var runningWeightsExtRelSub = 0;
 
+    //volunteer opportunity
     var runningScoreTotalVolOpptSub = 0;
     var runningScoreAvgVolOpptSub = 0;
     var runningWeightsVolOpptSub = 0;
+    
+    //volunteer satisfaction
+    var runningScoreTotalVolSat = 0;
+    var runningScoreAvgVolSat = 0;
+    var runningWeightsVolSat = 0;
 
+    //regional impact potential
     var runningScoreTotalRegionalSub = 0;
     var runningScoreAvgRegionalSub = 0;
     var runningWeightsRegionalSub = 0;
@@ -1050,14 +1148,14 @@
     var runningScoreTotalRelations = 0;
     var runningScoreAvgRelations = 0;
     var runningWeightsRelations = 0;
-    //volunteer opportunity
-    var runningScoreTotalVolOppt = 0;
-    var runningScoreAvgVolOppt = 0;
-    var runningWeightsVolOppt = 0;
+    //volunteer experience
+    var runningScoreTotalVolExp = 0;
+    var runningScoreAvgVolExp = 0;
+    var runningWeightsVolExp = 0;
     //volunteer satisfaction
-    var runningScoreTotalVolSats = 0;
-    var runningScoreAvgVolSats = 0;
-    var runningWeightsVolSats = 0;
+    //var runningScoreTotalVolSats = 0;
+    //var runningScoreAvgVolSats = 0;
+    //var runningWeightsVolSats = 0;
 
     var runningScoreTotalFinHealth = 0;
     var runningScoreAvgFinHealth = 0;
@@ -1132,6 +1230,12 @@
           console.log("vol opp sub");
           runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
+        }
+        
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
+          console.log("vol opp sub");
+          runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
         }
 
 
@@ -1210,6 +1314,7 @@
       runningScoreAvgRegionalSub = runningScoreTotalRegionalSub / runningWeightsRegionalSub;
       runningScoreAvgExtRelSub = runningScoreTotalExtRelSub / runningWeightsExtRelSub;
       runningScoreAvgVolOpptSub = runningScoreTotalVolOpptSub / runningWeightsVolOpptSub;
+      runningScoreAvgVolSat = runningScoreTotalVolSat / runningWeightsVolSat;
 
       computeCatScore(mapJSON);
 
@@ -1237,15 +1342,15 @@
           runningWeightsRelations = runningWeightsRelations + mapToWeights.get(variable);
         }
 
-        if (mapToCats.get(variable).valueOf() == "Volunteer Opportunity") {
-          runningScoreTotalVolOppt = runningScoreTotalVolOppt + mapToScores.get(variable) * mapToWeights.get(variable);
-          runningWeightsVolOppt = runningWeightsVolOppt + mapToWeights.get(variable);
+        if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
+          runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
         }
 
-        if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
-          runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
-          runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
-        }
+        //if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
+          //runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
+          //runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
+        //}
 
         if (mapToCats.get(variable).valueOf() == "Financial Health") {
           runningScoreTotalFinHealth = runningScoreTotalFinHealth + mapToScores.get(variable) * mapToWeights.get(variable);
@@ -1259,8 +1364,8 @@
       }
       runningScoreAvgRegional = runningScoreTotalRegional / runningWeightsRegional;
       runningScoreAvgRelations = runningScoreTotalRelations / runningWeightsRelations;
-      runningScoreAvgVolOppt = runningScoreTotalVolOppt / runningWeightsVolOppt;
-      runningScoreAvgVolSats = runningScoreTotalVolSats / runningWeightsVolSats;
+      runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
+      //runningScoreAvgVolSats = runningScoreTotalVolSats / runningWeightsVolSats;
       runningScoreAvgOperPerf = runningScoreTotalOperPerf / runningWeightsOperPerf;
       runningScoreAvgFinHealth = runningScoreTotalFinHealth / runningWeightsFinHealth;
 
