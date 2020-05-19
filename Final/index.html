@@ -178,6 +178,7 @@
             addMarker(addy);
           });
           elt(data);
+
         })
         .catch(function(error) {
           console.log("Error getting documents: ", error);
@@ -189,12 +190,13 @@
     getData(buildTable)
 
     //filter hospitals by search
+    /*
     $('#search-input').on('keyup', function() {
       var value = $(this).val()
       var info = searchTable(value, data)
       buildTable(info)
     })
-
+    */
 
     function buildTable(d) {
       var tableBody = document.getElementById("myTable");
@@ -225,8 +227,10 @@
         var b = document.createElement('Button');
         b.innerHTML = "See More";
         b.setAttribute("id", "btn btn-primary");
+        console.log("Here id is: " + id)
         b.onclick = function() {
-          location.href = ("hospital.html?username=" + id);
+          alert(id)
+          location.href = "hospital.html?username=" + id;
         };
 
         var td = document.createElement('TD');

@@ -49,3 +49,7 @@ app.get('/TermsOfUse.docx', function(req, res) {
 app.get('/PrivacyPolicy.docx', function(req, res) {
   res.sendFile(path.join(__dirname + '/PrivacyPolicy.docx'));
 })
+
+app.get('/delete.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/delete.html'));
+})
