@@ -123,10 +123,10 @@
 
           <p><b>What is the local population density within serving distance of the hospital (people per square kilometer)?</b></p>
           <label><input type="radio" name="Local Patient Population Density" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="1" required>&nbsp;0 - 100 people per square kilometer</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="2" required>&nbsp;100 - 150 people per square kilometer</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="3" required>&nbsp;150 - 200 people per square kilometer</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="4" required>&nbsp;200 - 250 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="1" required>&nbsp;&gt;50 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="2" required>&nbsp;50 - 100 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="3" required>&nbsp;100 - 150 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="4" required>&nbsp;150 - 250 people per square kilometer</label><br>
           <label><input type="radio" name="Local Patient Population Density" value="5" required>&nbsp;&gt;250 people per square kilometer</label><br>
           <br>
 
@@ -141,20 +141,20 @@
 
           <p><b>What is the maternal mortality rate (number of deaths of maternity patients per 100,000 live births annually) in the region where the hospital is located?</b></p>
           <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="1" required>&nbsp;&lt;10</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="2" required>&nbsp;10 - 50</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="3" required>&nbsp;50 - 100</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="4" required>&nbsp;100 - 150</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="5" required>&nbsp;&gt;150</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="1" required>&nbsp;&lt;50</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="2" required>&nbsp;50 - 100</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="3" required>&nbsp;100 - 150</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="4" required>&nbsp;150 - 300</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="5" required>&nbsp;&gt;300</label><br>
           <br>
 
           <p><b>What is the infant mortality rate (number of deaths of infants per 1,000 live births annually) in the region where the hospital is located?</b></p>
           <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="1" required>&nbsp;&lt;3</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="2" required>&nbsp;3 - 10</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="3" required>&nbsp;10 - 15</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="4" required>&nbsp;15 - 20</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="5" required>&nbsp;&gt;20</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="1" required>&nbsp;&lt;5</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="2" required>&nbsp;5 - 15</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="3" required>&nbsp;15 - 25</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="4" required>&nbsp;25 - 40</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="5" required>&nbsp;&gt;40</label><br>
           <br>
 
           <p><b>How many sources of revenue does the hospital have (as a measure of sustainability)?</b></p>
@@ -551,14 +551,27 @@
           <label><input type="radio" name="Outpatient Visits" value="5" required>&nbsp;&gt;1,500</label><br>
           <br>
 
-          <p><b>How many beds does the hospital have?</b></p>
-          <label><input type="radio" name="Bed Capacity" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Bed Capacity" value="1" required>&nbsp;&lt;50</label><br>
-          <label><input type="radio" name="Bed Capacity" value="2" required>&nbsp;50 - 100</label><br>
-          <label><input type="radio" name="Bed Capacity" value="3" required>&nbsp;100 - 300</label><br>
-          <label><input type="radio" name="Bed Capacity" value="4" required>&nbsp;300 - 500</label><br>
-          <label><input type="radio" name="Bed Capacity" value="5" required>&nbsp;&gt;500</label><br>
+          <p><b>What is the average price charged to inpatients (the cost of the stay less any charity care), as a percent above the national average? Average costs can be estimated by selecting your country in the WHO spreadsheet at the following
+              site: https://www.who.int/choice/country/country_specific/en/</b></p>
+          <label><input type="radio" name="Average Inpatient Cost" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="1" required>&nbsp;&gt;20% above national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="2" required>&nbsp;10% to 20% above national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="3" required>&nbsp;10% above to 10% below national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="4" required>&nbsp;10% to 20% below national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="5" required>&nbsp;&gt;20% below national average inpatient cost</label><br>
           <br>
+
+
+          <p><b>What is the average price charged to outpatients (the cost of the visit less any charity care), as a percent above the national average? Average costs can be estimated by selecting your country in the WHO spreadsheet at the following
+              site: https://www.who.int/choice/country/country_specific/en/</b></p>
+          <label><input type="radio" name="Average Outpatient Cost" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="1" required>&nbsp;&gt;20% above national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="2" required>&nbsp;10% to 20% above national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="3" required>&nbsp;10% above to 10% below national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="4" required>&nbsp;10% to 20% below national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="5" required>&nbsp;&gt;20% below national average outpatient cost</label><br>
+          <br>
+
 
           <p><b>What is the hospital's bed occupancy rate? (To calculate, divide total number of bed-days during the year by (number of beds available * 365 days), then multiply by 100.)</b></p>
           <label><input type="radio" name="Bed Occupancy" value="0" required>&nbsp;No Data</label><br>
@@ -768,7 +781,7 @@
   </script>
 
   <script>
-        var mapToWeights = new Map();
+    var mapToWeights = new Map();
     var mapToWeightsFinal = new Map();
     var mapToSubCatsj = new Map();
     var mapToSubCatsFinal = new Map();
@@ -1074,12 +1087,12 @@
     var runningScoreTotalFunding = 0;
     var runningScoreAvgFunding = 0;
     var runningWeightsFunding = 0;
-    
+
     //financial capacity
     var runningScoreTotalFinancial = 0;
     var runningScoreAvgFinancial = 0;
     var runningWeightsFinancial = 0;
-    
+
     //operational efficiency
     var runningScoreTotalOperation = 0;
     var runningScoreAvgOperation = 0;
@@ -1129,7 +1142,7 @@
     var runningScoreTotalVolOpptSub = 0;
     var runningScoreAvgVolOpptSub = 0;
     var runningWeightsVolOpptSub = 0;
-    
+
     //volunteer satisfaction
     var runningScoreTotalVolSat = 0;
     var runningScoreAvgVolSat = 0;
@@ -1225,15 +1238,15 @@
         }
 
         //if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Opportunity") {
-          //console.log("vol opp sub");
-          //runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
-          //runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
+        //console.log("vol opp sub");
+        //runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
+        //runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
         //}
-        
+
         //if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
-          //console.log("vol opp sub");
-          //runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
-          //runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
+        //console.log("vol opp sub");
+        //runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
+        //runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
         //}
 
 
@@ -1341,13 +1354,13 @@
         }
 
         //if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
-          //runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
-          //runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
+        //runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
+        //runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
         //}
 
         //if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
-          //runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
-          //runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
+        //runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
+        //runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
         //}
 
         if (mapToCats.get(variable).valueOf() == "Financial Health") {
@@ -1391,11 +1404,11 @@
       }
 
       totalScore = totalScoreSum / totalScoreWeights;
-      
+
       //for hospital.html calculations
       obj['totalScoreSum'] = totalScoreSum;
       obj['totalScoreWeights'] = totalScoreWeights;
-      
+
       obj['SC regional impact potential subcategory'] = runningScoreAvgRegionalSub;
       obj['SC external relations'] = runningScoreAvgExtRelSub;
       //obj['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
