@@ -101,6 +101,12 @@
           <p><b>Enter hospital summary/description</b></p>
           <input type="text" name="Summary" style="width:300px;" required><br><br>
 
+          <p><b>Enter causes your hospital supports</b></p>
+          <input type="text" name="Causes" style="width:300px;" required><br><br>
+
+          <p><b>Enter your hospital story</b></p>
+          <input type="text" name="Story" style="width:300px;" required><br><br>
+
           <!-- Questions -->
           <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? The average patient income can be estimated based on all sources of income (including wages, proceeds from
               sales, etc.). This tool can be used for reference: https://wid.world/simulator.</b></p>
@@ -1191,20 +1197,11 @@
     var totalOperationalPerfWeight = 0
 
 
-    //for testing
-    //var obj = {}
-
-
-    computeScores();
-
     function computeScores() {
-      //    obj ={}
-
       console.log(mapToWeights.keys());
 
       for (let key of mapToWeights.keys()) { //key is the variable name
         mapJSON.set(key, obj[key]);
-        //mapJSON[key] = obj[key];
       }
       console.log(mapJSON);
       console.log(mapJSON.entries());
@@ -1429,7 +1426,7 @@
       obj['R rating'] = totalScore;
       obj['ready'] = true;
 
-      firestore();
+      //firestore();
 
       console.log(JSON.stringify(obj));
 
