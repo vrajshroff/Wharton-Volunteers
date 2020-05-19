@@ -725,6 +725,16 @@
           <br>
 
 
+          <p><b>What services does the organization provide (e.g., hospital, education, agriculture)? Please list each as a way to allow donors and volunteers to search for the organization.</b></p>
+          <label><input type="radio" name="Additional Services" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Additional Services" value="3" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high
+            quality.</label><br>
+          <label><input type="radio" name="Additional Services" value="4" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high quality,
+            and the program performs above average on at least one key relevant metric.</label><br>
+          <label><input type="radio" name="Additional Services" value="5" required>&nbsp;At least 2 additional services are provided, to which at least 5% of the hospital's resources are dedicated. Appropriate services are delivered with high
+            quality, and the programs perform above average on at least one key relevant metric.</label><br>
+          <br>
+
           <!-- Questions Over-->
 
           <input type="submit" value="Check your Rating">
@@ -889,7 +899,6 @@
       mapToWeights.set('Culture of Continuous Improvement', 1)
       mapToWeights.set('Average Outpatient Cost', 5)
       mapToWeights.set('Average Inpatient Cost', 5)
-      mapToWeights.set('Safety of Funds', 5)
       mapToWeights.set('Additional Services', 4)
 
 
@@ -915,7 +924,6 @@
       mapToSubCatsj.set('Auditing', 'Accountability')
       mapToSubCatsj.set('Accounting Books', 'Accountability')
       mapToSubCatsj.set('Bank Accounts', 'Accountability')
-      mapToSubCatsj.set('Safety of Funds', 'Accountability')
       mapToSubCatsj.set('Cost Per Life Saved', 'Operational Efficiency')
       mapToSubCatsj.set('Charity Care Efficiency', 'Operational Efficiency')
       mapToSubCatsj.set('Average Inpatient Cost', 'Operational Efficiency')
@@ -1079,7 +1087,6 @@
       mapToCats.set('Culture of Continuous Improvement', 'Governance')
       mapToCats.set('Average Outpatient Cost', 'Operational Efficiency')
       mapToCats.set('Average Inpatient Cost', 'Operational Efficiency')
-      mapToCats.set('Safety of Funds', 'Accountability')
       mapToCats.set('Additional Services', 'Regional Impact Potential')
 
     }
