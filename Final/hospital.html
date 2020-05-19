@@ -41,8 +41,7 @@
   <div class="row" style="background-color:Navy;">
     <div class="col">
       <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
-      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
-          Donors</i></p>
+      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
     </div>
   </div>
 
@@ -77,6 +76,7 @@
       }
     }
 
+    //map for the table
     var map = new Map();
     map.set('regional impact potential', 'regional impact potential')
     map.set('funding sources', 'financial health')
@@ -110,9 +110,6 @@
             rats.push(docJSON[k].toFixed(2))
           }
         }
-        console.log("cats: " + cats);
-        console.log("rats: " + rats);
-
 
         //graph
         var data = [{
@@ -133,8 +130,9 @@
         document.getElementById("hospitalName").innerHTML = String(doc.get("Hospital Name"))
         document.getElementById("hospitalAddress").innerHTML = String(doc.get("Hospital Address"))
         document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
-        document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
+        document.getElementById("hospitalName").innerHTML = document.getElementById("hospitalName").innerHTML + " | Ratings: " + String(doc.get("R rating").toFixed(2)) + " / 5"
         document.getElementById("summary").innerHTML = String(doc.get("Summary"))
+        document.getElementById("causes").innerHTML = String(doc.get("Causes"))
 
 
         //subcat
@@ -222,17 +220,17 @@
     }).catch(function(error) {
       console.log("Error getting document:", error);
     });
-    
+
     //Angela's part
     var mapToWeights = new Map();
     var mapToSubCatsj = new Map();
-    var mapToCats = new Map(); 
-    var mapToWeights = new Map(); 
+    var mapToCats = new Map();
+    var mapToWeights = new Map();
 
     var runningScoreTotalVolOpptSub = 0;
     var runningScoreAvgVolOpptSub = 0;
     var runningWeightsVolOpptSub = 0;
-    
+
     //volunteer satisfaction
     var runningScoreTotalVolSat = 0;
     var runningScoreAvgVolSat = 0;
@@ -536,44 +534,44 @@
     }
 
     function computeScores(docJSON, newVarScores) {
-    	//newVarScores is a map of variables to scores corresponding to volunteer experience category
-    	for (const [variable, score] of newVarScores.entries()) {
-    		if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Opportunity") {
-          		console.log("vol opp sub");
-          		runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
-       	   		runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
-        	}
-        
-        	if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
-          		console.log("vol opp sub");
-          		runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
-          		runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
-        	}
+      //newVarScores is a map of variables to scores corresponding to volunteer experience category
+      for (const [variable, score] of newVarScores.entries()) {
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Opportunity") {
+          console.log("vol opp sub");
+          runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
+        }
 
-        	if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
-          		runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
-         		runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
-        	}
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
+          console.log("vol opp sub");
+          runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
+        }
 
-    	}
+        if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
+          runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
+        }
 
-    	runningScoreAvgVolOpptSub = runningScoreTotalVolOpptSub / runningWeightsVolOpptSub;
-        runningScoreAvgVolSat = runningScoreTotalVolSat / runningWeightsVolSat;
-        runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
-        docJSON['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
-        docJSON['SC volunteer satisfaction'] = runningScoreAvgVolSat;
-        docJSON['C volunteer experience'] = runningScoreAvgVolExp;
+      }
 
-        computeTotalScore(newVarScores);
+      runningScoreAvgVolOpptSub = runningScoreTotalVolOpptSub / runningWeightsVolOpptSub;
+      runningScoreAvgVolSat = runningScoreTotalVolSat / runningWeightsVolSat;
+      runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
+      docJSON['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
+      docJSON['SC volunteer satisfaction'] = runningScoreAvgVolSat;
+      docJSON['C volunteer experience'] = runningScoreAvgVolExp;
+
+      computeTotalScore(newVarScores);
 
 
     }
 
-    	
+
 
 
     //mapToScores is newVarScores - adding on to the total score sum and score weights from create.html
-     function computeTotalScore(mapToScores) {
+    function computeTotalScore(mapToScores) {
       for (const [variable, score] of mapToScores.entries()) {
         totalScoreSum = totalScoreSum + score * mapToWeights.get(variable);
         totalScoreWeights = totalScoreWeights + mapToWeights.get(variable);
@@ -581,7 +579,7 @@
 
       totalScore = totalScoreSum / totalScoreWeights;
 
-      
+
       docJSON['R rating'] = totalScore;
       docJSON['ready'] = true;
 
@@ -592,7 +590,6 @@
       document.getElementById('status').innerHTML = "Your hospital got a rating of " + Number(obj['R rating']).toFixed(2) + ". You can click 'Submit your Data' to add your hospital to our platform.";
 
     }
-    
   </script>
   <br>
   <div class="container-fluid">
@@ -606,15 +603,17 @@
         <h6> Contact </h6>
         <p id="hospitalContact"></p>
       </div>
-      <div class="col">
-        <h6> Rating</h6>
-        <p id="hospitalRating"></p>
-      </div>
     </div>
     <div class="row">
       <div class="col">
         <h6> Summary</h6>
         <p id="summary"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h6> Causes</h6>
+        <p id="causes"></p>
       </div>
     </div>
     <div id="myDiv"></div>
