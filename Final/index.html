@@ -21,6 +21,7 @@
     };
     firebase.initializeApp(firebaseConfig);
   </script>
+
   <style>
     html,
     body {
@@ -28,10 +29,10 @@
       overflow-x: hidden;
     }
   </style>
+
 </head>
 
 <body style="background-color:AliceBlue;">
-
 
   <div class="row" style="background-color:Navy;">
     <div class="col">
@@ -84,6 +85,7 @@
       <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <div id="map"></div>
       <script>
+        //Google Map
         var map;
         var pos;
         var url = "https://maps.googleapis.com/maps/api/geocode/json";
@@ -105,10 +107,7 @@
               key: 'AIzaSyA_QNYsXvsj5Da5GCh5TYaH48o_TLlZzJE'
             }
           }).then(function(response) {
-            console.log(response);
-
             pos = response.data.results[0].geometry.location;
-            console.log(pos);
             var marker = new google.maps.Marker({
               position: pos,
               map: map
@@ -148,6 +147,7 @@
           </tbody>
         </table>
       </div>
+      <p align="center"><i>Please review the <a href="CookiePolicy.docx">cookie policy</a>, <a href="TermsOfUse.docx">terms and conditions</a>, and <a href="PrivacyPolicy.docx">privacy policy</a> of the platform</i></p>
     </div>
 
     <br>
@@ -155,107 +155,104 @@
 
 
   <script>
+    //Fill out table
     var data = [];
-    
-    function myFunc(elt) {
-      
+
+    function getData(elt) {
+
       var db = firebase.firestore();
       var count = 0;
       db.collection("hospitals")
         .get()
         .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
-            console.log(doc.id, " => ", doc.data()); 
             // Add to data collection
-            console.log(doc.data())
-            var elt = { "name" : doc.data()["Hospital Name"], "address" : doc.data()["Hospital Address"], "contact" : doc.data()["Hospital Contact"], "rating" : doc.data()["R rating"], "id" : doc.id }
+            var elt = {
+              "name": doc.data()["Hospital Name"],
+              "address": doc.data()["Hospital Address"],
+              "contact": doc.data()["Hospital Contact"],
+              "rating": doc.data()["R rating"],
+              "id": doc.id
+            }
             data[count] = elt;
-            console.log(data[count]);
             count++
             // Add marker to map
             var addy = doc.data()["Hospital Address"];
             addMarker(addy);
-
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           });
           elt(data);
         })
         .catch(function(error) {
           console.log("Error getting documents: ", error);
         });
-        
-        
+
+
+    }
+
+    getData(buildTable)
+
+    //filter hospitals by search
+    $('#search-input').on('keyup', function() {
+      var value = $(this).val()
+      var info = searchTable(value, data)
+      buildTable(info)
+    })
+
+
+    function buildTable(d) {
+      var tableBody = document.getElementById("myTable");
+      tableBody.innerHTML = ''
+
+      for (var i = 0; i < d.length; i++) {
+
+        var tr = document.createElement('TR');
+        tableBody.appendChild(tr);
+
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(d[i].name));
+        tr.appendChild(td);
+
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(d[i].address));
+        tr.appendChild(td);
+
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(d[i].contact));
+        tr.appendChild(td);
+
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(Number(d[i].rating).toFixed(2) + " / 5"));
+        tr.appendChild(td);
+
+        var id = d[i].id
+        var b = document.createElement('Button');
+        b.innerHTML = "See More";
+        b.setAttribute("id", "btn btn-primary");
+        b.onclick = function() {
+          location.href = ("hospital.html?username=" + id);
+        };
+
+        var td = document.createElement('TD');
+        td.appendChild(b);
+        tr.appendChild(td);
+
       }
 
-      myFunc(buildTable)
 
-      $('#search-input').on('keyup', function(){
-        var value = $(this).val()
-        console.log('Value: ', value)
-        var info = searchTable(value, data)
-        buildTable(info)
-      })
-      
+    }
 
-      function buildTable(d){
-        console.log("Here");
-        console.log(JSON.stringify(d));
-        
 
-        var tableBody = document.getElementById("myTable");
-        tableBody.innerHTML = ''
-
-        for (var i = 0; i < d.length; i++) {
-
-          var tr = document.createElement('TR');
-          tableBody.appendChild(tr);
-
-          var td = document.createElement('TD');
-          td.appendChild(document.createTextNode(d[i].name));
-          tr.appendChild(td);
-
-          var td = document.createElement('TD');
-          td.appendChild(document.createTextNode(d[i].address));
-          tr.appendChild(td);
-
-          var td = document.createElement('TD');
-          td.appendChild(document.createTextNode(d[i].contact));
-          tr.appendChild(td);
-
-          var td = document.createElement('TD');
-          td.appendChild(document.createTextNode(Number(d[i].rating).toFixed(2) + " / 5"));
-          tr.appendChild(td);
-
-          var id = d[i].id
-          var b = document.createElement('Button');
-          b.innerHTML = "See More";
-          b.setAttribute("id", "btn btn-primary");
-          b.onclick = function() {
-            location.href = ("hospital.html?username=" + id);
-          };
-
-          var td = document.createElement('TD');
-          td.appendChild(b);
-          tr.appendChild(td);
-
+    function searchTable(value, da) {
+      var filteredData = []
+      for (var i = 0; i < da.length; i++) {
+        value = value.toLowerCase()
+        var info = da[i].name.toLowerCase() + da[i].address.toLowerCase() + da[i].contact.toLowerCase()
+        if (info.includes(value)) {
+          filteredData.push(da[i])
         }
-      
-      
       }
-      
-
-      function searchTable(value, da) {
-        var filteredData = []
-        for (var i = 0; i < da.length; i++) {
-          value = value.toLowerCase()
-          var info = da[i].name.toLowerCase() + da[i].address.toLowerCase() + da[i].contact.toLowerCase()
-          console.log('Value', value, ' info: ', info)
-          if (info.includes(value)) {
-            filteredData.push(da[i])
-          }
-        }
-        return filteredData
-      }
+      return filteredData
+    }
   </script>
 </body>
 

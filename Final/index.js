@@ -37,3 +37,15 @@ app.get('/about.html', function(req, res) {
 app.get('/hospital.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/hospital.html'));
 })
+
+app.get('/CookiePolicy.docx', function(req, res) {
+  res.sendFile(path.join(__dirname + '/CookiePolicy.docx'));
+})
+
+app.get('/TermsOfUse.docx', function(req, res) {
+  res.sendFile(path.join(__dirname + '/TermsOfUse.docx'));
+})
+
+app.get('/PrivacyPolicy.docx', function(req, res) {
+  res.sendFile(path.join(__dirname + '/PrivacyPolicy.docx'));
+})
