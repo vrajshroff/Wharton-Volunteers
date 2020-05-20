@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
   <script>
@@ -30,15 +31,12 @@
 </head>
 
 <body style="background-color:AliceBlue;">
-
-
   <div class="row" style="background-color:Navy;">
     <div class="col">
       <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
       <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
     </div>
   </div>
-
   <div style="background-color:WhiteSmoke;">
     <ul class="nav nav-tabs nav-justified">
       <li class="nav-item" style="border:1px solid black;">
@@ -53,7 +51,6 @@
     </ul>
   </div>
   <br>
-
   <section>
     <div class="container-fluid">
       <p>
@@ -71,15 +68,12 @@
       <h3>
         Find high impact hospitals
       </h3>
-
     </div>
   </section>
-
   <section>
     <div class="container-fluid">
       <div id="map" style="width:100%; height:400px;">
       </div>
-
       <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <div id="map"></div>
       <script>
@@ -104,7 +98,6 @@
               key: 'AIzaSyA_QNYsXvsj5Da5GCh5TYaH48o_TLlZzJE'
             }
           }).then(function(response) {
-
             pos = response.data.results[0].geometry.location;
             var marker = new google.maps.Marker({
               position: pos,
@@ -113,96 +106,127 @@
           }).catch(function(error) {
             console.log(error);
           });
-
-
         }
       </script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_QNYsXvsj5Da5GCh5TYaH48o_TLlZzJE&callback=initMap" async defer></script>
-
     </div>
   </section>
-
-  <section>
-    <div class="container-fluid">
-      <div class="table-responsive-lg" style="background-color: #e1ecf0;">
-        <table class="table table-striped table-bordered table-hover" id="myData">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Hospital Name</th>
-              <th scope="col">Location</th>
-              <th scope="col">Contact</th>
-              <th scope="col">Overall Impact Rating</th>
-              <th scope="col">See More</th>
-            </tr>
-          </thead>
-          <tbody id="tBody">
-          </tbody>
-        </table>
-      </div>
-      <p align="center"><i><a href="CookiePolicy.docx">Cookie Policy</a> / <a href="TermsOfUse.docx">Terms and Conditions</a> / <a href="PrivacyPolicy.docx">Privacy Policy</a></i></p>
-
+  <br>
+  <div class="container-fluid">
+    <label for="search-input">Search</label>
+    <input id="search-input" class="form-control" type="text">
+    <br>
+    <div class="table-responsive-lg" style="background-color: #e1ecf0;">
+      <table class="table table-striped table-bordered table-hover" id="myData">
+        <thead class="thead-dark">
+          <tr>
+            <th data-colname="Hospital Name">Hospital Name</th>
+            <th data-colname="Hospital Address">Location</th>
+            <th data-colname="Hospital Contact">Contact</th>
+            <th data-colname="R rating" data-order="desc">Impact Rating</th>
+            <th>See More</th>
+          </tr>
+        </thead>
+        <tbody id="myTable">
+        </tbody>
+      </table>
     </div>
-  </section>
+  </div>
+
+
+  <div class="container-fluid" style="background-color:	#f0f5f5;">
+    <hr>
+    <p align="center">This platform is designed and implemented by <a href="https://www.linkedin.com/in/vrajshroff/">Vraj Shroff</a>, the tech lead and product manager of TIRS.
+      <br>
+      <a href="https://www.linkedin.com/in/angela-l-618b48132/">Angela Lin</a>,
+      <a href="https://www.linkedin.com/in/brendan-mccaffrey">Brendan-McCaffrey</a>, and
+      <a href="https://www.linkedin.com/in/">Katherine Wang</a> worked on this platform as student full stack developers.</p>
+    <p align="center"><i><a style="color: inherit;" href="CookiePolicy.docx">Cookie Policy</a> | <a style="color: inherit;" href="TermsOfUse.docx">Terms and Conditions</a> | <a style="color: inherit;" href="PrivacyPolicy.docx">Privacy
+          Policy</a></i></p>
+  </div>
 
   <script>
-    function addRow(name, addy, contact, rating, id) {
+    var data = [];
 
-      var tableBody = document.getElementById("tBody");
-
-      var tr = document.createElement('TR');
-      tableBody.appendChild(tr);
-
-      var td = document.createElement('TD');
-      td.appendChild(document.createTextNode(name));
-      tr.appendChild(td);
-
-      var td = document.createElement('TD');
-      td.appendChild(document.createTextNode(addy));
-      tr.appendChild(td);
-
-      var td = document.createElement('TD');
-      td.appendChild(document.createTextNode(contact));
-      tr.appendChild(td);
-
-      var td = document.createElement('TD');
-      td.appendChild(document.createTextNode(Number(rating).toFixed(2) + " / 5"));
-      tr.appendChild(td);
-
-      var b = document.createElement('Button');
-      b.innerHTML = "See More";
-      b.setAttribute("id", "btn btn-primary");
-      b.onclick = function() {
-        location.href = ("hospital.html?username=" + id);
-      };
-
-      var td = document.createElement('TD');
-      td.appendChild(b);
-      tr.appendChild(td);
-
-    }
-  </script>
-  <script>
-    onclick = "location.href=…"
-
-    var db = firebase.firestore();
-
-    db.collection("hospitals")
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-
-          var name = doc.data()["Hospital Name"];
-          var addy = doc.data()["Hospital Address"];
-          var contact = doc.data()["Hospital Contact"];
-          var rating = doc.data()["R rating"];
-
-          addRow(name, addy, contact, rating, doc.id);
-          addMarker(addy);
+    function myFunc(elt) {
+      var db = firebase.firestore();
+      var count = 0;
+      db.collection("hospitals")
+        .get()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            // Add to data collection
+            var elt = {
+              "name": doc.data()["Hospital Name"],
+              "address": doc.data()["Hospital Address"],
+              "contact": doc.data()["Hospital Contact"],
+              "rating": doc.data()["R rating"],
+              "id": doc.id
+            }
+            data[count] = elt;
+            count++
+            // Add marker to map
+            var addy = doc.data()["Hospital Address"];
+            addMarker(addy);
+          });
+          elt(data);
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
         });
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
-      });
+    }
+    myFunc(buildTable)
+    $('#search-input').on('keyup', function() {
+      var value = $(this).val()
+      var info = searchTable(value, data)
+      buildTable(info)
+    })
+
+    function buildTable(d) {
+      var tableBody = document.getElementById("myTable");
+      tableBody.innerHTML = ''
+      for (var i = 0; i < d.length; i++) {
+        var tr = document.createElement('TR');
+        tableBody.appendChild(tr);
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(d[i].name));
+        tr.appendChild(td);
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(d[i].address));
+        tr.appendChild(td);
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(d[i].contact));
+        tr.appendChild(td);
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(Number(d[i].rating).toFixed(2) + " / 5"));
+        tr.appendChild(td);
+
+        var b = document.createElement('Button');
+        b.innerHTML = "See More";
+        b.setAttribute("id", "btn btn-primary");
+        b.onclick = (function(opt) {
+          return function() {
+            location.href = ("hospital.html?username=" + opt);
+          };
+        })(d[i].id);
+
+        var td = document.createElement('TD');
+        td.appendChild(b);
+        tr.appendChild(td);
+      }
+    }
+
+    function searchTable(value, da) {
+      var filteredData = []
+      for (var i = 0; i < da.length; i++) {
+        value = value.toLowerCase()
+        var info = da[i].name.toLowerCase() + da[i].address.toLowerCase() + da[i].contact.toLowerCase()
+        if (info.includes(value)) {
+          filteredData.push(da[i])
+        }
+      }
+      return filteredData
+    }
   </script>
 </body>
 
