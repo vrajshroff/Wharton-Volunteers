@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Authorization for Virtual Hour</title>
+  <title>TIRS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -24,11 +24,21 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
 
   <script>
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+
+    var url = 'create.html'
+    if (getParameterByName('name')) {
+      url = getParameterByName('name')
+    }
+
     var uiConfig = {
-      signInSuccessUrl: 'create.html',
+      signInSuccessUrl: url,
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-      tosUrl: 'index.html',
-      privacyPolicyUrl: 'index.html'
+      tosUrl: 'TermsOfUse.docx',
+      privacyPolicyUrl: 'PrivacyPolicy.docx'
     };
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start('#firebaseui-auth-container', uiConfig);
@@ -48,7 +58,7 @@
 
   <div class="row" style="background-color:Navy;">
     <div class="col">
-      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+      <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
       <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
     </div>
   </div>
@@ -61,6 +71,10 @@
 
   <div class="row" id="firebaseDiv">
     <div class="col">
+      <i>
+        <p align="center">A Google account is required to use this platform. <a href="https://support.google.com/accounts/answer/27441?hl=en" target="_blank">Create a new Google account here</a> if you don't already have one. <br>By clicking the
+          following button, you agree to abide by the terms and conditions of this platform.</p><br>
+      </i>
       <div id="firebaseui-auth-container"></div>
     </div>
   </div>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>TIRS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDQCfr1bfMkJc_-on2eCbzh3i2ZplSkjfM",
+      authDomain: "wharton-volunteers.firebaseapp.com",
+      databaseURL: "https://wharton-volunteers.firebaseio.com",
+      projectId: "wharton-volunteers",
+      storageBucket: "wharton-volunteers.appspot.com",
+      messagingSenderId: "1067661612787",
+      appId: "1:1067661612787:web:b6eac7c8fb4aff84260986"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    initApp = function() {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+
+        } else {
+          location.href = 'index.html';
+        }
+      }, function(error) {
+        console.log(error);
+      });
+    };
+    window.addEventListener('load', function() {
+      initApp();
+    });
+  </script>
+  <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body style="background-color:AliceBlue;">
+
+  <div class="row" style="background-color:Navy;">
+    <div class="col">
+      <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
+      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
+    </div>
+  </div>
+
+  <div style="background-color:WhiteSmoke;">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="about.html">About Us</a>
+      </li>
+      <li class="nav-item" style="border:1px solid black;">
+        <a class="nav-link" href="auth.html" style="color:black">Add New Hospital</a>
+      </li>
+    </ul>
+  </div>
+
+  <br><br>
+
+  <div class="container-fluid">
+    <form id="myForm" onsubmit="d()">
+      <p><b>Enter username of your hospital</b></p>
+      <input type="text" id="username" style="width:300px;" required><br><br>
+
+      <input type="submit" value="Delete Your Hospital">
+    </form>
+    <br>
+    <p id="error" style="color:red;"></p>
+  </div>
+
+  <script>
+    function handleForm(event) {
+      event.preventDefault();
+    }
+    var form = document.getElementById("myForm");
+    form.addEventListener('submit', handleForm);
+
+    var db = firebase.firestore();
+
+    function d() {
+      console.log(document.getElementById('username').value)
+      db.collection("hospitals").doc(document.getElementById('username').value).delete().then(function() {
+        console.log("Document successfully deleted!");
+        document.getElementById("error").innerHTML = "Hospital deleted. Go back to the home page."
+      }).catch(function(error) {
+        console.error("Error removing document: ", error);
+        document.getElementById("error").innerHTML = "Error occured while deleting the hospital. Please make sure the username is correct and try again. Note, only creator of the hospital can delete the hospital from the platform."
+      });
+    }
+  </script>
+</body>
+
+</html>
