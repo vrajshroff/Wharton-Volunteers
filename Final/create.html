@@ -1239,17 +1239,17 @@
           runningWeightsExtRelSub = runningWeightsExtRelSub + mapToWeights.get(variable);
         }
 
-        //if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Opportunity") {
-        //console.log("vol opp sub");
-        //runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
-        //runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
-        //}
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Opportunity") {
+          console.log("vol opp sub");
+          runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
+         }
 
-        //if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
-        //console.log("vol opp sub");
-        //runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
-        //runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
-        //}
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
+          console.log("vol opp sub");
+          runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
+        }
 
 
         if (mapToSubCatsj.get(variable).valueOf() == "Funding Sources") {
@@ -1326,8 +1326,8 @@
       runningScoreAvgCare = runningScoreTotalCare / runningWeightsCare;
       runningScoreAvgRegionalSub = runningScoreTotalRegionalSub / runningWeightsRegionalSub;
       runningScoreAvgExtRelSub = runningScoreTotalExtRelSub / runningWeightsExtRelSub;
-      //runningScoreAvgVolOpptSub = runningScoreTotalVolOpptSub / runningWeightsVolOpptSub;
-      //runningScoreAvgVolSat = runningScoreTotalVolSat / runningWeightsVolSat;
+      runningScoreAvgVolOpptSub = runningScoreTotalVolOpptSub / runningWeightsVolOpptSub;
+      runningScoreAvgVolSat = runningScoreTotalVolSat / runningWeightsVolSat;
 
       computeCatScore(mapJSON);
 
@@ -1355,10 +1355,10 @@
           runningWeightsRelations = runningWeightsRelations + mapToWeights.get(variable);
         }
 
-        //if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
-        //runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
-        //runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
-        //}
+        if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
+          runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
+        }
 
         //if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
         //runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
@@ -1377,7 +1377,7 @@
       }
       runningScoreAvgRegional = runningScoreTotalRegional / runningWeightsRegional;
       runningScoreAvgRelations = runningScoreTotalRelations / runningWeightsRelations;
-      //runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
+      runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
       //runningScoreAvgVolSats = runningScoreTotalVolSats / runningWeightsVolSats;
       runningScoreAvgOperPerf = runningScoreTotalOperPerf / runningWeightsOperPerf;
       runningScoreAvgFinHealth = runningScoreTotalFinHealth / runningWeightsFinHealth;
@@ -1413,7 +1413,8 @@
 
       obj['SC regional impact potential subcategory'] = runningScoreAvgRegionalSub;
       obj['SC external relations'] = runningScoreAvgExtRelSub;
-      //obj['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
+      obj['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
+      obj['SC volunteer satisfaction'] = runningScoreAvgVolSats;
       obj['SC funding sources'] = runningScoreAvgFunding;
       obj['SC financial capacity'] = runningScoreAvgFinancial;
       obj['SC operational effciency'] = runningScoreAvgOperation;
@@ -1426,14 +1427,13 @@
       obj['SC care quality'] = runningScoreAvgCare;
       obj['C regional impact potential'] = runningScoreAvgRegional;
       obj['C external relations'] = runningScoreAvgRelations;
-      //obj['C volunteer opportunity'] = runningScoreAvgVolOppt;
-      //obj['volunteer satisfaction'] = runningScoreAvgVolSats;
+      obj['C volunteer opportunity'] = runningScoreAvgVolOppt;
       obj['C financial health'] = runningScoreAvgFinHealth;
       obj['C operational performance'] = runningScoreAvgOperPerf;
       obj['R rating'] = totalScore;
       obj['ready'] = true;
 
-      //firestore();
+      firestore();
 
       console.log(JSON.stringify(obj));
 
