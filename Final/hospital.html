@@ -169,9 +169,13 @@
           var t = document.createElement('span')
 
           if (subcats[cats[i]]) {
-            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i] + '</a>';
+            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i].split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' ') + '</a>';
           } else {
-            t.innerHTML = cats[i];
+            t.innerHTML = cats[i].split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' ');
           }
 
           z.appendChild(t);
@@ -193,7 +197,9 @@
 
               z = document.createElement("TD");
               t = document.createElement('span')
-              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + subcats[cats[i]][j];
+              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + subcats[cats[i]][j].split(' ')
+                .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+                .join(' ');
               z.appendChild(t);
               y.appendChild(z);
 

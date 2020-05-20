@@ -26,8 +26,7 @@
         if (user) {
 
         } else {
-          //uncomment after demo
-          //location.href = 'index.html';
+          location.href = 'index.html';
         }
       }, function(error) {
         console.log(error);
@@ -77,35 +76,35 @@
     <div class="row">
       <div class="col">
 
-        <h2> Add Your Hospital to TIMS </h2>
+        <h2> Add Your Hospital to TIRS </h2>
         <i>
           <p>Note: All questions are required. Please answer them with best of your ability. If you sleect "No Data", your hospital's ratings would be negatively affected.</p>
         </i>
 
-        <p>You will be able to see your hospital rating before you submit your data.</p>
+        <p>You will be able to see your hospital rating before you submit your data. Your responses will be displayed publicly upon submission. The hospitl creator may delete this information any time.</p>
 
         <hr>
         <form id="myForm" onsubmit="addToDB()">
-          <p><b>Enter a username for your hospital</b></p>
-          <input type="text" name="Hospital Username" style="width:300px;" required><br><br>
+          <p><b>Enter a username for your hospital. Please store this username - you will need it if you want to delete the hospital.</b></p>
+          <input type="text" name="Hospital Username" minlength="2" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital name</b></p>
-          <input type="text" name="Hospital Name" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Name" minlength="2" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital address</b></p>
-          <input type="text" name="Hospital Address" placeholder="Bazaricherra, Karimganj, Assam, India" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Address" minlength="2" placeholder="Bazaricherra, Karimganj, Assam, India" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital contact information</b></p>
-          <input type="text" name="Hospital Contact" placeholder="Mobile/Email" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Contact" minlength="2" placeholder="Mobile/Email" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital summary/description</b></p>
-          <input type="text" name="Summary" style="width:300px;" required><br><br>
+          <input type="text" name="Summary" minlength="2" style="width:300px;" required><br><br>
 
           <p><b>Enter causes your hospital supports</b></p>
-          <input type="text" name="Causes" style="width:300px;" required><br><br>
+          <input type="text" name="Causes" minlength="2" style="width:300px;" required><br><br>
 
           <p><b>Enter your hospital story</b></p>
-          <input type="text" name="Story" style="width:300px;" required><br><br>
+          <input type="text" name="Story" minlength="2" style="width:300px;" required><br><br>
 
           <!-- Questions -->
           <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? The average patient income can be estimated based on all sources of income (including wages, proceeds from
@@ -762,9 +761,7 @@
     //function called when submit is pressed
     function addToDB() {
 
-      obj["creator"] = "vrajshroff@gmail.com"
-      //firebase.auth().currentUser.email;
-      //change after demo
+      obj["creator"] = firebase.auth().currentUser.email;
 
       var idSet = new Set();
       var elements = document.getElementById("myForm").elements;
@@ -874,29 +871,6 @@
       mapToWeights.set('Child Education Opportunities', 1)
       mapToWeights.set('Housing Opportunities', 1)
       mapToWeights.set('Local Safety', 2)
-      //mapToWeights.set('Local Safety Perception', 2)
-      //mapToWeights.set('Volunteer Recommendation', 3)
-      //mapToWeights.set('Overall Volunteer Satisfaction', 1)
-      //mapToWeights.set('Skills Match', 1)
-      //mapToWeights.set('Learning Opportunities', 3)
-      //mapToWeights.set('Career Development', 2)
-      //mapToWeights.set('Job Training Appropriateness', 2)
-      //mapToWeights.set('Community Affiliation', 3)
-      //mapToWeights.set('Strategy and Influence', 2)
-      //mapToWeights.set('Philanthropic Impact', 3)
-      //mapToWeights.set('Flexibility', 1)
-      //mapToWeights.set('Supervision', 2)
-      //mapToWeights.set('Recognition', 1)
-      //mapToWeights.set('Achievement', 3)
-      //mapToWeights.set('Respect of Community', 1)
-      //mapToWeights.set('Charity Rating Organizations', 1)
-      //mapToWeights.set('Donor Satisfaction', 3)
-      //mapToWeights.set('Leadership Credibility', 7)
-      //mapToWeights.set('Staff Satisfaction', 1)
-      //mapToWeights.set('Patient Satisfaction - Hospital Cleanliness', 1)
-      //mapToWeights.set('Patient Satisfaction - Staff', 1)
-      //mapToWeights.set('Patient Satisfaction - Service', 1)
-      //mapToWeights.set('Culture of Continuous Improvement', 1)
       mapToWeights.set('Average Outpatient Cost', 5)
       mapToWeights.set('Average Inpatient Cost', 5)
       mapToWeights.set('Additional Services', 4)
@@ -943,7 +917,6 @@
       mapToSubCatsj.set('Appointed CEO', 'Governance')
       mapToSubCatsj.set('Legal Support', 'Governance')
       mapToSubCatsj.set('Operational Policies', 'Governance')
-      //mapToSubCatsj.set('Culture of Continuous Improvement', 'Governance')
       mapToSubCatsj.set('Outcomes Reporting', 'Transparency')
       mapToSubCatsj.set('Donor Privacy Policy', 'Transparency')
       mapToSubCatsj.set('Website', 'Transparency')
@@ -961,39 +934,17 @@
       mapToSubCatsj.set('Hospital Infant Mortality Rate (IMR)', 'Care Quality')
       mapToSubCatsj.set('Patient Mortality Risk', 'Care Quality')
       mapToSubCatsj.set('Patient Readmission Rate', 'Care Quality')
-      //mapToSubCatsj.set('Patient Satisfaction - Service', 'Care Quality')
-      //mapToSubCatsj.set('Patient Satisfaction - Staff', 'Care Quality')
-      //mapToSubCatsj.set('Patient Satisfaction - Hospital Cleanliness', 'Care Quality')
-      //mapToSubCatsj.set('Staff Satisfaction', 'Care Quality')
       mapToSubCatsj.set('Staff Experience', 'Care Quality')
       mapToSubCatsj.set('Staff Meetings', 'Care Quality')
       mapToSubCatsj.set('Staff Turnover', 'Care Quality')
-      //mapToSubCatsj.set('Leadership Credibility', 'External Relations')
-      //mapToSubCatsj.set('Donor Satisfaction', 'External Relations')
-      //mapToSubCatsj.set('Charity Rating Organizations', 'External Relations')
       mapToSubCatsj.set('Collaboration', 'External Relations')
       mapToSubCatsj.set('Exchange Programs', 'External Relations')
-      //mapToSubCatsj.set('Respect of Community', 'External Relations')
       mapToSubCatsj.set('Volunteer Responsibility', 'Volunteer Opportunity')
       mapToSubCatsj.set('Expected Volunteer Experience', 'Volunteer Opportunity')
       mapToSubCatsj.set('Spousal Job Opportunities', 'Volunteer Opportunity')
       mapToSubCatsj.set('Child Education Opportunities', 'Volunteer Opportunity')
       mapToSubCatsj.set('Housing Opportunities', 'Volunteer Opportunity')
       mapToSubCatsj.set('Local Safety', 'Volunteer Opportunity')
-      //mapToSubCatsj.set('Local Safety Perception', 'Volunteer Opportunity')
-      //mapToSubCatsj.set('Volunteer Recommendation', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Overall Volunteer Satisfaction', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Skills Match', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Learning Opportunities', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Career Development', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Job Training Appropriateness', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Community Affiliation', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Strategy and Influence', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Philanthropic Impact', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Flexibility', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Supervision', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Recognition', 'Volunteer Satisfaction')
-      //mapToSubCatsj.set('Achievement', 'Volunteer Satisfaction')
 
 
       mapToCats.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
@@ -1062,29 +1013,6 @@
       mapToCats.set('Child Education Opportunities', 'Volunteer Experience')
       mapToCats.set('Housing Opportunities', 'Volunteer Experience')
       mapToCats.set('Local Safety', 'Volunteer Experience')
-      //mapToCats.set('Local Safety Perception', 'Volunteer Experience')
-      //mapToCats.set('Volunteer Recommendation', 'Volunteer Experience')
-      //mapToCats.set('Overall Volunteer Satisfaction', 'Volunteer Experience')
-      //mapToCats.set('Skills Match', 'Volunteer Experience')
-      //mapToCats.set('Learning Opportunities', 'Volunteer Experience')
-      //mapToCats.set('Career Development', 'Volunteer Experience')
-      //mapToCats.set('Job Training Appropriateness', 'Volunteer Experience')
-      //mapToCats.set('Community Affiliation', 'Volunteer SExperience')
-      //mapToCats.set('Strategy and Influence', 'Volunteer Experience')
-      //mapToCats.set('Philanthropic Impact', 'Volunteer Experience')
-      //mapToCats.set('Flexibility', 'Volunteer Experience')
-      //mapToCats.set('Supervision', 'Volunteer Experience')
-      //mapToCats.set('Recognition', 'Volunteer Experience')
-      //mapToCats.set('Achievement', 'Volunteer Experience')
-      //mapToCats.set('Respect of Community', 'External Relations')
-      //mapToCats.set('Charity Rating Organizations', 'External Relations')
-      //mapToCats.set('Donor Satisfaction', 'External Relations')
-      //mapToCats.set('Leadership Credibility', 'External Relations')
-      //mapToCats.set('Staff Satisfaction', 'Care Quality')
-      //mapToCats.set('Patient Satisfaction - Hospital Cleanliness', 'Care Quality')
-      //mapToCats.set('Patient Satisfaction - Staff', 'Care Quality')
-      //mapToCats.set('Patient Satisfaction - Service', 'Care Quality')
-      //mapToCats.set('Culture of Continuous Improvement', 'Governance')
       mapToCats.set('Average Outpatient Cost', 'Operational Efficiency')
       mapToCats.set('Average Inpatient Cost', 'Operational Efficiency')
       mapToCats.set('Additional Services', 'Regional Impact Potential')
@@ -1304,16 +1232,7 @@
           runningWeightsCare = runningWeightsCare + mapToWeights.get(variable);
         }
       }
-      console.log(runningScoreTotalFunding);
-      console.log(runningScoreTotalFinancial);
-      console.log(runningScoreTotalOperation);
-      console.log(runningScoreTotalGov);
-      console.log(runningScoreTotalTrans);
-      console.log(runningScoreTotalAccount);
-      console.log(runningScoreTotalOrganization);
-      console.log(runningScoreTotalVolume);
-      console.log(runningScoreTotalEfficiency);
-      console.log(runningScoreTotalCare);
+
       runningScoreAvgFunding = runningScoreTotalFunding / runningWeightsFunding;
       runningScoreAvgFinancial = runningScoreTotalFinancial / runningWeightsFinancial;
       runningScoreAvgOperation = runningScoreTotalOperation / runningWeightsOperation;
@@ -1360,11 +1279,6 @@
           runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
         }
 
-        //if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
-        //runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
-        //runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
-        //}
-
         if (mapToCats.get(variable).valueOf() == "Financial Health") {
           runningScoreTotalFinHealth = runningScoreTotalFinHealth + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsFinHealth = runningWeightsFinHealth + mapToWeights.get(variable);
@@ -1378,18 +1292,8 @@
       runningScoreAvgRegional = runningScoreTotalRegional / runningWeightsRegional;
       runningScoreAvgRelations = runningScoreTotalRelations / runningWeightsRelations;
       runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
-      //runningScoreAvgVolSats = runningScoreTotalVolSats / runningWeightsVolSats;
       runningScoreAvgOperPerf = runningScoreTotalOperPerf / runningWeightsOperPerf;
       runningScoreAvgFinHealth = runningScoreTotalFinHealth / runningWeightsFinHealth;
-
-
-      //financial health: funding sources, financial efficiency, financial capacity, accountability
-      //financialHealth = (runningScoreTotalFunding + runningScoreTotalEfficiency + runningScoreTotalFinancial + runningScoreTotalAccount) /
-      //(runningWeightsAccount + runningWeightsFunding + runningWeightsEfficiency + runningWeightsFinancial);
-
-      //operational performance: operational effciency, governance, transparency, organization quality, volume, care quality
-      //operationalPerformance = (runningScoreTotalOperation + runningScoreTotalGov + runningScoreTotalTrans + runningScoreTotalOrganization + runningScoreTotalVolume + runningScoreTotalCare) /
-      //(runningWeightsOperation + runningWeightsGov + runningWeightsTrans + runningWeightsOrganization + runningWeightsVolume + runningWeightsCare);
 
       computeTotalScore(mapToScores);
 
@@ -1412,9 +1316,6 @@
       obj['totalScoreWeights'] = totalScoreWeights;
 
       obj['SC regional impact potential subcategory'] = runningScoreAvgRegionalSub;
-      //obj['SC external relations'] = runningScoreAvgExtRelSub;
-      obj['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
-      obj['SC volunteer satisfaction'] = runningScoreAvgVolSat;
       obj['SC funding sources'] = runningScoreAvgFunding;
       obj['SC financial capacity'] = runningScoreAvgFinancial;
       obj['SC operational effciency'] = runningScoreAvgOperation;
@@ -1427,7 +1328,7 @@
       obj['SC care quality'] = runningScoreAvgCare;
       obj['C regional impact potential'] = runningScoreAvgRegional;
       obj['C external relations'] = runningScoreAvgRelations;
-      obj['C volunteer experience'] = runningScoreAvgVolExp;
+      obj['C volunteer opportunity'] = runningScoreAvgVolExp;
       obj['C financial health'] = runningScoreAvgFinHealth;
       obj['C operational performance'] = runningScoreAvgOperPerf;
       obj['R rating'] = totalScore;
