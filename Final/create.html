@@ -1243,7 +1243,7 @@
           console.log("vol opp sub");
           runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
           runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
-         }
+        }
 
         if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
           console.log("vol opp sub");
@@ -1414,7 +1414,7 @@
       obj['SC regional impact potential subcategory'] = runningScoreAvgRegionalSub;
       obj['SC external relations'] = runningScoreAvgExtRelSub;
       obj['SC volunteer opportunity'] = runningScoreAvgVolOpptSub;
-      obj['SC volunteer satisfaction'] = runningScoreAvgVolSat;
+      obj['SC volunteer satisfaction'] = runningScoreAvgVolSats;
       obj['SC funding sources'] = runningScoreAvgFunding;
       obj['SC financial capacity'] = runningScoreAvgFinancial;
       obj['SC operational effciency'] = runningScoreAvgOperation;
@@ -1432,8 +1432,6 @@
       obj['C operational performance'] = runningScoreAvgOperPerf;
       obj['R rating'] = totalScore;
       obj['ready'] = true;
-
-      firestore();
 
       console.log(JSON.stringify(obj));
 
