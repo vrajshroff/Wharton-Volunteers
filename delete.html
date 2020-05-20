@@ -91,7 +91,6 @@
     var db = firebase.firestore();
 
     function d() {
-      console.log(document.getElementById('username').value)
       db.collection("hospitals").doc(document.getElementById('username').value).delete().then(function() {
         console.log("Document successfully deleted!");
         document.getElementById("error").innerHTML = "Hospital deleted. Go back to the home page."

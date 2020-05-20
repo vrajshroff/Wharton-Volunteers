@@ -769,7 +769,6 @@
         var item = elements.item(i);
         if (item.checked || item.value.length > 1) {
           obj[item.name] = item.value;
-          console.log(item.value);
         }
       }
       console.log(JSON.stringify(obj));
@@ -1134,13 +1133,10 @@
 
 
     function computeScores() {
-      console.log(mapToWeights.keys());
 
       for (let key of mapToWeights.keys()) { //key is the variable name
         mapJSON.set(key, obj[key]);
       }
-      console.log(mapJSON);
-      console.log(mapJSON.entries());
       computeSubCatScore(mapJSON);
 
     }
@@ -1148,13 +1144,9 @@
 
 
     function computeSubCatScore(mapToScores) {
-      console.log("compute SubCat Score");
-      console.log(mapToScores.entries());
 
       //funding sources
       for (const [variable, score] of mapToScores.entries()) {
-        console.log("variable");
-        console.log(variable);
 
         if (mapToSubCatsj.get(variable).valueOf() == "Regional Impact Potential") {
           console.log("regional imapct potential subcat");
