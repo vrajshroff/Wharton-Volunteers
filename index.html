@@ -196,15 +196,6 @@
           var contact = doc.data()["Hospital Contact"];
           var rating = doc.data()["R rating"];
 
-
-          console.log(doc.data())
-          console.log("name " + name)
-          console.log("addy " + addy)
-          console.log("contact " + contact)
-          console.log("rating " + rating)
-          console.log("\n")
-
-
           addRow(name, addy, contact, rating, doc.id);
           addMarker(addy);
         });
