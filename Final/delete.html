@@ -26,7 +26,7 @@
         if (user) {
 
         } else {
-          //location.href = 'index.html';
+          location.href = 'index.html';
         }
       }, function(error) {
         console.log(error);
@@ -97,7 +97,7 @@
         document.getElementById("error").innerHTML = "Hospital deleted. Go back to the home page."
       }).catch(function(error) {
         console.error("Error removing document: ", error);
-        document.getElementById("error").innerHTML = "Error occured while deleting the hospital. Please make sure the username is correct and try again."
+        document.getElementById("error").innerHTML = "Error occured while deleting the hospital. Please make sure the username is correct and try again. Note, only creator of the hospital can delete the hospital from the platform."
       });
     }
   </script>
