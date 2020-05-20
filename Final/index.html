@@ -226,16 +226,13 @@
           td.appendChild(document.createTextNode(Number(d[i].rating).toFixed(2) + " / 5"));
           tr.appendChild(td);
 
-          
+          var id = d[i].id
           var b = document.createElement('Button');
           b.innerHTML = "See More";
           b.setAttribute("id", "btn btn-primary");
-          b.onclick = (function(opt) {
-            return function() {
-               location.href = ("hospital.html?username=" + opt);
-            };
-          })(d[i].id);
-
+          b.onclick = function() {
+            location.href = ("hospital.html?username=" + id);
+          };
 
           var td = document.createElement('TD');
           td.appendChild(b);
