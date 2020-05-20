@@ -24,21 +24,11 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
 
   <script>
-    function getParameterByName(name) {
-      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-    }
-
-    var url = 'create.html'
-    if (getParameterByName('name')) {
-      url = getParameterByName('name')
-    }
-
     var uiConfig = {
-      signInSuccessUrl: url,
+      signInSuccessUrl: 'create.html',
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-      tosUrl: 'TermsOfUse.docx',
-      privacyPolicyUrl: 'PrivacyPolicy.docx'
+      tosUrl: 'index.html',
+      privacyPolicyUrl: 'index.html'
     };
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start('#firebaseui-auth-container', uiConfig);
@@ -71,10 +61,6 @@
 
   <div class="row" id="firebaseDiv">
     <div class="col">
-      <i>
-        <p align="center">A Google account is required to use this platform. <a href="https://support.google.com/accounts/answer/27441?hl=en" target="_blank">Create a new Google account here</a> if you don't already have one. <br>By clicking the
-          following button, you agree to abide by the terms and conditions of this platform.</p><br>
-      </i>
       <div id="firebaseui-auth-container"></div>
     </div>
   </div>
