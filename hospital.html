@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>TIMS</title>
+  <title>TIRS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,6 +27,7 @@
     };
     firebase.initializeApp(firebaseConfig);
   </script>
+
   <style>
     html,
     body {
@@ -34,15 +35,15 @@
       overflow-x: hidden;
     }
   </style>
+
 </head>
 
 <body style="background-color:AliceBlue;">
 
   <div class="row" style="background-color:Navy;">
     <div class="col">
-      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
-      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and
-          Donors</i></p>
+      <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
+      <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
     </div>
   </div>
 
@@ -66,7 +67,7 @@
       return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     }
 
-    function someFunction(div) {
+    function showSubCat(div) {
       var result_style = document.getElementsByClassName("s " + div)
       for (var i = 0; i < result_style.length; i++) {
         if (result_style[i].style.display == "none") {
@@ -77,6 +78,7 @@
       }
     }
 
+    //map for the table
     var map = new Map();
     map.set('regional impact potential', 'regional impact potential')
     map.set('funding sources', 'financial health')
@@ -90,7 +92,8 @@
     map.set('volume', 'operational performance')
     map.set('care quality', 'operational performance')
     map.set('external relations', 'external relations')
-    map.set('volunteer opportunity', 'volunteer opportunity')
+    map.set('volunteer opportunity', 'volunteer experience')
+    map.set('volunteer satisfaction', 'volunteer experience')
 
 
     var db = firebase.firestore();
@@ -110,9 +113,6 @@
             rats.push(docJSON[k].toFixed(2))
           }
         }
-        console.log("cats: " + cats);
-        console.log("rats: " + rats);
-
 
         //graph
         var data = [{
@@ -123,15 +123,20 @@
 
         Plotly.newPlot('myDiv', data, {
           paper_bgcolor: 'rgba(100,0,0,0)',
-          plot_bgcolor: 'rgba(100,0,0,0)'
+          plot_bgcolor: 'rgba(100,0,0,0)',
+          yaxis: {
+            range: [0, 5]
+          }
         });
 
         //basic info
         document.getElementById("hospitalName").innerHTML = String(doc.get("Hospital Name"))
         document.getElementById("hospitalAddress").innerHTML = String(doc.get("Hospital Address"))
         document.getElementById("hospitalContact").innerHTML = String(doc.get("Hospital Contact"))
-        document.getElementById("hospitalRating").innerHTML = String(doc.get("R rating").toFixed(2)) + " / 5"
+        document.getElementById("hospitalName").innerHTML = document.getElementById("hospitalName").innerHTML + " | Ratings: " + String(doc.get("R rating").toFixed(2)) + " / 5"
         document.getElementById("summary").innerHTML = String(doc.get("Summary"))
+        document.getElementById("causes").innerHTML = String(doc.get("Causes"))
+        document.getElementById("story").innerHTML = String(doc.get("Story"))
 
 
         //subcat
@@ -140,26 +145,18 @@
         for (var k in docJSON) {
           if (k.startsWith("SC ")) {
             var foundSubCat = k.substring(3)
-            //console.log("foundSubCat: " + foundSubCat)
             var itsCat = map.get(foundSubCat)
-            //console.log("itsCat: " + itsCat)
             if (subcats[itsCat]) {
               var tempList = subcats[itsCat]
               tempList.push(foundSubCat)
               subcats[itsCat] = tempList
-              //console.log("subcats.set(itsCat): " + subcats[itsCat])
             } else {
               var tempList = []
               tempList.push(foundSubCat)
-              //console.log(foundSubCat)
-              console.log(itsCat)
               subcats[itsCat] = tempList
-              //console.log("subcats.set(itsCat) else: " + subcats[itsCat])
             }
           }
         }
-
-        console.log("subcats: " + JSON.stringify(subcats))
 
         //table
         var x = document.getElementById("table");
@@ -172,9 +169,13 @@
           var t = document.createElement('span')
 
           if (subcats[cats[i]]) {
-            t.innerHTML = '<a href="javascript:someFunction(\'' + cats[i] + '\');">' + cats[i] + '</a>';
+            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i].split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' ') + '</a>';
           } else {
-            t.innerHTML = cats[i];
+            t.innerHTML = cats[i].split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' ');
           }
 
           z.appendChild(t);
@@ -189,7 +190,6 @@
           x.appendChild(y);
 
           if (subcats[cats[i]]) {
-            console.log(subcats[cats[i]])
             for (var j = 0; j < subcats[cats[i]].length; j++) {
               y = document.createElement("TR");
               y.setAttribute("class", "s " + cats[i]);
@@ -197,7 +197,9 @@
 
               z = document.createElement("TD");
               t = document.createElement('span')
-              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + subcats[cats[i]][j];
+              t.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;" + subcats[cats[i]][j].split(' ')
+                .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+                .join(' ');
               z.appendChild(t);
               y.appendChild(z);
 
@@ -222,6 +224,9 @@
   </script>
   <br>
   <div class="container-fluid">
+    <u>
+      <p align="right"><a href="auth.html?name=delete.html">Delete Hospital</a></p>
+    </u>
     <h1 id="hospitalName"> </h1><br>
     <div class="row">
       <div class="col">
@@ -232,10 +237,6 @@
         <h6> Contact </h6>
         <p id="hospitalContact"></p>
       </div>
-      <div class="col">
-        <h6> Rating</h6>
-        <p id="hospitalRating"></p>
-      </div>
     </div>
     <div class="row">
       <div class="col">
@@ -243,7 +244,21 @@
         <p id="summary"></p>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <h6> Story</h6>
+        <p id="story"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h6> Causes</h6>
+        <p id="causes"></p>
+      </div>
+    </div>
+
     <div id="myDiv"></div>
+
   </div>
 
   <table class="table table-hover">

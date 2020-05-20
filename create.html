@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Add Hospital to TIMS</title>
+  <title>TIRS</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -36,14 +36,20 @@
       initApp();
     });
   </script>
-
+  <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
 </head>
 
 <body style="background-color:AliceBlue;">
 
   <div class="row" style="background-color:Navy;">
     <div class="col">
-      <h1 align="center" style="color:white;">Transformational Impact Measurement System</h1>
+      <h1 align="center" style="color:white;">Transformational Impact Ratings System</h1>
       <p align="center" style="color:white;"> <i>An Online Platform to Connect Hospitals with Volunteers and Donors</i></p>
     </div>
   </div>
@@ -54,44 +60,55 @@
         <a class="nav-link" href="index.html">Home</a>
       </li>
       <li class="nav-item" style="border:1px solid black;">
-        <a class="nav-link" href="calculator.html">Calculator</a>
-      </li>
-      <li class="nav-item" style="border:1px solid black;">
         <a class="nav-link" href="about.html">About Us</a>
       </li>
       <li class="nav-item" style="border:1px solid black;">
-        <a class="nav-link active" href="auth.html?websiteId=create.html">Add New Hospital</a>
+        <a class="nav-link" href="auth.html" style="color:black">Add New Hospital</a>
       </li>
     </ul>
   </div>
+
+  <br><br>
 
 
   <div class="container-fluid">
 
     <div class="row">
       <div class="col">
-        <br><br>
 
-        <h2> Add Your Hospital to TIMS </h2>
+        <h2> Add Your Hospital to TIRS </h2>
         <i>
           <p>Note: All questions are required. Please answer them with best of your ability. If you sleect "No Data", your hospital's ratings would be negatively affected.</p>
         </i>
+
+        <p>You will be able to see your hospital rating before you submit your data. Your responses will be displayed publicly upon submission. The hospitl creator may delete this information any time.</p>
+
         <hr>
         <form id="myForm" onsubmit="addToDB()">
-          <p><b>Enter a username for your hospital</b></p>
-          <input type="text" name="Hospital Username" style="width:300px;" required><br><br>
+          <p><b>Enter a username for your hospital. Please store this username - you will need it if you want to delete the hospital.</b></p>
+          <input type="text" name="Hospital Username" minlength="2" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital name</b></p>
-          <input type="text" name="Hospital Name" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Name" minlength="2" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital address</b></p>
-          <input type="text" name="Hospital Address" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Address" minlength="2" placeholder="Bazaricherra, Karimganj, Assam, India" style="width:300px;" required><br><br>
 
           <p><b>Enter hospital contact information</b></p>
-          <input type="text" name="Hospital Contact" style="width:300px;" required><br><br>
+          <input type="text" name="Hospital Contact" minlength="2" placeholder="Mobile/Email" style="width:300px;" required><br><br>
 
-          <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? This tool can be used for reference: https://wid.world/simulator.</b></p>
+          <p><b>Enter hospital summary/description</b></p>
+          <input type="text" name="Summary" minlength="2" style="width:300px;" required><br><br>
 
+          <p><b>Enter causes your hospital supports</b></p>
+          <input type="text" name="Causes" minlength="2" style="width:300px;" required><br><br>
+
+          <p><b>Enter your hospital story</b></p>
+          <input type="text" name="Story" minlength="2" style="width:300px;" required><br><br>
+
+          <!-- Questions -->
+          <p><b>Into which percentile of the country's income per capita does the average patient population that the hospital serves fall? The average patient income can be estimated based on all sources of income (including wages, proceeds from
+              sales, etc.). This tool can be used for reference: https://wid.world/simulator.</b></p>
           <label><input type="radio" name="Socioeconomic Status of Patient Population" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Socioeconomic Status of Patient Population" value="1" required>&nbsp;Local population falls in &gt;80th percentile for country's income per capita</label><br>
           <label><input type="radio" name="Socioeconomic Status of Patient Population" value="2" required>&nbsp;Local population falls in 60th - 80th percentile for country's income per capita</label><br>
@@ -103,19 +120,19 @@
           <p><b>Does a mix of incomes exist in the region such that wealthier patients can be charged more to offset charity care for lower income patients? In other words, what is the standard deviation of the local population income?</b></p>
           <label><input type="radio" name="Local Population Income Mix" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Local Population Income Mix" value="1" required>&nbsp;Standard deviation of local population income is &lt;5% of average local population income</label><br>
-          <label><input type="radio" name="Local Population Income Mix" value="2" required>&nbsp;Standard deviation of local population income is 5% - 7% of average local population income</label><br>
-          <label><input type="radio" name="Local Population Income Mix" value="3" required>&nbsp;Standard deviation of local population income is 7% - 10% of average local population income</label><br>
-          <label><input type="radio" name="Local Population Income Mix" value="4" required>&nbsp;Standard deviation of local population income is 10% - 15% of average local population income</label><br>
-          <label><input type="radio" name="Local Population Income Mix" value="5" required>&nbsp;Standard deviation of local population income is &gt;15% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="2" required>&nbsp;Standard deviation of local population income is 5% - 10% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="3" required>&nbsp;Standard deviation of local population income is 10% - 20% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="4" required>&nbsp;Standard deviation of local population income is 20% - 30% of average local population income</label><br>
+          <label><input type="radio" name="Local Population Income Mix" value="5" required>&nbsp;Standard deviation of local population income is &gt;30% of average local population income</label><br>
           <br>
 
-          <p><b>What is the local population density within serving distance of the hospital (patients per square mile)?</b></p>
+          <p><b>What is the local population density within serving distance of the hospital (people per square kilometer)?</b></p>
           <label><input type="radio" name="Local Patient Population Density" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="1" required>&nbsp;&gt;250 people per square mile</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="2" required>&nbsp;200 - 250 people per square mile</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="3" required>&nbsp;150 - 200 people per square mile</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="4" required>&nbsp;100 - 150 people per square mile</label><br>
-          <label><input type="radio" name="Local Patient Population Density" value="5" required>&nbsp;0 - 100 people per square mile</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="1" required>&nbsp;&gt;50 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="2" required>&nbsp;50 - 100 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="3" required>&nbsp;100 - 150 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="4" required>&nbsp;150 - 250 people per square kilometer</label><br>
+          <label><input type="radio" name="Local Patient Population Density" value="5" required>&nbsp;&gt;250 people per square kilometer</label><br>
           <br>
 
           <p><b>How easy is it for the patient population to receive care at another hospital?</b></p>
@@ -129,38 +146,27 @@
 
           <p><b>What is the maternal mortality rate (number of deaths of maternity patients per 100,000 live births annually) in the region where the hospital is located?</b></p>
           <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="1" required>&nbsp;&lt;10</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="2" required>&nbsp;10 - 50</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="3" required>&nbsp;50 - 100</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="4" required>&nbsp;100 - 150</label><br>
-          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="5" required>&nbsp;&gt;150</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="1" required>&nbsp;&lt;50</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="2" required>&nbsp;50 - 100</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="3" required>&nbsp;100 - 150</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="4" required>&nbsp;150 - 300</label><br>
+          <label><input type="radio" name="Local Maternal Mortality Rate (MMR)" value="5" required>&nbsp;&gt;300</label><br>
           <br>
 
           <p><b>What is the infant mortality rate (number of deaths of infants per 1,000 live births annually) in the region where the hospital is located?</b></p>
           <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="1" required>&nbsp;&lt;3</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="2" required>&nbsp;3 - 10</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="3" required>&nbsp;10 - 15</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="4" required>&nbsp;15 - 20</label><br>
-          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="5" required>&nbsp;&gt;20</label><br>
-          <br>
-
-          <p><b>What services does the organization provide (e.g., hospital, education, agriculture)? Please list each as a way to allow donors and volunteers to search for the organization.</b></p>
-          <label><input type="radio" name="Additional Services" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Additional Services" value="3" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high
-            quality.</label><br>
-          <label><input type="radio" name="Additional Services" value="4" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high
-            quality,
-            and the program performs above average on at least one key relevant metric.</label><br>
-          <label><input type="radio" name="Additional Services" value="5" required>&nbsp;At least 2 additional services are provided, to which at least 5% of the hospital's resources are dedicated. Appropriate services are delivered with high
-            quality, and the programs perform above average on at least one key relevant metric.</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="1" required>&nbsp;&lt;5</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="2" required>&nbsp;5 - 15</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="3" required>&nbsp;15 - 25</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="4" required>&nbsp;25 - 40</label><br>
+          <label><input type="radio" name="Local Infant Mortality Rate (IMR)" value="5" required>&nbsp;&gt;40</label><br>
           <br>
 
           <p><b>How many sources of revenue does the hospital have (as a measure of sustainability)?</b></p>
           <label><input type="radio" name="Diversity of Revenue Sources" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Diversity of Revenue Sources" value="1" required>&nbsp;Hospital does not have a stable source of revenue</label><br>
           <label><input type="radio" name="Diversity of Revenue Sources" value="2" required>&nbsp;Donations are the hospital's only source of stable revenue</label><br>
-          <label><input type="radio" name="Diversity of Revenue Sources" value="3" required>&nbsp;Revenue comes from a combination of donations and earnings from a single business activity</label><br>
+          <label><input type="radio" name="Diversity of Revenue Sources" value="3" required>&nbsp;Revenue comes from earnings from a single business activity and may include donations</label><br>
           <label><input type="radio" name="Diversity of Revenue Sources" value="4" required>&nbsp;Revenue comes from a combination of consolidated donations (&gt;40% of donations come from a few key donors) and earnings from multiple business
             activities</label><br>
           <label><input type="radio" name="Diversity of Revenue Sources" value="5" required>&nbsp;Revenue comes from a combination of many donation sources (&gt;40% of donations do not come from a few key donors) and earnings from multiple business
@@ -185,7 +191,8 @@
           <label><input type="radio" name="Operating Margin" value="5" required>&nbsp;&gt;6%</label><br>
           <br>
 
-          <p><b>What percent of expenses consist of program expenses? (To calculate, divide the average program expense by the average total expense, over three most recent fiscal years.)</b></p>
+          <p><b>What percent of expenses consist of program expenses (e.g., non-administrative and non-capital expenditures)? (To calculate, divide the average program expense by the average total expense, over three most recent fiscal years.)</b>
+          </p>
           <label><input type="radio" name="Program Expense Percentage" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Program Expense Percentage" value="1" required>&nbsp;&lt;50%</label><br>
           <label><input type="radio" name="Program Expense Percentage" value="2" required>&nbsp;50% - 60%</label><br>
@@ -194,7 +201,8 @@
           <label><input type="radio" name="Program Expense Percentage" value="5" required>&nbsp;&gt;80%</label><br>
           <br>
 
-          <p><b>What percent of expenses consist of administrative expenses? (To calculate, divide the average administrative expense by the average total expense, over three most recent fiscal years.)</b></p>
+          <p><b>What percent of expenses consist of administrative expenses (e.g., human resources, accounting, overhead)? (To calculate, divide the average administrative expense by the average total expense, over three most recent fiscal
+              years.)</b></p>
           <label><input type="radio" name="Administrative Expense Percentage" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Administrative Expense Percentage" value="1" required>&nbsp;&gt;30%</label><br>
           <label><input type="radio" name="Administrative Expense Percentage" value="2" required>&nbsp;25% - 30%</label><br>
@@ -311,8 +319,7 @@
           <label><input type="radio" name="Formal Governance Structure" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Formal Governance Structure" value="1" required>&nbsp;Hospital has an informal governance structure and does not have a board</label><br>
           <label><input type="radio" name="Formal Governance Structure" value="3" required>&nbsp;Hospital has a formal organizational structure (chart) in place that is appropriate to the work being carried out and an independent board</label><br>
-          <label><input type="radio" name="Formal Governance Structure" value="5" required>&nbsp;Hospital has a well-defined organizational structure (chart), clear delegation of responsibility and authority, coherent functioning of departments,
-            and
+          <label><input type="radio" name="Formal Governance Structure" value="5" required>&nbsp;Hospital has a well-defined organizational structure (chart), clear delegation of responsibility and authority, coherent functioning of departments, and
             an independent board that works on policymaking, oversight, and support</label><br>
           <br>
 
@@ -329,14 +336,11 @@
           <label><input type="radio" name="Strategic Plan and Implementation" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Strategic Plan and Implementation" value="1" required>&nbsp;Hospital has not yet developed either a long-term or short-term strategic plan</label><br>
           <label><input type="radio" name="Strategic Plan and Implementation" value="2" required>&nbsp;Hospital develops a long-term strategic plan and/or a yearly operational plan</label><br>
-          <label><input type="radio" name="Strategic Plan and Implementation" value="3" required>&nbsp;Hospital develops and adheres to a yearly operational plan that identifies organizational goals to be achieved and the resources needed to
-            achieve
+          <label><input type="radio" name="Strategic Plan and Implementation" value="3" required>&nbsp;Hospital develops and adheres to a yearly operational plan that identifies organizational goals to be achieved and the resources needed to achieve
             those goals</label><br>
-          <label><input type="radio" name="Strategic Plan and Implementation" value="4" required>&nbsp;Hospital develops and adheres to a long-term strategic plan that identifies organizational goals to be achieved and the resources needed to
-            achieve
+          <label><input type="radio" name="Strategic Plan and Implementation" value="4" required>&nbsp;Hospital develops and adheres to a long-term strategic plan that identifies organizational goals to be achieved and the resources needed to achieve
             those goals</label><br>
-          <label><input type="radio" name="Strategic Plan and Implementation" value="5" required>&nbsp;Hospital develops and adheres to a long-term strategic plan with a yearly operational plan that identifies organizational goals to be achieved
-            over
+          <label><input type="radio" name="Strategic Plan and Implementation" value="5" required>&nbsp;Hospital develops and adheres to a long-term strategic plan with a yearly operational plan that identifies organizational goals to be achieved over
             a specific period of time and the resources needed to achieve those goals</label><br>
           <br>
 
@@ -364,11 +368,9 @@
             funding</label><br>
           <label><input type="radio" name="Systems Capacity" value="2" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with
             sufficient funding</label><br>
-          <label><input type="radio" name="Systems Capacity" value="3" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed
-            with
+          <label><input type="radio" name="Systems Capacity" value="3" required>&nbsp;Hospital possesses some of the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed with
             sufficient funding</label><br>
-          <label><input type="radio" name="Systems Capacity" value="4" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with
-            sufficient
+          <label><input type="radio" name="Systems Capacity" value="4" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities but may not be able to expand capacity as needed with sufficient
             funding</label><br>
           <label><input type="radio" name="Systems Capacity" value="5" required>&nbsp;Hospital possesses the basic infrastructure, tools, and resources needed to fulfill its activities and has the capability to expand capacity as needed with
             sufficient funding</label><br>
@@ -397,11 +399,9 @@
           <label><input type="radio" name="Board Meetings" value="1" required>&nbsp;Board meetings are not held</label><br>
           <label><input type="radio" name="Board Meetings" value="2" required>&nbsp;Board meetings are held on an ad hoc basis</label><br>
           <label><input type="radio" name="Board Meetings" value="3" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital records minutes during board meetings</label><br>
-          <label><input type="radio" name="Board Meetings" value="4" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible
-            for
+          <label><input type="radio" name="Board Meetings" value="4" required>&nbsp;Board meetings are held on an ad hoc basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible for
             future reference</label><br>
-          <label><input type="radio" name="Board Meetings" value="5" required>&nbsp;Board meetings are held on a regular basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible
-            for
+          <label><input type="radio" name="Board Meetings" value="5" required>&nbsp;Board meetings are held on a regular basis, and the hospital keeps an official record of events that take place in board meeting minutes that are made accessible for
             future reference</label><br>
           <br>
 
@@ -426,8 +426,7 @@
           <label><input type="radio" name="Board Donation Oversight" value="3" required>&nbsp;The board reviews and approves the budget.</label><br>
           <label><input type="radio" name="Board Donation Oversight" value="4" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and donor
             restrictions.</label><br>
-          <label><input type="radio" name="Board Donation Oversight" value="5" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and
-            donor's
+          <label><input type="radio" name="Board Donation Oversight" value="5" required>&nbsp;The board reviews and approves the budget, and reviews and monitors how funds are used and whether the uses comply with the hospital's policies and donor's
             restrictions. The board also reviews and compares the budgeted versus actual expenses and income, and discusses major variances.</label><br>
           <br>
 
@@ -500,12 +499,9 @@
 
           <p><b>Do all patients receive equal care regardless of their wealth (as a measure of accessibility)?</b></p>
           <label><input type="radio" name="Equal Services for All Patients" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Equal Services for All Patients" value="1" required>&nbsp;Hospital processes have unintentionally become oriented toward serving higher income patients, reducing the volume of less wealthy
-            patients.</label><br>
-          <label><input type="radio" name="Equal Services for All Patients" value="3" required>&nbsp;Higher income patients receive priority in terms of private rooms, physician of choice, or shorter wait times at higher cost in order to subsidize
-            costs of less wealthy patients.</label><br>
-          <label><input type="radio" name="Equal Services for All Patients" value="5" required>&nbsp;All patients receive equal care regardless of income level. Higher income patients do not receive priority in terms of private rooms, physician of
-            choice, or shorter wait times.</label><br>
+          <label><input type="radio" name="Equal Services for All Patients" value="1" required>&nbsp;Hospital has a single tier of service aimed at the rich (private patients)</label><br>
+          <label><input type="radio" name="Equal Services for All Patients" value="3" required>&nbsp;Hospital has two or more tiers of service</label><br>
+          <label><input type="radio" name="Equal Services for All Patients" value="5" required>&nbsp;Hospital has a single tier of service aimed at the poor (general patients)</label><br>
           <br>
 
           <p><b>How well does the hospital work with community experts, partners, staff, and patients to build support, plan for the future, and impact the health of their local communities?</b></p>
@@ -560,6 +556,28 @@
           <label><input type="radio" name="Outpatient Visits" value="5" required>&nbsp;&gt;1,500</label><br>
           <br>
 
+          <p><b>What is the average price charged to inpatients (the cost of the stay less any charity care), as a percent above the national average? Average costs can be estimated by selecting your country in the WHO spreadsheet at the following
+              site: https://www.who.int/choice/country/country_specific/en/</b></p>
+          <label><input type="radio" name="Average Inpatient Cost" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="1" required>&nbsp;&gt;20% above national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="2" required>&nbsp;10% to 20% above national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="3" required>&nbsp;10% above to 10% below national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="4" required>&nbsp;10% to 20% below national average inpatient cost</label><br>
+          <label><input type="radio" name="Average Inpatient Cost" value="5" required>&nbsp;&gt;20% below national average inpatient cost</label><br>
+          <br>
+
+
+          <p><b>What is the average price charged to outpatients (the cost of the visit less any charity care), as a percent above the national average? Average costs can be estimated by selecting your country in the WHO spreadsheet at the following
+              site: https://www.who.int/choice/country/country_specific/en/</b></p>
+          <label><input type="radio" name="Average Outpatient Cost" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="1" required>&nbsp;&gt;20% above national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="2" required>&nbsp;10% to 20% above national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="3" required>&nbsp;10% above to 10% below national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="4" required>&nbsp;10% to 20% below national average outpatient cost</label><br>
+          <label><input type="radio" name="Average Outpatient Cost" value="5" required>&nbsp;&gt;20% below national average outpatient cost</label><br>
+          <br>
+
+
           <p><b>What is the hospital's bed occupancy rate? (To calculate, divide total number of bed-days during the year by (number of beds available * 365 days), then multiply by 100.)</b></p>
           <label><input type="radio" name="Bed Occupancy" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Bed Occupancy" value="1" required>&nbsp;&lt;60%</label><br>
@@ -612,15 +630,6 @@
           <label><input type="radio" name="Patient Readmission Rate" value="5" required>&nbsp;&lt;5%</label><br>
           <br>
 
-          <p><b>How many days, on average, does it take between a patient requesting services and being seen by a service provider?</b></p>
-          <label><input type="radio" name="Days to Visit" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Days to Visit" value="1" required>&nbsp;&gt;20 days</label><br>
-          <label><input type="radio" name="Days to Visit" value="2" required>&nbsp;15 - 20 days</label><br>
-          <label><input type="radio" name="Days to Visit" value="3" required>&nbsp;10 - 15 days</label><br>
-          <label><input type="radio" name="Days to Visit" value="4" required>&nbsp;5 - 10 days</label><br>
-          <label><input type="radio" name="Days to Visit" value="5" required>&nbsp;&lt;5 days</label><br>
-          <br>
-
           <p><b>Does the hospital have staff with work experience of 10 years and above in a particular field?</b></p>
           <label><input type="radio" name="Staff Experience" value="0" required>&nbsp;No Data</label><br>
           <label><input type="radio" name="Staff Experience" value="1" required>&nbsp;&lt;10% of staff have experience in a particular field of &gt;10 years</label><br>
@@ -644,15 +653,6 @@
           <label><input type="radio" name="Staff Turnover" value="3" required>&nbsp;30% - 70%</label><br>
           <label><input type="radio" name="Staff Turnover" value="4" required>&nbsp;10% - 30%</label><br>
           <label><input type="radio" name="Staff Turnover" value="5" required>&nbsp;&lt;10%</label><br>
-          <br>
-
-          <p><b>On average, how many patients does a physician see per day, or how many hours does a physician work per week?</b></p>
-          <label><input type="radio" name="Physician Performance" value="0" required>&nbsp;No Data</label><br>
-          <label><input type="radio" name="Physician Performance" value="1" required>&nbsp;&lt;14 patients per day or &lt;40 hours per week</label><br>
-          <label><input type="radio" name="Physician Performance" value="2" required>&nbsp;14 - 17 patients per day or 40 - 48 hours per week</label><br>
-          <label><input type="radio" name="Physician Performance" value="3" required>&nbsp;18 - 21 patients per day or 49 - 56 hours per week</label><br>
-          <label><input type="radio" name="Physician Performance" value="4" required>&nbsp;22 - 25 patients per day or 57 - 60 hours per week</label><br>
-          <label><input type="radio" name="Physician Performance" value="5" required>&nbsp;&gt;25 patients per day or &gt;60 hours per week</label><br>
           <br>
 
           <p><b>Does the hospital have partners that it is are collaborating with, and does it plan to add partners to its network?</b></p>
@@ -723,49 +723,25 @@
           <label><input type="radio" name="Local Safety" value="5" required>&nbsp;Crime rate &lt;40</label><br>
           <br>
 
-          <p><b>Does the hospital support any specific causes (e.g., leprosy, cancer, maternal health)? Please list each as a way to allow donors and volunteers to search for the hospital.</b></p>
-          <input type="text" name="Cause" style="width:300px;" required><br><br>
 
-          <p><b>Does the hospital have a Christian-based mission?</b></p>
-          <input type="text" name="Christian Mission" style="width:300px;" required><br><br>
-
-          <p><b>If you would like, you may provide a story of an individual whose life your hospital has benefited. Personal stories often help donors and volunteers make a personal connection to a charitable organization.</b></p>
-          <input type="text" name="Beneficiary Narrative" style="width:300px;" required><br><br>
-
-          <p><b>Does the hospital have any specific donor needs? If so, please explain, as a way for potential donors to find the hospital. If available, please provide a plan for future funds, including specific uses (e.g., new program or
-              facility),
-              amounts, priority, and alignment to the hospital's strategic plan.</b></p>
-          <input type="text" name="Donation Needs" style="width:300px;" required><br><br>
-
-          <p><b>Is the hospital registered with the appropriate bodies required to receive foreign donations (e.g., FCRA in India)?</b></p>
-          <input type="text" name="Ability to Accept Foreign Donations" style="width:300px;" required><br><br>
-
-          <p><b>Can the hospital accommodate donations that come with conditions tied to them?</b></p>
-          <input type="text" name="Conditional Donations" style="width:300px;" required><br><br>
-
-          <p><b>How has the hospital used donations in the past?</b></p>
-          <input type="text" name="Donation Uses" style="width:300px;" required><br><br>
-
-          <p><b>Does the hospital have any specific volunteer needs? If so, please explain, as a way for potential volunteers to find the hospital. If available, please provide a plan for volunteer work (e.g., specific procedures the volunteer will
-              get to learn or perform, learning objectives).</b></p>
-          <input type="text" name="Volunteer Needs" style="width:300px;" required><br><br>
-
-          <p><b>How difficult is it for volunteers to obtain a visa to work with the hospital? Please explain.</b></p>
-          <input type="text" name="Visa Requirement" style="width:300px;" required><br><br>
-
-          <p><b>Are volunteers able to receive a salary? If so, what is the average salary or a typical range of salaries?</b></p>
-          <input type="text" name="Volunteer Salary" style="width:300px;" required><br><br>
-
-          <p><b>Are there any features of the hospital's location that you would like to highlight that might attract short-term volunteers, such as music, wildlife photography, nearby tourist attractions, etc.?</b></p>
-          <input type="text" name="Attractions" style="width:300px;" required><br><br>
-
-          <p><b>Please describe the location in which the hospital is located and how difficult it would be for volunteers to travel there.</b></p>
-          <input type="text" name="Location Access" style="width:300px;" required><br><br>
-
-          <input type="submit" value="Submit">
+          <p><b>What services does the organization provide (e.g., hospital, education, agriculture)? Please list each as a way to allow donors and volunteers to search for the organization.</b></p>
+          <label><input type="radio" name="Additional Services" value="0" required>&nbsp;No Data</label><br>
+          <label><input type="radio" name="Additional Services" value="3" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high
+            quality.</label><br>
+          <label><input type="radio" name="Additional Services" value="4" required>&nbsp;At least 1 additional service is provided, to which at least 2% of the hospital's resources are dedicated. Appropriate services are delivered with high quality,
+            and the program performs above average on at least one key relevant metric.</label><br>
+          <label><input type="radio" name="Additional Services" value="5" required>&nbsp;At least 2 additional services are provided, to which at least 5% of the hospital's resources are dedicated. Appropriate services are delivered with high
+            quality, and the programs perform above average on at least one key relevant metric.</label><br>
           <br>
-          <p id="status" style="color:red"></p>
+
+          <!-- Questions Over-->
+
+          <input type="submit" value="Check your Rating">
         </form>
+
+        <br>
+        <button type="button" onclick="firestore()">Submit your Data</button>
+        <p id="status" style="color:red"></p>
 
       </div>
     </div>
@@ -785,34 +761,35 @@
     //function called when submit is pressed
     function addToDB() {
 
-      obj["Creator Email"] = firebase.auth().currentUser.email;
+      obj["creator"] = firebase.auth().currentUser.email;
 
       var idSet = new Set();
       var elements = document.getElementById("myForm").elements;
       for (var i = 0; i < elements.length - 1; i++) {
         var item = elements.item(i);
-        console.log(item.value.length);
         if (item.checked || item.value.length > 1) {
           obj[item.name] = item.value;
         }
       }
-      results = JSON.stringify(obj);
-      console.log(results);
-      //at this point obj has all the fields so it is ready to be called to add new fields
-
-      //angela's function
+      console.log(JSON.stringify(obj));
       computeScores();
     }
 
     function firestore() {
-      db.collection("hospitals").doc(obj["Hospital Username"]).set(obj)
-        .then(function() {
-          console.log("Document successfully written!");
-          document.getElementById("status").innerHTML = "Hospital successfully added. Go back to the homepage and check out your hospital information."
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
+
+      if (obj['ready']) {
+        db.collection("hospitals").doc(obj["Hospital Username"]).set(obj)
+          .then(function() {
+            console.log("Document successfully written!");
+            document.getElementById("status").innerHTML = "Hospital successfully added. Go back to the homepage and check out your hospital information."
+          })
+          .catch(function(error) {
+            console.error("Error writing document: ", error);
+            document.getElementById("status").innerHTML = "Error occured while adding hospital. Please try again with another username."
+          });
+      } else {
+        document.getElementById('status').innerHTML = "Click 'Check your Rating' button first and try again."
+      }
     }
   </script>
 
@@ -827,13 +804,13 @@
     var mapJSON = new Map();
 
     function createMaps() {
+
       mapToWeights.set('Socioeconomic Status of Patient Population', 10)
       mapToWeights.set('Local Population Income Mix', 6)
       mapToWeights.set('Local Patient Population Density', 8)
       mapToWeights.set('Alternative Care Options', 9)
       mapToWeights.set('Local Maternal Mortality Rate (MMR)', 10)
       mapToWeights.set('Local Infant Mortality Rate (IMR)', 10)
-      mapToWeights.set('Additional Services', 4)
       mapToWeights.set('Diversity of Revenue Sources', 7)
       mapToWeights.set('Donations Percent of Revenue', 7)
       mapToWeights.set('Operating Margin', 6)
@@ -849,7 +826,6 @@
       mapToWeights.set('Auditing', 1)
       mapToWeights.set('Accounting Books', 1)
       mapToWeights.set('Bank Accounts', 1)
-      mapToWeights.set('Safety of Funds', 5)
       mapToWeights.set('Cost Per Life Saved', 7)
       mapToWeights.set('Charity Care Efficiency', 6)
       mapToWeights.set('Formal Governance Structure', 6)
@@ -867,7 +843,6 @@
       mapToWeights.set('Appointed CEO', 1)
       mapToWeights.set('Legal Support', 2)
       mapToWeights.set('Operational Policies', 1)
-      mapToWeights.set('Culture of Continuous Improvement', 1)
       mapToWeights.set('Outcomes Reporting', 3)
       mapToWeights.set('Donor Privacy Policy', 1)
       mapToWeights.set('Website', 1)
@@ -885,144 +860,29 @@
       mapToWeights.set('Hospital Infant Mortality Rate (IMR)', 4)
       mapToWeights.set('Patient Mortality Risk', 2)
       mapToWeights.set('Patient Readmission Rate', 1)
-      mapToWeights.set('Days to Visit', 2)
-      mapToWeights.set('Patient Satisfaction - Service', 1)
-      mapToWeights.set('Patient Satisfaction - Staff', 1)
-      mapToWeights.set('Patient Satisfaction - Hospital Cleanliness', 1)
-      mapToWeights.set('Staff Satisfaction', 1)
       mapToWeights.set('Staff Experience', 1)
       mapToWeights.set('Staff Meetings', 1)
       mapToWeights.set('Staff Turnover', 1)
-      mapToWeights.set('Physician Performance', 1)
-      mapToWeights.set('Leadership Credibility', 7)
-      mapToWeights.set('Donor Satisfaction', 3)
-      mapToWeights.set('Charity Rating Organizations', 1)
       mapToWeights.set('Collaboration', 2)
       mapToWeights.set('Exchange Programs', 1)
-      mapToWeights.set('Respect of Community', 1)
       mapToWeights.set('Volunteer Responsibility', 1)
       mapToWeights.set('Expected Volunteer Experience', 1)
       mapToWeights.set('Spousal Job Opportunities', 1)
       mapToWeights.set('Child Education Opportunities', 1)
       mapToWeights.set('Housing Opportunities', 1)
       mapToWeights.set('Local Safety', 2)
-      mapToWeights.set('Local Safety Perception', 2)
-      mapToWeights.set('Volunteer Recommendation', 3)
-      mapToWeights.set('Overall Volunteer Satisfaction', 1)
-      mapToWeights.set('Skills Match', 1)
-      mapToWeights.set('Learning Opportunities', 3)
-      mapToWeights.set('Career Development', 2)
-      mapToWeights.set('Job Training Appropriateness', 2)
-      mapToWeights.set('Community Affiliation', 3)
-      mapToWeights.set('Strategy and Influence', 2)
-      mapToWeights.set('Philanthropic Impact', 3)
-      mapToWeights.set('Flexibility', 1)
-      mapToWeights.set('Supervision', 2)
-      mapToWeights.set('Recognition', 1)
-      mapToWeights.set('Achievement', 3)
+      mapToWeights.set('Average Outpatient Cost', 5)
+      mapToWeights.set('Average Inpatient Cost', 5)
+      mapToWeights.set('Additional Services', 4)
 
 
-      mapToCats.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
-      mapToCats.set('Local Population Income Mix', 'Regional Impact Potential')
-      mapToCats.set('Local Patient Population Density', 'Regional Impact Potential')
-      mapToCats.set('Alternative Care Options', 'Regional Impact Potential')
-      mapToCats.set('Local Maternal Mortality Rate (MMR)', 'Regional Impact Potential')
-      mapToCats.set('Local Infant Mortality Rate (IMR)', 'Regional Impact Potential')
-      mapToCats.set('Additional Services', 'Regional Impact Potential')
-      mapToCats.set('Diversity of Revenue Sources', 'Financial Health')
-      mapToCats.set('Donations Percent of Revenue', 'Financial Health')
-      mapToCats.set('Operating Margin', 'Financial Health')
-      mapToCats.set('Program Expense Percentage', 'Financial Health')
-      mapToCats.set('Administrative Expense Percentage', 'Financial Health')
-      mapToCats.set('Capital Expenditure Percentage', 'Financial Health')
-      mapToCats.set('Fundraising Expense Percentage', 'Financial Health')
-      mapToCats.set('Fundraising Efficiency', 'Financial Health')
-      mapToCats.set('Program Expense Growth', 'Financial Health')
-      mapToCats.set('Liabilities to Assets Ratio', 'Financial Health')
-      mapToCats.set('Charity Care Percentage', 'Financial Health')
-      mapToCats.set('Budget', 'Financial Health')
-      mapToCats.set('Auditing', 'Financial Health')
-      mapToCats.set('Accounting Books', 'Financial Health')
-      mapToCats.set('Bank Accounts', 'Financial Health')
-      mapToCats.set('Safety of Funds', 'Financial Health')
-      mapToCats.set('Cost Per Life Saved', 'Operational Performance')
-      mapToCats.set('Charity Care Efficiency', 'Operational Performance')
-      mapToCats.set('Formal Governance Structure', 'Operational Performance')
-      mapToCats.set('Commitment to Mission', 'Operational Performance')
-      mapToCats.set('Strategic Plan and Implementation', 'Operational Performance')
-      mapToCats.set('Key Performance Indicators', 'Operational Performance')
-      mapToCats.set('Alternate Implementation Plans', 'Operational Performance')
-      mapToCats.set('Systems Capacity', 'Operational Performance')
-      mapToCats.set('Board Independence', 'Operational Performance')
-      mapToCats.set('Permanent Board Members', 'Operational Performance')
-      mapToCats.set('Board Meetings', 'Operational Performance')
-      mapToCats.set('Annual General Meetings', 'Operational Performance')
-      mapToCats.set('Board Review', 'Operational Performance')
-      mapToCats.set('Board Donation Oversight', 'Operational Performance')
-      mapToCats.set('Appointed CEO', 'Operational Performance')
-      mapToCats.set('Legal Support', 'Operational Performance')
-      mapToCats.set('Operational Policies', 'Operational Performance')
-      mapToCats.set('Culture of Continuous Improvement', 'Operational Performance')
-      mapToCats.set('Outcomes Reporting', 'Operational Performance')
-      mapToCats.set('Donor Privacy Policy', 'Operational Performance')
-      mapToCats.set('Website', 'Operational Performance')
-      mapToCats.set('Appropriate Standards of Care', 'Operational Performance')
-      mapToCats.set('Equal Services for All Patients', 'Operational Performance')
-      mapToCats.set('Community Engagement', 'Operational Performance')
-      mapToCats.set('Quality Certifications', 'Operational Performance')
-      mapToCats.set('Awards Conferred', 'Operational Performance')
-      mapToCats.set('Major Surgeries', 'Operational Performance')
-      mapToCats.set('Child Deliveries', 'Operational Performance')
-      mapToCats.set('Outpatient Visits', 'Operational Performance')
-      mapToCats.set('Bed Occupancy', 'Operational Performance')
-      mapToCats.set('Weighted Average Patient Volume CAGR', 'Operational Performance')
-      mapToCats.set('Hospital Maternal Mortality Rate (MMR)', 'Operational Performance')
-      mapToCats.set('Hospital Infant Mortality Rate (IMR)', 'Operational Performance')
-      mapToCats.set('Patient Mortality Risk', 'Operational Performance')
-      mapToCats.set('Patient Readmission Rate', 'Operational Performance')
-      mapToCats.set('Days to Visit', 'Operational Performance')
-      mapToCats.set('Patient Satisfaction - Service', 'Operational Performance')
-      mapToCats.set('Patient Satisfaction - Staff', 'Operational Performance')
-      mapToCats.set('Patient Satisfaction - Hospital Cleanliness', 'Operational Performance')
-      mapToCats.set('Staff Satisfaction', 'Operational Performance')
-      mapToCats.set('Staff Experience', 'Operational Performance')
-      mapToCats.set('Staff Meetings', 'Operational Performance')
-      mapToCats.set('Staff Turnover', 'Operational Performance')
-      mapToCats.set('Physician Performance', 'Operational Performance')
-      mapToCats.set('Leadership Credibility', 'External Relations')
-      mapToCats.set('Donor Satisfaction', 'External Relations')
-      mapToCats.set('Charity Rating Organizations', 'External Relations')
-      mapToCats.set('Collaboration', 'External Relations')
-      mapToCats.set('Exchange Programs', 'External Relations')
-      mapToCats.set('Respect of Community', 'External Relations')
-      mapToCats.set('Volunteer Responsibility', 'Volunteer Opportunity')
-      mapToCats.set('Expected Volunteer Experience', 'Volunteer Opportunity')
-      mapToCats.set('Spousal Job Opportunities', 'Volunteer Opportunity')
-      mapToCats.set('Child Education Opportunities', 'Volunteer Opportunity')
-      mapToCats.set('Housing Opportunities', 'Volunteer Opportunity')
-      mapToCats.set('Local Safety', 'Volunteer Opportunity')
-      mapToCats.set('Local Safety Perception', 'Volunteer Opportunity')
-      mapToCats.set('Volunteer Recommendation', 'Volunteer Satisfaction')
-      mapToCats.set('Overall Volunteer Satisfaction', 'Volunteer Satisfaction')
-      mapToCats.set('Skills Match', 'Volunteer Satisfaction')
-      mapToCats.set('Learning Opportunities', 'Volunteer Satisfaction')
-      mapToCats.set('Career Development', 'Volunteer Satisfaction')
-      mapToCats.set('Job Training Appropriateness', 'Volunteer Satisfaction')
-      mapToCats.set('Community Affiliation', 'Volunteer Satisfaction')
-      mapToCats.set('Strategy and Influence', 'Volunteer Satisfaction')
-      mapToCats.set('Philanthropic Impact', 'Volunteer Satisfaction')
-      mapToCats.set('Flexibility', 'Volunteer Satisfaction')
-      mapToCats.set('Supervision', 'Volunteer Satisfaction')
-      mapToCats.set('Recognition', 'Volunteer Satisfaction')
-      mapToCats.set('Achievement', 'Volunteer Satisfaction')
-
-      mapToSubCatsj.set('Socioeconomic Status of Patient Population', '')
-      mapToSubCatsj.set('Local Population Income Mix', '')
-      mapToSubCatsj.set('Local Patient Population Density', '')
-      mapToSubCatsj.set('Alternative Care Options', '')
-      mapToSubCatsj.set('Local Maternal Mortality Rate (MMR)', '')
-      mapToSubCatsj.set('Local Infant Mortality Rate (IMR)', '')
-      mapToSubCatsj.set('Additional Services', '')
+      mapToSubCatsj.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
+      mapToSubCatsj.set('Local Population Income Mix', 'Regional Impact Potential')
+      mapToSubCatsj.set('Local Patient Population Density', 'Regional Impact Potential')
+      mapToSubCatsj.set('Alternative Care Options', 'Regional Impact Potential')
+      mapToSubCatsj.set('Local Maternal Mortality Rate (MMR)', 'Regional Impact Potential')
+      mapToSubCatsj.set('Local Infant Mortality Rate (IMR)', 'Regional Impact Potential')
+      mapToSubCatsj.set('Additional Services', 'Regional Impact Potential')
       mapToSubCatsj.set('Diversity of Revenue Sources', 'Funding Sources')
       mapToSubCatsj.set('Donations Percent of Revenue', 'Funding Sources')
       mapToSubCatsj.set('Operating Margin', 'Financial Efficiency')
@@ -1038,9 +898,10 @@
       mapToSubCatsj.set('Auditing', 'Accountability')
       mapToSubCatsj.set('Accounting Books', 'Accountability')
       mapToSubCatsj.set('Bank Accounts', 'Accountability')
-      mapToSubCatsj.set('Safety of Funds', 'Accountability')
       mapToSubCatsj.set('Cost Per Life Saved', 'Operational Efficiency')
       mapToSubCatsj.set('Charity Care Efficiency', 'Operational Efficiency')
+      mapToSubCatsj.set('Average Inpatient Cost', 'Operational Efficiency')
+      mapToSubCatsj.set('Average Outpatient Cost', 'Operational Efficiency')
       mapToSubCatsj.set('Formal Governance Structure', 'Governance')
       mapToSubCatsj.set('Commitment to Mission', 'Governance')
       mapToSubCatsj.set('Strategic Plan and Implementation', 'Governance')
@@ -1056,7 +917,6 @@
       mapToSubCatsj.set('Appointed CEO', 'Governance')
       mapToSubCatsj.set('Legal Support', 'Governance')
       mapToSubCatsj.set('Operational Policies', 'Governance')
-      mapToSubCatsj.set('Culture of Continuous Improvement', 'Governance')
       mapToSubCatsj.set('Outcomes Reporting', 'Transparency')
       mapToSubCatsj.set('Donor Privacy Policy', 'Transparency')
       mapToSubCatsj.set('Website', 'Transparency')
@@ -1074,86 +934,163 @@
       mapToSubCatsj.set('Hospital Infant Mortality Rate (IMR)', 'Care Quality')
       mapToSubCatsj.set('Patient Mortality Risk', 'Care Quality')
       mapToSubCatsj.set('Patient Readmission Rate', 'Care Quality')
-      mapToSubCatsj.set('Days to Visit', 'Care Quality')
-      mapToSubCatsj.set('Patient Satisfaction - Service', 'Care Quality')
-      mapToSubCatsj.set('Patient Satisfaction - Staff', 'Care Quality')
-      mapToSubCatsj.set('Patient Satisfaction - Hospital Cleanliness', 'Care Quality')
-      mapToSubCatsj.set('Staff Satisfaction', 'Care Quality')
       mapToSubCatsj.set('Staff Experience', 'Care Quality')
       mapToSubCatsj.set('Staff Meetings', 'Care Quality')
       mapToSubCatsj.set('Staff Turnover', 'Care Quality')
-      mapToSubCatsj.set('Physician Performance', 'Care Quality')
-      mapToSubCatsj.set('Leadership Credibility', '')
-      mapToSubCatsj.set('Donor Satisfaction', '')
-      mapToSubCatsj.set('Charity Rating Organizations', '')
-      mapToSubCatsj.set('Collaboration', '')
-      mapToSubCatsj.set('Exchange Programs', '')
-      mapToSubCatsj.set('Respect of Community', '')
-      mapToSubCatsj.set('Volunteer Responsibility', '')
-      mapToSubCatsj.set('Expected Volunteer Experience', '')
-      mapToSubCatsj.set('Spousal Job Opportunities', '')
-      mapToSubCatsj.set('Child Education Opportunities', '')
-      mapToSubCatsj.set('Housing Opportunities', '')
-      mapToSubCatsj.set('Local Safety', '')
-      mapToSubCatsj.set('Local Safety Perception', '')
-      mapToSubCatsj.set('Volunteer Recommendation', '')
-      mapToSubCatsj.set('Overall Volunteer Satisfaction', '')
-      mapToSubCatsj.set('Skills Match', '')
-      mapToSubCatsj.set('Learning Opportunities', '')
-      mapToSubCatsj.set('Career Development', '')
-      mapToSubCatsj.set('Job Training Appropriateness', '')
-      mapToSubCatsj.set('Community Affiliation', '')
-      mapToSubCatsj.set('Strategy and Influence', '')
-      mapToSubCatsj.set('Philanthropic Impact', '')
-      mapToSubCatsj.set('Flexibility', '')
-      mapToSubCatsj.set('Supervision', '')
-      mapToSubCatsj.set('Recognition', '')
-      mapToSubCatsj.set('Achievement', '')
+      mapToSubCatsj.set('Collaboration', 'External Relations')
+      mapToSubCatsj.set('Exchange Programs', 'External Relations')
+      mapToSubCatsj.set('Volunteer Responsibility', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Expected Volunteer Experience', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Spousal Job Opportunities', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Child Education Opportunities', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Housing Opportunities', 'Volunteer Opportunity')
+      mapToSubCatsj.set('Local Safety', 'Volunteer Opportunity')
+
+
+      mapToCats.set('Socioeconomic Status of Patient Population', 'Regional Impact Potential')
+      mapToCats.set('Local Population Income Mix', 'Regional Impact Potential')
+      mapToCats.set('Local Patient Population Density', 'Regional Impact Potential')
+      mapToCats.set('Alternative Care Options', 'Regional Impact Potential')
+      mapToCats.set('Local Maternal Mortality Rate (MMR)', 'Regional Impact Potential')
+      mapToCats.set('Local Infant Mortality Rate (IMR)', 'Regional Impact Potential')
+      mapToCats.set('Diversity of Revenue Sources', 'Financial Health')
+      mapToCats.set('Donations Percent of Revenue', 'Financial Health')
+      mapToCats.set('Operating Margin', 'Financial Health')
+      mapToCats.set('Program Expense Percentage', 'Financial Health')
+      mapToCats.set('Administrative Expense Percentage', 'Financial Health')
+      mapToCats.set('Capital Expenditure Percentage', 'Financial Health')
+      mapToCats.set('Fundraising Expense Percentage', 'Financial Health')
+      mapToCats.set('Fundraising Efficiency', 'Financial Health')
+      mapToCats.set('Program Expense Growth', 'Financial Health')
+      mapToCats.set('Liabilities to Assets Ratio', 'Financial Health')
+      mapToCats.set('Charity Care Percentage', 'Financial Health')
+      mapToCats.set('Budget', 'Financial Health')
+      mapToCats.set('Auditing', 'Financial Health')
+      mapToCats.set('Accounting Books', 'Financial Health')
+      mapToCats.set('Bank Accounts', 'Financial Health')
+      mapToCats.set('Cost Per Life Saved', 'Operational Performance')
+      mapToCats.set('Charity Care Efficiency', 'Operational Performance')
+      mapToCats.set('Formal Governance Structure', 'Operational Performance')
+      mapToCats.set('Commitment to Mission', 'Operational Performance')
+      mapToCats.set('Strategic Plan and Implementation', 'Operational Performance')
+      mapToCats.set('Key Performance Indicators', 'Operational Performance')
+      mapToCats.set('Alternate Implementation Plans', 'Operational Performance')
+      mapToCats.set('Systems Capacity', 'Operational Performance')
+      mapToCats.set('Board Independence', 'Operational Performance')
+      mapToCats.set('Permanent Board Members', 'Operational Performance')
+      mapToCats.set('Board Meetings', 'Operational Performance')
+      mapToCats.set('Annual General Meetings', 'Operational Performance')
+      mapToCats.set('Board Review', 'Operational Performance')
+      mapToCats.set('Board Donation Oversight', 'Operational Performance')
+      mapToCats.set('Appointed CEO', 'Operational Performance')
+      mapToCats.set('Legal Support', 'Operational Performance')
+      mapToCats.set('Operational Policies', 'Operational Performance')
+      mapToCats.set('Outcomes Reporting', 'Operational Performance')
+      mapToCats.set('Donor Privacy Policy', 'Operational Performance')
+      mapToCats.set('Website', 'Operational Performance')
+      mapToCats.set('Appropriate Standards of Care', 'Operational Performance')
+      mapToCats.set('Equal Services for All Patients', 'Operational Performance')
+      mapToCats.set('Community Engagement', 'Operational Performance')
+      mapToCats.set('Quality Certifications', 'Operational Performance')
+      mapToCats.set('Awards Conferred', 'Operational Performance')
+      mapToCats.set('Major Surgeries', 'Operational Performance')
+      mapToCats.set('Child Deliveries', 'Operational Performance')
+      mapToCats.set('Outpatient Visits', 'Operational Performance')
+      mapToCats.set('Bed Occupancy', 'Operational Performance')
+      mapToCats.set('Weighted Average Patient Volume CAGR', 'Operational Performance')
+      mapToCats.set('Hospital Maternal Mortality Rate (MMR)', 'Operational Performance')
+      mapToCats.set('Hospital Infant Mortality Rate (IMR)', 'Operational Performance')
+      mapToCats.set('Patient Mortality Risk', 'Operational Performance')
+      mapToCats.set('Patient Readmission Rate', 'Operational Performance')
+      mapToCats.set('Staff Experience', 'Operational Performance')
+      mapToCats.set('Staff Meetings', 'Operational Performance')
+      mapToCats.set('Staff Turnover', 'Operational Performance')
+      mapToCats.set('Collaboration', 'External Relations')
+      mapToCats.set('Exchange Programs', 'External Relations')
+      mapToCats.set('Volunteer Responsibility', 'Volunteer Experience')
+      mapToCats.set('Expected Volunteer Experience', 'Volunteer Experience')
+      mapToCats.set('Spousal Job Opportunities', 'Volunteer Experience')
+      mapToCats.set('Child Education Opportunities', 'Volunteer Experience')
+      mapToCats.set('Housing Opportunities', 'Volunteer Experience')
+      mapToCats.set('Local Safety', 'Volunteer Experience')
+      mapToCats.set('Average Outpatient Cost', 'Operational Efficiency')
+      mapToCats.set('Average Inpatient Cost', 'Operational Efficiency')
+      mapToCats.set('Additional Services', 'Regional Impact Potential')
 
     }
 
     createMaps();
 
     //subcategory variables
+    //funding sources
     var runningScoreTotalFunding = 0;
     var runningScoreAvgFunding = 0;
     var runningWeightsFunding = 0;
 
+    //financial capacity
     var runningScoreTotalFinancial = 0;
     var runningScoreAvgFinancial = 0;
     var runningWeightsFinancial = 0;
 
+    //operational efficiency
     var runningScoreTotalOperation = 0;
     var runningScoreAvgOperation = 0;
     var runningWeightsOperation = 0;
 
+    //governance
     var runningScoreTotalGov = 0;
     var runningScoreAvgGov = 0;
     var runningWeightsGov = 0;
 
+    //transparency
     var runningScoreTotalTrans = 0;
     var runningScoreAvgTrans = 0;
     var runningWeightsTrans = 0;
 
+    //accountability
     var runningScoreTotalAccount = 0;
     var runningScoreAvgAccount = 0;
     var runningWeightsAccount = 0;
 
+    //org quality
     var runningScoreTotalOrganization = 0;
     var runningScoreAvgOrganization = 0;
     var runningWeightsOrganization = 0;
 
+    //volume
     var runningScoreTotalVolume = 0;
     var runningScoreAvgVolume = 0;
     var runningWeightsVolume = 0;
 
+    //financial efficiency
     var runningScoreTotalEfficiency = 0;
     var runningScoreAvgEfficiency = 0;
     var runningWeightsEfficiency = 0;
 
+    //care quality
     var runningScoreTotalCare = 0;
     var runningScoreAvgCare = 0;
     var runningWeightsCare = 0;
+
+    //external relations
+    var runningScoreTotalExtRelSub = 0;
+    var runningScoreAvgExtRelSub = 0;
+    var runningWeightsExtRelSub = 0;
+
+    //volunteer opportunity
+    var runningScoreTotalVolOpptSub = 0;
+    var runningScoreAvgVolOpptSub = 0;
+    var runningWeightsVolOpptSub = 0;
+
+    //volunteer satisfaction
+    var runningScoreTotalVolSat = 0;
+    var runningScoreAvgVolSat = 0;
+    var runningWeightsVolSat = 0;
+
+    //regional impact potential
+    var runningScoreTotalRegionalSub = 0;
+    var runningScoreAvgRegionalSub = 0;
+    var runningWeightsRegionalSub = 0;
 
     //category variables
     //regional impact potential
@@ -1164,14 +1101,24 @@
     var runningScoreTotalRelations = 0;
     var runningScoreAvgRelations = 0;
     var runningWeightsRelations = 0;
-    //volunteer opportunity
-    var runningScoreTotalVolOppt = 0;
-    var runningScoreAvgVolOppt = 0;
-    var runningWeightsVolOppt = 0;
+    //volunteer experience
+    var runningScoreTotalVolExp = 0;
+    var runningScoreAvgVolExp = 0;
+    var runningWeightsVolExp = 0;
     //volunteer satisfaction
-    var runningScoreTotalVolSats = 0;
-    var runningScoreAvgVolSats = 0;
-    var runningWeightsVolSats = 0;
+    //var runningScoreTotalVolSats = 0;
+    //var runningScoreAvgVolSats = 0;
+    //var runningWeightsVolSats = 0;
+
+    var runningScoreTotalFinHealth = 0;
+    var runningScoreAvgFinHealth = 0;
+    var runningWeightsFinHealth = 0;
+
+    var runningScoreTotalOperPerf = 0;
+    var runningScoreAvgOperPerf = 0;
+    var runningWeightsOperPerf = 0;
+
+
     var totalScoreSum = 0;
     var totalScoreWeights = 0;
     var totalScore = 0;
@@ -1185,39 +1132,47 @@
     var totalOperationalPerfWeight = 0
 
 
-    //for testing
-    //var obj = {}
-
-
-    computeScores();
-
     function computeScores() {
-
-      console.log(mapToWeights.keys());
 
       for (let key of mapToWeights.keys()) { //key is the variable name
         mapJSON.set(key, obj[key]);
-        //mapJSON[key] = obj[key];
       }
-      console.log(mapJSON);
-      console.log(mapJSON.entries());
       computeSubCatScore(mapJSON);
 
     }
 
 
 
-
-
-
     function computeSubCatScore(mapToScores) {
-      console.log("compute SubCat Score");
-      console.log(mapToScores.entries());
 
       //funding sources
       for (const [variable, score] of mapToScores.entries()) {
-        console.log("variable");
-        console.log(variable);
+
+        if (mapToSubCatsj.get(variable).valueOf() == "Regional Impact Potential") {
+          console.log("regional imapct potential subcat");
+          runningScoreTotalRegionalSub = runningScoreTotalRegionalSub + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsRegionalSub = runningWeightsRegionalSub + mapToWeights.get(variable);
+        }
+
+        if (mapToSubCatsj.get(variable).valueOf() == "External Relations") {
+          console.log("ext relations sub");
+          runningScoreTotalExtRelSub = runningScoreTotalExtRelSub + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsExtRelSub = runningWeightsExtRelSub + mapToWeights.get(variable);
+        }
+
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Opportunity") {
+          console.log("vol opp sub");
+          runningScoreTotalVolOpptSub = runningScoreTotalVolOpptSub + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolOpptSub = runningWeightsVolOpptSub + mapToWeights.get(variable);
+        }
+
+        if (mapToSubCatsj.get(variable).valueOf() == "Volunteer Satisfaction") {
+          console.log("vol opp sub");
+          runningScoreTotalVolSat = runningScoreTotalVolSat + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolSat = runningWeightsVolSat + mapToWeights.get(variable);
+        }
+
+
         if (mapToSubCatsj.get(variable).valueOf() == "Funding Sources") {
           console.log("funding sources");
           runningScoreTotalFunding = runningScoreTotalFunding + mapToScores.get(variable) * mapToWeights.get(variable);
@@ -1270,16 +1225,7 @@
           runningWeightsCare = runningWeightsCare + mapToWeights.get(variable);
         }
       }
-      console.log(runningScoreTotalFunding);
-      console.log(runningScoreTotalFinancial);
-      console.log(runningScoreTotalOperation);
-      console.log(runningScoreTotalGov);
-      console.log(runningScoreTotalTrans);
-      console.log(runningScoreTotalAccount);
-      console.log(runningScoreTotalOrganization);
-      console.log(runningScoreTotalVolume);
-      console.log(runningScoreTotalEfficiency);
-      console.log(runningScoreTotalCare);
+
       runningScoreAvgFunding = runningScoreTotalFunding / runningWeightsFunding;
       runningScoreAvgFinancial = runningScoreTotalFinancial / runningWeightsFinancial;
       runningScoreAvgOperation = runningScoreTotalOperation / runningWeightsOperation;
@@ -1290,6 +1236,10 @@
       runningScoreAvgVolume = runningScoreTotalVolume / runningWeightsVolume;
       runningScoreAvgEfficiency = runningScoreTotalEfficiency / runningWeightsEfficiency;
       runningScoreAvgCare = runningScoreTotalCare / runningWeightsCare;
+      runningScoreAvgRegionalSub = runningScoreTotalRegionalSub / runningWeightsRegionalSub;
+      runningScoreAvgExtRelSub = runningScoreTotalExtRelSub / runningWeightsExtRelSub;
+      runningScoreAvgVolOpptSub = runningScoreTotalVolOpptSub / runningWeightsVolOpptSub;
+      runningScoreAvgVolSat = runningScoreTotalVolSat / runningWeightsVolSat;
 
       computeCatScore(mapJSON);
 
@@ -1317,29 +1267,26 @@
           runningWeightsRelations = runningWeightsRelations + mapToWeights.get(variable);
         }
 
-        if (mapToCats.get(variable).valueOf() == "Volunteer Opportunity") {
-          runningScoreTotalVolOppt = runningScoreTotalVolOppt + mapToScores.get(variable) * mapToWeights.get(variable);
-          runningWeightsVolOppt = runningWeightsVolOppt + mapToWeights.get(variable);
+        if (mapToCats.get(variable).valueOf() == "Volunteer Experience") {
+          runningScoreTotalVolExp = runningScoreTotalVolExp + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsVolExp = runningWeightsVolExp + mapToWeights.get(variable);
         }
 
-        if (mapToCats.get(variable).valueOf() == "Volunteer Satisfaction") {
-          runningScoreTotalVolSats = runningScoreTotalVolSats + mapToScores.get(variable) * mapToWeights.get(variable);
-          runningWeightsVolSats = runningWeightsVolSats + mapToWeights.get(variable);
+        if (mapToCats.get(variable).valueOf() == "Financial Health") {
+          runningScoreTotalFinHealth = runningScoreTotalFinHealth + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsFinHealth = runningWeightsFinHealth + mapToWeights.get(variable);
+        }
+
+        if (mapToCats.get(variable).valueOf() == "Operational Performance") {
+          runningScoreTotalOperPerf = runningScoreTotalOperPerf + mapToScores.get(variable) * mapToWeights.get(variable);
+          runningWeightsOperPerf = runningWeightsOperPerf + mapToWeights.get(variable);
         }
       }
       runningScoreAvgRegional = runningScoreTotalRegional / runningWeightsRegional;
       runningScoreAvgRelations = runningScoreTotalRelations / runningWeightsRelations;
-      runningScoreAvgVolOppt = runningScoreTotalVolOppt / runningWeightsVolOppt;
-      runningScoreAvgVolSats = runningScoreTotalVolSats / runningWeightsVolSats;
-
-
-      //financial health: funding sources, financial efficiency, financial capacity, accountability
-      financialHealth = (runningScoreTotalFunding + runningScoreTotalEfficiency + runningScoreTotalFinancial + runningScoreTotalAccount) /
-        (runningWeightsAccount + runningWeightsFunding + runningWeightsEfficiency + runningWeightsFinancial);
-
-      //operational performance: operational effciency, governance, transparency, organization quality, volume, care quality
-      operationalPerformance = (runningScoreTotalOperation + runningScoreTotalGov + runningScoreTotalTrans + runningScoreTotalOrganization + runningScoreTotalVolume + runningScoreTotalCare) /
-        (runningWeightsOperation + runningWeightsGov + runningWeightsTrans + runningWeightsOrganization + runningWeightsVolume + runningWeightsCare);
+      runningScoreAvgVolExp = runningScoreTotalVolExp / runningWeightsVolExp;
+      runningScoreAvgOperPerf = runningScoreTotalOperPerf / runningWeightsOperPerf;
+      runningScoreAvgFinHealth = runningScoreTotalFinHealth / runningWeightsFinHealth;
 
       computeTotalScore(mapToScores);
 
@@ -1357,26 +1304,32 @@
 
       totalScore = totalScoreSum / totalScoreWeights;
 
-      obj['funding sources'] = runningScoreAvgFunding;
-      obj['financial capacity'] = runningScoreAvgFinancial;
-      obj['operational effciency'] = runningScoreAvgOperation;
-      obj['governance'] = runningScoreAvgGov;
-      obj['transparency'] = runningScoreAvgTrans;
-      obj['accountability'] = runningScoreAvgAccount;
-      obj['organization quality'] = runningScoreAvgOrganization;
-      obj['volume'] = runningScoreAvgVolume;
-      obj['financial efficiency'] = runningScoreAvgEfficiency;
-      obj['care quality'] = runningScoreAvgCare;
-      obj['regional impact potential'] = runningScoreAvgRegional;
-      obj['external relations'] = runningScoreAvgRelations;
-      obj['volunteer opportunity'] = runningScoreAvgVolOppt;
-      obj['volunteer satisfaction'] = runningScoreAvgVolSats;
-      obj['financial health'] = financialHealth;
-      obj['operational performance'] = operationalPerformance;
-      obj['score'] = totalScore;
+      //for hospital.html calculations
+      obj['totalScoreSum'] = totalScoreSum;
+      obj['totalScoreWeights'] = totalScoreWeights;
 
-      //firestore();
+      obj['SC regional impact potential subcategory'] = runningScoreAvgRegionalSub;
+      obj['SC funding sources'] = runningScoreAvgFunding;
+      obj['SC financial capacity'] = runningScoreAvgFinancial;
+      obj['SC operational effciency'] = runningScoreAvgOperation;
+      obj['SC governance'] = runningScoreAvgGov;
+      obj['SC transparency'] = runningScoreAvgTrans;
+      obj['SC accountability'] = runningScoreAvgAccount;
+      obj['SC organization quality'] = runningScoreAvgOrganization;
+      obj['SC volume'] = runningScoreAvgVolume;
+      obj['SC financial efficiency'] = runningScoreAvgEfficiency;
+      obj['SC care quality'] = runningScoreAvgCare;
+      obj['C regional impact potential'] = runningScoreAvgRegional;
+      obj['C external relations'] = runningScoreAvgRelations;
+      obj['C volunteer experience'] = runningScoreAvgVolExp;
+      obj['C financial health'] = runningScoreAvgFinHealth;
+      obj['C operational performance'] = runningScoreAvgOperPerf;
+      obj['R rating'] = totalScore;
+      obj['ready'] = true;
+
       console.log(JSON.stringify(obj));
+
+      document.getElementById('status').innerHTML = "Your hospital got a rating of " + Number(obj['R rating']).toFixed(2) + ". You can click 'Submit your Data' to add your hospital to our platform.";
 
     }
   </script>
