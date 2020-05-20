@@ -786,6 +786,7 @@
           })
           .catch(function(error) {
             console.error("Error writing document: ", error);
+            document.getElementById("status").innerHTML = "Error occured while adding hospital. Please try again with another username."
           });
       } else {
         document.getElementById('status').innerHTML = "Click 'Check your Rating' button first and try again."
@@ -1328,7 +1329,7 @@
       obj['SC care quality'] = runningScoreAvgCare;
       obj['C regional impact potential'] = runningScoreAvgRegional;
       obj['C external relations'] = runningScoreAvgRelations;
-      obj['C volunteer opportunity'] = runningScoreAvgVolExp;
+      obj['C volunteer experience'] = runningScoreAvgVolExp;
       obj['C financial health'] = runningScoreAvgFinHealth;
       obj['C operational performance'] = runningScoreAvgOperPerf;
       obj['R rating'] = totalScore;
