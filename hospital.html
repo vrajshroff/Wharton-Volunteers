@@ -116,9 +116,9 @@
 
         var upperCat = []
         for (var uc in cats) {
-          upperCat.push(uc..split(' ')
+          upperCat.push(uc.split(' ')
             .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
-            .join(' ');)
+            .join(' '));
         }
 
         //graph
