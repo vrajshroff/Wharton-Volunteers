@@ -107,18 +107,15 @@
         docJSON = doc.data();
         var cats = []
         var rats = []
+        var upperCat = []
         for (var k in docJSON) {
           if (k.startsWith("C ")) {
             cats.push(k.substring(2))
             rats.push(docJSON[k].toFixed(2))
+            upperCat.push(k.substring(2).split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' '))
           }
-        }
-
-        var upperCat = []
-        for (var uc in cats) {
-          upperCat.push(uc.split(' ')
-            .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
-            .join(' '));
         }
 
         //graph
@@ -265,6 +262,7 @@
     </div>
 
     <div id="myDiv"></div>
+
 
   </div>
 
