@@ -109,16 +109,21 @@
         var rats = []
         for (var k in docJSON) {
           if (k.startsWith("C ")) {
-            cats.push(k.substring(2).split(' ')
-              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
-              .join(' '))
+            cats.push(k.substring(2))
             rats.push(docJSON[k].toFixed(2))
           }
         }
 
+        var upperCat[]
+        for (var uc in cats) {
+          upperCat.push(uc..split(' ')
+            .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+            .join(' ');)
+        }
+
         //graph
         var data = [{
-          x: cats,
+          x: upperCat,
           y: rats,
           type: 'bar'
         }];
@@ -171,9 +176,13 @@
           var t = document.createElement('span')
 
           if (subcats[cats[i]]) {
-            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i];
+            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i].split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' ');
           } else {
-            t.innerHTML = cats[i];
+            t.innerHTML = cats[i].split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' ');
           }
 
           z.appendChild(t);
