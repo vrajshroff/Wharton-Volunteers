@@ -109,7 +109,9 @@
         var rats = []
         for (var k in docJSON) {
           if (k.startsWith("C ")) {
-            cats.push(k.substring(2))
+            cats.push(k.substring(2).split(' ')
+              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+              .join(' '))
             rats.push(docJSON[k].toFixed(2))
           }
         }
@@ -169,13 +171,9 @@
           var t = document.createElement('span')
 
           if (subcats[cats[i]]) {
-            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i].split(' ')
-              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
-              .join(' ') + '</a>';
+            t.innerHTML = '<a href="javascript:showSubCat(\'' + cats[i] + '\');">' + cats[i];
           } else {
-            t.innerHTML = cats[i].split(' ')
-              .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
-              .join(' ');
+            t.innerHTML = cats[i];
           }
 
           z.appendChild(t);
