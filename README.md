@@ -5,14 +5,16 @@ Platform: transformationalimpact.org
 Report: report.transformationalimpact.org
 
 
-Developers
+*Developers*
 
 Email Vraj Shroff at vrajshroff@gmail.com for access
 
 GitHub: github.com/vrajshroff/Wharton-Volunteers
+
 Firebase: console.firebase.google.com/u/0/project/wharton-volunteers/
 
-Overview
+
+*Overview*
 
 index.html - homepage that displays basic hospital information about all the hospitals in the system from the database 
 
@@ -25,7 +27,6 @@ create.html - a page where people can enter hospital information and get a preli
 delete.html - a page that lets creators delete their hospital after authentication
 
 hospital.html - retrieves hospital information and displays it in a graph and table
-
 
 
 
